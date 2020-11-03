@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { Asset } from 'expo-asset';
-import { AppLoading } from 'expo';
+import { AppLoading, registerRootComponent } from 'expo';
 import * as Font from 'expo-font';
 import { FontSource } from 'expo-font';
 import TestTemplate from 'components/templates/TestTemplate';
+import Gate from 'navigations/Gate';
 
 const storybook = false;
 
@@ -20,15 +21,15 @@ const storybook = false;
 let App = null;
 if (storybook) {
   // eslint-disable-next-line @typescript-eslint/no-var-requires
-  App = require('./storybook').default;
+  App = require('../storybook').default;
 } else {
   App = (): React.ReactNode => {
     const [isReady, setIsReady] = useState(false);
     const handleFinish = (): void => setIsReady(true);
     const loadAsync = async () => {
       const fonts: string | { [fontFamily: string]: FontSource } = {
-        'nanumGothic-bold': require('./assets/fonts/NanumGothic-Bold.ttf'),
-        'nanumGothic-regular': require('./assets/fonts/NanumGothic-Regular.ttf'),
+        'nanumGothic-bold': require('../assets/fonts/NanumGothic-Bold.ttf'),
+        'nanumGothic-regular': require('../assets/fonts/NanumGothic-Regular.ttf'),
       };
       // const images = [require('./assets/loadingBg.jpeg')];
 
@@ -41,7 +42,7 @@ if (storybook) {
     };
 
     return isReady ? (
-      <TestTemplate />
+      <Gate />
     ) : (
       <AppLoading
         startAsync={loadAsync}
@@ -52,4 +53,4 @@ if (storybook) {
   };
 }
 
-export default App;
+export default registerRootComponent(App);

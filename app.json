@@ -1,5 +1,6 @@
 {
   "expo": {
+    "entryPoint": "./src/App.tsx", 
     "name": "todaysWod",
     "slug": "todaysWod",
     "version": "1.0.0",

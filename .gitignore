@@ -13,3 +13,4 @@ web-build/
 .DS_Store
 __tests__
 yarn-error.log
+.env
