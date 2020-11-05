@@ -26,19 +26,19 @@ interface IStyleProps {
 
 const V = styled.View<IStyleProps>`
   position: ${(props) => props.position};
-  top: ${(props) => props.top};
-  left: ${(props) => props.left};
-  right: ${(props) => props.right};
-  bottom: ${(props) => props.bottom};
+  ${(props) => props.top && `top: ${props.top}px;`};
+  ${(props) => props.left && `left: ${props.left}px;`};
+  ${(props) => props.right && `right: ${props.right}px;`};
+  ${(props) => props.bottom && `bottom: ${props.bottom}px;`};
 `;
 
 const PositionBlock: React.FC<IProps> = ({
   children,
   position = Position.RELATIVE,
-  top = 0,
-  left = 0,
-  right = 0,
-  bottom = 0,
+  top,
+  left,
+  right,
+  bottom,
 }) => {
   const styleProps = {
     position,

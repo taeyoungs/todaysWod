@@ -29,10 +29,12 @@ export enum WHITE {
   OLD_LACE = '#fdf5e6',
   FLORAL = '#fffaf0',
   SEA_SHALL = '#fff5ee',
+  TANSPARENT = 'transparent',
 }
 
 export enum RED {
   RED = '#ff0000',
+  DARK_ORANGE = '#B67929',
 }
 
 export enum GREEN {
@@ -41,6 +43,12 @@ export enum GREEN {
   GREEN = '#00ff00',
 }
 
+//#00243F
+//#859F9E
+// #22a6b3
+// #6a89cc - #778beb
+//#425C59 #0984e3
+// #3A5350
 export enum BLUE {
   ALICE = '#f0f8ff',
   AZURE = '#f0ffff',
@@ -48,7 +56,15 @@ export enum BLUE {
   LIGHT = '#add8e6',
 }
 
-export type ColorType = GRAY | BLACK | WHITE | RED | GREEN | BLUE;
+export enum MAIN {
+  BG = '#425C59',
+  TXT = '#FFCEA3',
+  TXT_LIGHT = '#859F9E',
+  BG_LIGHT = '#A1BCBB',
+  BG_DARK = '#39524F',
+}
+
+export type ColorType = GRAY | BLACK | WHITE | RED | GREEN | BLUE | MAIN;
 
 export const ColorPalette = {
   Gray: GRAY,
@@ -57,4 +73,5 @@ export const ColorPalette = {
   Red: RED,
   Green: GREEN,
   Blue: BLUE,
+  Main: MAIN,
 };

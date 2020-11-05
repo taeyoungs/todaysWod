@@ -1,49 +1,13 @@
 import React from 'react';
 import styled from 'styled-components/native';
-import { IComponentProps } from 'models/common';
 import { CalculateBlock, MPB } from 'utils';
+import { IComponentProps } from 'models/common';
 import { ColorPalette, ColorType } from 'models/color';
-
-export enum FlexDirection {
-  ROW = 'row',
-  COLUMN = 'column',
-  ROW_REVERSE = 'row-reverse',
-  COLUMN_REVERSE = 'column-reverse',
-}
-
-export enum BorderStyle {
-  DOTTED = 'dotted',
-  SOLID = 'solid',
-  DOUBLE = 'double',
-  DASHED = 'dashed',
-}
-
-export enum Sort {
-  LEFT_TOP = 11,
-  LEFT_CENTER = 21,
-  LEFT_BOTTOM = 31,
-  LEFT_SPACE_BETWEEN = 41,
-  LEFT_SPACE_AROUND = 51,
-  CENTER_TOP = 12,
-  CENTER_CENTER = 22,
-  CENTER_BOTTOM = 32,
-  CENTER_SPACE_BETWEEN = 42,
-  CENTER_SPACE_AROUND = 52,
-  RIGHT_TOP = 13,
-  RIGHT_CENTER = 23,
-  RIGHT_BOTTOM = 33,
-  RIGHT_SPACE_BETWEEN = 43,
-  RIGHT_SPACE_AROUND = 53,
-  SPACE_BETWEEN_TOP = 14,
-  SPACE_BETWEEN_CENTER = 24,
-  SPACE_BETWEEN_BOTTOM = 34,
-  SPACE_AROUND_TOP = 15,
-  SPACE_AROUND_CENTER = 25,
-  SPACE_AROUND_BOTTOM = 35,
-}
+import { FlexDirection, Sort, BorderStyle } from 'components/molecules/Block';
 
 interface IProps extends IComponentProps {
   children?: React.ReactNode;
+  flex?: number;
   flexDirection?: FlexDirection;
   backgroundColor?: ColorType;
   borderRadius?: number;
@@ -53,7 +17,6 @@ interface IProps extends IComponentProps {
   sort?: Sort;
   width?: string;
   height?: string;
-  test?: boolean;
 }
 
 interface IStyleProps {
@@ -72,6 +35,7 @@ interface IStyleProps {
   borderRadius?: number;
   borderStyle?: string;
   borderColor?: string;
+  flex?: number;
   flexDirection?: FlexDirection;
   justifyContent?: string;
   alignItems?: string;
@@ -81,6 +45,7 @@ interface IStyleProps {
 }
 
 const V = styled.View<IStyleProps>`
+  flex: ${(props) => props.flex};
   flex-direction: ${(props) => props.flexDirection};
   margin-top: ${(props) => props.marginTop}px;
   margin-right: ${(props) => props.marginRight}px;
@@ -94,7 +59,7 @@ const V = styled.View<IStyleProps>`
   border-right-width: ${(props) => props.borderRightWidth}px;
   border-bottom-width: ${(props) => props.borderBottomWidth}px;
   border-left-width: ${(props) => props.borderLeftWidth}px;
-  ${(props) => props.borderRadius && `border-radius: ${props.borderRadius}px;`};
+  border-radius: ${(props) => props.borderRadius}px;
   border-style: ${(props) => props.borderStyle};
   border-color: ${(props) => props.borderColor};
   justify-content: ${(props) => props.justifyContent};
@@ -102,8 +67,10 @@ const V = styled.View<IStyleProps>`
   background-color: ${(props) => props.backgroundColor};
   ${(props) => props.width && `width: ${props.width};`};
   ${(props) => props.height && `height: ${props.height};`};
-  overflow: hidden;
 `;
+
+// width: ${(props) => props.width};
+// height: ${(props) => props.height};
 
 export const CalculateSort = (sort: Sort): string[] => {
   const horizontalNumber = sort % 10;
@@ -125,20 +92,20 @@ export const CalculateSort = (sort: Sort): string[] => {
   return [horizontal, vertical];
 };
 
-const Block: React.FC<IProps> = ({
+const Flex: React.FC<IProps> = ({
   children,
   margin = [0],
   padding = [0],
+  flex = 1,
   border = [0],
-  borderRadius,
+  borderRadius = 0,
   borderStyle = BorderStyle.SOLID,
   flexDirection = FlexDirection.COLUMN,
-  backgroundColor = ColorPalette.White.TANSPARENT,
+  backgroundColor = ColorPalette.Main.BG,
   borderColor = ColorPalette.Black.BLACK,
   sort = Sort.CENTER_CENTER,
   width,
   height,
-  test = false,
 }) => {
   const marginProps = CalculateBlock(margin, MPB.Margin);
   const paddingProps = CalculateBlock(padding, MPB.Padiing);
@@ -151,12 +118,8 @@ const Block: React.FC<IProps> = ({
   const alignItems =
     flexDirection === FlexDirection.ROW ? vertical : horizontal;
 
-  if (test) {
-    console.log(margin);
-    console.log(marginProps);
-  }
-
   const styleProps = {
+    flex,
     flexDirection,
     justifyContent,
     alignItems,
@@ -174,4 +137,4 @@ const Block: React.FC<IProps> = ({
   return <V {...styleProps}>{children}</V>;
 };
 
-export default Block;
+export default Flex;

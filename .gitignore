@@ -14,3 +14,4 @@ web-build/
 __tests__
 yarn-error.log
 .env
+debug.log
