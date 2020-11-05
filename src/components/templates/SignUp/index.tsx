@@ -20,19 +20,23 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 interface IProps {
   email: string;
   pw: string;
+  confirmPw: string;
   onEmailChange(text: string): void;
   onPwChange(text: string): void;
+  onConfirmPwChange(text: string): void;
   onPress(event: GestureResponderEvent): void;
-  goSignUp(): void;
+  goLogIn(): void;
 }
 
-const LogIn: React.FC<IProps> = ({
+const SignUp: React.FC<IProps> = ({
   onEmailChange,
   onPwChange,
+  onConfirmPwChange,
   onPress,
-  goSignUp,
   email,
   pw,
+  confirmPw,
+  goLogIn,
 }) => {
   return (
     <>
@@ -66,11 +70,15 @@ const LogIn: React.FC<IProps> = ({
                   value={pw}
                 />
               </InputBox>
-              <Block width={'100%'}>
-                <T color={ColorPalette.Main.TXT_LIGHT}>
-                  비밀번호를 잊어버리셨나요?
-                </T>
-              </Block>
+              <InputBox name="lock" label="비밀번호 확인">
+                <TInput
+                  placeholder=""
+                  width={'70%'}
+                  secureTextEntry={true}
+                  onChangeText={onConfirmPwChange}
+                  value={confirmPw}
+                />
+              </InputBox>
               <Btn
                 onPress={onPress}
                 activeOpacity={0.6}
@@ -84,15 +92,15 @@ const LogIn: React.FC<IProps> = ({
                   fontFamily={FontFamily.NANUM_BOLD}
                   align={TextAlign.CENTER}
                 >
-                  로그인
+                  회원가입
                 </T>
               </Btn>
               <Block flexDirection={FlexDirection.ROW} width={'100%'}>
                 <T color={ColorPalette.Main.TXT_LIGHT}>
-                  아직 회원이 아니신가요?{' '}
+                  이미 가입한 상태인가요?{' '}
                 </T>
-                <TouchableOpacity onPress={goSignUp}>
-                  <T color={ColorPalette.Main.TXT}>회원가입</T>
+                <TouchableOpacity onPress={goLogIn}>
+                  <T color={ColorPalette.Main.TXT}>로그인</T>
                 </TouchableOpacity>
               </Block>
             </Block>
@@ -118,4 +126,4 @@ const LogIn: React.FC<IProps> = ({
   );
 };
 
-export default LogIn;
+export default SignUp;

@@ -1,36 +1,35 @@
 import React, { useState } from 'react';
-import LogIn from 'components/templates/LogIn';
 import { GestureResponderEvent } from 'react-native';
+import SignUp from 'components/templates/SignUp';
 import { LogInScreenProps } from 'models/types';
-import { createTwoButtonAlert, validateEmail } from 'utils';
 
 interface IProps {
   navigation: LogInScreenProps['navigation'];
 }
 
-const LogInScreen: React.FC<IProps> = ({ navigation }) => {
+const SignUpScreen: React.FC<IProps> = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [pw, setPw] = useState('');
+  const [confirmPw, setConfirmPw] = useState('');
   const onEmailChange = (text: string) => setEmail(text);
   const onPwChange = (text: string) => setPw(text);
+  const onConfirmPwChange = (text: string) => setConfirmPw(text);
   const onPress = (event: GestureResponderEvent) => {
-    // console.log(email, pw);
-    if (!validateEmail(email, pw)) {
-      createTwoButtonAlert();
-      return;
-    }
+    console.log(email, pw, confirmPw);
   };
-  const goSignUp = () => navigation.navigate('SignUpScreen');
+  const goLogIn = () => navigation.navigate('LogInScreen');
   return (
-    <LogIn
+    <SignUp
       email={email}
-      onEmailChange={onEmailChange}
       pw={pw}
+      confirmPw={confirmPw}
       onPwChange={onPwChange}
+      onConfirmPwChange={onConfirmPwChange}
+      onEmailChange={onEmailChange}
       onPress={onPress}
-      goSignUp={goSignUp}
+      goLogIn={goLogIn}
     />
   );
 };
 
-export default LogInScreen;
+export default SignUpScreen;
