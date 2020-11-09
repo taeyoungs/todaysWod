@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { GestureResponderEvent } from 'react-native';
-import SignUp from 'components/templates/SignUp';
+import SignUp from 'components/templates/Auth/SignUp';
 import { LogInScreenProps } from 'models/types';
 
 interface IProps {

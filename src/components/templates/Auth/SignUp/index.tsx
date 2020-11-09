@@ -1,6 +1,6 @@
 import React from 'react';
 import { GestureResponderEvent, StatusBar } from 'react-native';
-import TInput from 'components/atoms/TInput';
+import TInput, { KeyboardType } from 'components/atoms/TInput';
 import Img from 'components/atoms/Img';
 import T, { FontFamily, TextAlign } from 'components/atoms/T';
 import Block, {
@@ -59,6 +59,7 @@ const SignUp: React.FC<IProps> = ({
                   width={'100%'}
                   onChangeText={onEmailChange}
                   value={email}
+                  keyboardType={KeyboardType.EMAIL}
                 />
               </InputBox>
               <InputBox name="lock" label="비밀번호">

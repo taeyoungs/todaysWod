@@ -38,7 +38,7 @@ const TouchableBtn = styled.TouchableOpacity<IStyleProps>`
   ${(props) => props.borderRadius && `border-radius: ${props.borderRadius}px;`};
   ${(props) => props.borderRadius && `border-color: ${props.borderColor};`};
   ${(props) =>
-    props.borderRadius && `background-color: ${props.backgroundColor};`};
+    props.backgroundColor && `background-color: ${props.backgroundColor};`};
 `;
 
 // width: string, bgColor: ColorType, borderRadius: string

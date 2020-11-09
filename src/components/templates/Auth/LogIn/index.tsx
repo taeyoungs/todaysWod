@@ -1,6 +1,6 @@
 import React from 'react';
 import { GestureResponderEvent, StatusBar } from 'react-native';
-import TInput from 'components/atoms/TInput';
+import TInput, { KeyboardType } from 'components/atoms/TInput';
 import Img from 'components/atoms/Img';
 import T, { FontFamily, TextAlign } from 'components/atoms/T';
 import Block, {
@@ -16,21 +16,24 @@ import InputBox from 'components/organisms/InputBox';
 import { ColorPalette } from 'models/color';
 import KeyboardDismiss from 'components/molecules/KeyboardDismiss';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import Icon from 'components/atoms/Icon';
 
 interface IProps {
   email: string;
   pw: string;
-  onEmailChange(text: string): void;
+  setEmail: React.Dispatch<React.SetStateAction<string>>;
   onPwChange(text: string): void;
   onPress(event: GestureResponderEvent): void;
   goSignUp(): void;
+  goPwChange(): void;
 }
 
 const LogIn: React.FC<IProps> = ({
-  onEmailChange,
+  setEmail,
   onPwChange,
   onPress,
   goSignUp,
+  goPwChange,
   email,
   pw,
 }) => {
@@ -52,10 +55,20 @@ const LogIn: React.FC<IProps> = ({
               <InputBox name="at" label="이메일" size={20}>
                 <TInput
                   placeholder=""
-                  width={'100%'}
-                  onChangeText={onEmailChange}
+                  width={'70%'}
+                  onChangeText={(text) => setEmail(text)}
                   value={email}
+                  keyboardType={KeyboardType.EMAIL}
                 />
+                {email != '' ? (
+                  <Btn onPress={() => setEmail('')}>
+                    <Icon
+                      name="close-circle-outline"
+                      size={20}
+                      color={ColorPalette.Gray.SLATE}
+                    />
+                  </Btn>
+                ) : null}
               </InputBox>
               <InputBox name="lock" label="비밀번호">
                 <TInput
@@ -67,9 +80,11 @@ const LogIn: React.FC<IProps> = ({
                 />
               </InputBox>
               <Block width={'100%'}>
-                <T color={ColorPalette.Main.TXT_LIGHT}>
-                  비밀번호를 잊어버리셨나요?
-                </T>
+                <TouchableOpacity onPress={goPwChange}>
+                  <T color={ColorPalette.Main.TXT_LIGHT}>
+                    비밀번호를 잊어버리셨나요?
+                  </T>
+                </TouchableOpacity>
               </Block>
               <Btn
                 onPress={onPress}

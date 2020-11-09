@@ -122,12 +122,14 @@ const TInput: React.FC<IProps> = ({
         autoCapitalize={autoCapitalize}
         secureTextEntry={isShow}
         {...styleProps}
+        placeholderTextColor={ColorPalette.Main.TXT_LIGHT}
       />
       {secureTextEntry ? (
         <TouchableOpacity onPress={() => setIsShow((prevState) => !prevState)}>
           <Icon
             name={isShow ? 'eye' : 'eye-off'}
-            color={ColorPalette.Gray.LIGHT_SLATE}
+            color={ColorPalette.Gray.SLATE}
+            size={22}
           />
         </TouchableOpacity>
       ) : null}

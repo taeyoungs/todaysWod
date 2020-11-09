@@ -88,25 +88,17 @@ export function CalculateBlock(
   return styleProps;
 }
 
-export const validateEmail = (
-  email: string,
-  pw: string,
-  confirmPw?: string
-): boolean => {
+export const validateEmail = (email: string): boolean => {
   const regExp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   // console.log(regExp.test(email));
-
-  const alertProps = {
-    msg: '이메일 형식이 올바르지 않습니다.',
-  };
 
   return regExp.test(email);
 };
 
-export const createTwoButtonAlert = (): void => {
+export const createOneButtonAlert = (errorMsg: string): void => {
   return Alert.alert(
-    '이메일 형식이 올바르지 않습니다.',
     '',
+    `${errorMsg}`,
     [{ text: '확인', onPress: () => null }],
     { cancelable: false }
   );
