@@ -5,7 +5,8 @@ export type RootStackParamList = {
   LogInScreen: undefined;
   SignUpScreen: undefined;
   PwScreen: undefined;
-  CertificationScreen: undefined;
+  CertificationScreen: { email: string };
+  PwResetScreen: { email: string };
 };
 
 export type WelcomeProps = StackScreenProps<RootStackParamList, 'Welcome'>;
@@ -21,4 +22,8 @@ export type PwScreenProps = StackScreenProps<RootStackParamList, 'PwScreen'>;
 export type CertificationScreenProps = StackScreenProps<
   RootStackParamList,
   'CertificationScreen'
+>;
+export type PwResetScreenProps = StackScreenProps<
+  RootStackParamList,
+  'PwResetScreen'
 >;

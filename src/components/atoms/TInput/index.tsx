@@ -48,6 +48,8 @@ interface IProps extends IComponentProps {
   returnKeyType?: ReturnKeyType;
   autoCapitalize?: AutoCapitalize;
   secureTextEntry?: boolean;
+  maxLength?: number;
+  ref?: React.RefObject<any>;
 }
 
 interface IStyleProps {
@@ -91,15 +93,18 @@ const TInput: React.FC<IProps> = ({
   onBlur,
   size = 16,
   color = ColorPalette.Main.TXT,
-  placeholder = '텍스트를 입력해주세요.',
+  placeholder = '',
   keyboardType = KeyboardType.DEFAULT,
   returnKeyType = ReturnKeyType.DONE,
   autoCapitalize = AutoCapitalize.NONE,
   secureTextEntry = false,
+  maxLength,
+  ref = null,
 }) => {
   const marginProps = CalculateBlock(margin, MPB.Margin);
   const paddingProps = CalculateBlock(padding, MPB.Padiing);
   const [isShow, setIsShow] = useState(secureTextEntry);
+  // const testRef = useRef<T()
 
   const styleProps = {
     size,
@@ -112,6 +117,7 @@ const TInput: React.FC<IProps> = ({
   return (
     <>
       <TextInput
+        ref={ref}
         onChangeText={onChangeText}
         onFocus={onFocus}
         onBlur={onBlur}
@@ -121,8 +127,10 @@ const TInput: React.FC<IProps> = ({
         returnKeyType={returnKeyType}
         autoCapitalize={autoCapitalize}
         secureTextEntry={isShow}
+        maxLength={maxLength}
         {...styleProps}
         placeholderTextColor={ColorPalette.Main.TXT_LIGHT}
+        selectionColor={ColorPalette.Main.TXT}
       />
       {secureTextEntry ? (
         <TouchableOpacity onPress={() => setIsShow((prevState) => !prevState)}>

@@ -34,7 +34,7 @@ const InputBox: React.FC<IProps> = ({ name, children, label, size }) => {
           {label}
         </T>
         <Block
-          margin={[10, 0, 5, 0]}
+          margin={[5, 0, 0, 0]}
           width={'100%'}
           flexDirection={FlexDirection.ROW}
           sort={Sort.LEFT_CENTER}

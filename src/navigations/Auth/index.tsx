@@ -6,6 +6,7 @@ import SignUpScreen from 'screens/Auth/SignUpScreen';
 import PwScreen from 'screens/Auth/PwScreen';
 import CertificationScreen from 'screens/Auth/CertificationScreen';
 import { RootStackParamList } from 'models/types';
+import PwResetScreen from 'screens/Auth/PwResetScreen';
 
 const Auth = createStackNavigator<RootStackParamList>();
 
@@ -31,6 +32,11 @@ export default (): JSX.Element => {
         options={{ header: () => <BackButton /> }}
         name="CertificationScreen"
         component={CertificationScreen}
+      />
+      <Auth.Screen
+        options={{ header: () => null }}
+        name="PwResetScreen"
+        component={PwResetScreen}
       />
     </Auth.Navigator>
   );

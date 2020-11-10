@@ -9,7 +9,8 @@ interface IProps {
 }
 
 const PwScreen: React.FC<IProps> = ({ navigation }) => {
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState('lolollg@naver.com');
+  const [loading, setLoading] = useState(false);
   const sendEmail = async () => {
     if (!validateEmail(email)) {
       createOneButtonAlert('이메일 형식이 올바르지 않습니다.');
@@ -19,9 +20,12 @@ const PwScreen: React.FC<IProps> = ({ navigation }) => {
       const form = {
         email,
       };
+      setLoading(true);
       const results = await api.pw_reset(form);
+      // navigation.setParams(form);
+      // navigation.navigate('CertificationScreen', form);
       if (results.status === 200) {
-        navigation.navigate('CertificationScreen');
+        navigation.navigate('CertificationScreen', { email });
       }
     } catch (error) {
       if (error.message === 'Request failed with status code 404') {
@@ -29,11 +33,20 @@ const PwScreen: React.FC<IProps> = ({ navigation }) => {
         return;
       }
       console.warn(error);
+    } finally {
+      setLoading(false);
     }
   };
   // const goCertification = () => navigation.navigate()
 
-  return <Pw sendEmail={sendEmail} email={email} setEmail={setEmail} />;
+  return (
+    <Pw
+      sendEmail={sendEmail}
+      email={email}
+      setEmail={setEmail}
+      loading={loading}
+    />
+  );
 };
 
 export default PwScreen;

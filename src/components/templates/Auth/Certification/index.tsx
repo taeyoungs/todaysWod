@@ -1,12 +1,13 @@
-import React, { forwardRef } from 'react';
+import React from 'react';
 import T, { FontFamily, TextAlign } from 'components/atoms/T';
 import Btn from 'components/atoms/Button';
 import Block, { FlexDirection, Sort } from 'components/molecules/Block';
 import Flex from 'components/molecules/Flex';
 import KeyboardDismiss from 'components/molecules/KeyboardDismiss';
+import NInputs from 'components/organisms/NInputs';
 import { ColorPalette } from 'models/color';
-import NInput from 'components/organisms/NInput';
-import { TextInput } from 'react-native';
+import { ActivityIndicator } from 'react-native';
+// import NInput from 'components/organisms/NInput';
 
 interface IProps {
   one: string;
@@ -21,17 +22,26 @@ interface IProps {
   setFour: React.Dispatch<React.SetStateAction<string>>;
   setFive: React.Dispatch<React.SetStateAction<string>>;
   setSix: React.Dispatch<React.SetStateAction<string>>;
-  ref: Record<string, React.RefObject<TextInput>>;
+  handleSubmit(): void;
+  loading: boolean;
 }
 
-// twoRef: React.RefObject<TextInput>;
-//   threeRef: React.RefObject<TextInput>;
-//   fourRef: React.RefObject<TextInput>;
-//   fiveRef: React.RefObject<TextInput>;
-//   sixRef: React.RefObject<TextInput>;
-
-const Certification = forwardRef<JSX.Element, IProps>(props: IProps, ref) => {
-//   console.log(props.ref);
+const Certification: React.FC<IProps> = ({
+  one,
+  two,
+  three,
+  four,
+  five,
+  six,
+  setOne,
+  setTwo,
+  setThree,
+  setFour,
+  setFive,
+  setSix,
+  handleSubmit,
+  loading,
+}) => {
   return (
     <KeyboardDismiss>
       <Flex>
@@ -66,28 +76,40 @@ const Certification = forwardRef<JSX.Element, IProps>(props: IProps, ref) => {
           flexDirection={FlexDirection.ROW}
           sort={Sort.SPACE_BETWEEN_CENTER}
         >
-          <NInput value={one} setValue={setOne} />
-          <NInput value={two} setValue={setTwo} ref={twoRef} />
-          <NInput value={three} setValue={setThree} />
-          <NInput value={four} setValue={setFour} />
-          <NInput value={five} setValue={setFive} />
-          <NInput value={six} setValue={setSix} />
+          <NInputs
+            one={one}
+            two={two}
+            three={three}
+            four={four}
+            five={five}
+            six={six}
+            setOne={setOne}
+            setTwo={setTwo}
+            setThree={setThree}
+            setFour={setFour}
+            setFive={setFive}
+            setSix={setSix}
+          />
         </Flex>
         <Flex sort={Sort.CENTER_TOP} width={'80%'}>
           <Btn
-            onPress={() => console.log('인증')}
+            onPress={handleSubmit}
             backgroundColor={ColorPalette.Main.TXT}
             padding={[20]}
             borderRadius={25}
           >
-            <T
-              align={TextAlign.CENTER}
-              fontFamily={FontFamily.NANUM_BOLD}
-              color={ColorPalette.Main.BG}
-              size={16}
-            >
-              확인
-            </T>
+            {loading ? (
+              <ActivityIndicator />
+            ) : (
+              <T
+                align={TextAlign.CENTER}
+                fontFamily={FontFamily.NANUM_BOLD}
+                color={ColorPalette.Main.BG}
+                size={16}
+              >
+                확인
+              </T>
+            )}
           </Btn>
         </Flex>
       </Flex>

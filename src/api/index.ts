@@ -18,7 +18,7 @@ const callApi = async (
     'Authorization': jwt != null ? `Bearer ${jwt}` : null,
     'Content-Type': 'application/json',
   };
-  const baseUrl = 'http://172.30.1.25:8000/api/v1';
+  const baseUrl = 'http://172.30.1.16:8000/api/v1';
   const fullUrl = `${baseUrl}${path}`;
 
   if (method === 'get' || method === 'delete') {
@@ -33,6 +33,10 @@ const api = {
     callApi(Method.POST, '/users/token/', form),
   pw_reset: (form: Record<string, string>): Promise<AxiosResponse<any>> =>
     callApi(Method.POST, '/users/pw_reset/', form),
+  certification: (form: Record<string, string>): Promise<AxiosResponse<any>> =>
+    callApi(Method.POST, '/users/certification/', form),
+  pw_set: (form: Record<string, string>): Promise<AxiosResponse<any>> =>
+    callApi(Method.POST, '/users/pw_set/', form),
 };
 
 export default api;
