@@ -32,6 +32,7 @@ export enum MPB {
   Margin = 'margin',
   Padiing = 'padding',
   Border = 'border',
+  BorderRadius = 'borderRadius',
 }
 
 export function CalculateBlock(
@@ -82,6 +83,13 @@ export function CalculateBlock(
       borderRightWidth: resultArr[1],
       borderBottomWidth: resultArr[2],
       borderLeftWidth: resultArr[3],
+    };
+  } else {
+    styleProps = {
+      borderTopLeftRadius: resultArr[0],
+      borderBottomLeftRadius: resultArr[1],
+      borderTopRightRadius: resultArr[2],
+      borderBottomRightRadius: resultArr[3],
     };
   }
 

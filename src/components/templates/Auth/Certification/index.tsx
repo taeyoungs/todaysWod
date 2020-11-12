@@ -24,6 +24,9 @@ interface IProps {
   setSix: React.Dispatch<React.SetStateAction<string>>;
   handleSubmit(): void;
   loading: boolean;
+  title: string;
+  subtitle: string;
+  btnText: string;
 }
 
 const Certification: React.FC<IProps> = ({
@@ -41,6 +44,9 @@ const Certification: React.FC<IProps> = ({
   setSix,
   handleSubmit,
   loading,
+  title,
+  subtitle,
+  btnText,
 }) => {
   return (
     <KeyboardDismiss>
@@ -53,21 +59,14 @@ const Certification: React.FC<IProps> = ({
               size={30}
               margin={[10, 0]}
             >
-              인증번호 입력
+              {title}
             </T>
             <T
               color={ColorPalette.Main.TXT_LIGHT}
               size={12}
               align={TextAlign.CENTER}
             >
-              이메일에 적혀있는 인증번호를 입력해주세요.
-            </T>
-            <T
-              color={ColorPalette.Main.TXT_LIGHT}
-              size={12}
-              align={TextAlign.CENTER}
-            >
-              인증번호가 맞다면 비밀번호 재설정 화면으로 이동합니다.
+              {subtitle}
             </T>
           </Block>
         </Flex>
@@ -107,7 +106,7 @@ const Certification: React.FC<IProps> = ({
                 color={ColorPalette.Main.BG}
                 size={16}
               >
-                확인
+                {btnText}
               </T>
             )}
           </Btn>

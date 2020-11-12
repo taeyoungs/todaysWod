@@ -1,22 +1,25 @@
 import React from 'react';
-import { GestureResponderEvent, StatusBar } from 'react-native';
+import {
+  GestureResponderEvent,
+  StatusBar,
+  TouchableOpacity,
+} from 'react-native';
 import TInput, { KeyboardType } from 'components/atoms/TInput';
 import Img from 'components/atoms/Img';
 import T, { FontFamily, TextAlign } from 'components/atoms/T';
+import Btn from 'components/atoms/Button';
 import Block, {
   BorderStyle,
   FlexDirection,
   Sort,
 } from 'components/molecules/Block';
-import Btn from 'components/atoms/Button';
 import Flex from 'components/molecules/Flex';
 import PositionBlock, { Position } from 'components/molecules/PositionBlock';
+import KeyboardDismiss from 'components/molecules/KeyboardDismiss';
 import Logo from 'components/organisms/Logo';
 import InputBox from 'components/organisms/InputBox';
-import { ColorPalette } from 'models/color';
-import KeyboardDismiss from 'components/molecules/KeyboardDismiss';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import Icon from 'components/atoms/Icon';
+import { ColorPalette } from 'models/color';
 
 interface IProps {
   email: string;
@@ -112,17 +115,17 @@ const LogIn: React.FC<IProps> = ({
               </Block>
             </Block>
           </Flex>
-          <PositionBlock left={-15} bottom={-20} position={Position.ABSOLUTE}>
+          <PositionBlock left={-30} bottom={-30} position={Position.ABSOLUTE}>
             <Block
               border={[3]}
               borderColor={ColorPalette.Main.BG_DARK}
-              borderRadius={100}
+              borderRadius={[100]}
               borderStyle={BorderStyle.DASHED}
-              padding={[30]}
+              padding={[40]}
             >
               <Img
-                width={60}
-                height={60}
+                width={70}
+                height={70}
                 sourceImg={require('assets/images/dark_dbell.png')}
               />
             </Block>

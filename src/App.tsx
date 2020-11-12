@@ -37,6 +37,7 @@ if (storybook) {
         require('../assets/images/main_logo.png'),
         require('../assets/images/dark_dbell.png'),
         require('../assets/images/light_dbell.png'),
+        require('../assets/images/seoulmap.png'),
       ];
 
       const promisedImages = images.map((image: number | string) => {

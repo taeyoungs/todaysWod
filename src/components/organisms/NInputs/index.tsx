@@ -49,7 +49,7 @@ const NInputs: React.FC<IProps> = ({
 
   const blockStyleProps = {
     backgroundColor: ColorPalette.Main.BG_DARK,
-    borderRadius: 5,
+    borderRadius: [5],
     height: '40%',
     width: '45px',
   };

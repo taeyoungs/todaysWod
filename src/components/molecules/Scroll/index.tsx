@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components/native';
 import { NativeScrollEvent, NativeSyntheticEvent } from 'react-native';
-import { CalculateBlock } from 'utils';
+import { CalculateBlock, MPB } from 'utils';
 import { IComponentProps } from 'models/common';
-import { ColorType } from 'models/color';
+import { ColorPalette, ColorType } from 'models/color';
 import { FlexDirection } from 'components/molecules/Block';
 
 interface IProps extends IComponentProps {
@@ -35,7 +35,6 @@ interface IStyleProps {
 }
 
 const ScrollV = styled.ScrollView<IStyleProps>`
-  flex: ${(props) => props.flex};
   flex-direction: ${(props) => props.flexDirection};
   margin-top: ${(props) => props.marginTop}px;
   margin-right: ${(props) => props.marginTop}px;
@@ -45,8 +44,9 @@ const ScrollV = styled.ScrollView<IStyleProps>`
   padding-right: ${(props) => props.paddingRight}px;
   padding-bottom: ${(props) => props.paddingBottom}px;
   padding-left: ${(props) => props.paddingLeft}px;
-  width: ${(props) => props.width};
-  height: ${(props) => props.height};
+  ${(props) => props.width && `width: ${props.width}`};
+  ${(props) => props.height && `height: ${props.height}`};
+  background-color: ${ColorPalette.Main.BG};
 `;
 
 const Scroll: React.FC<IProps> = ({
@@ -59,8 +59,8 @@ const Scroll: React.FC<IProps> = ({
   height = '100%',
   onScroll,
 }) => {
-  const marginProps = CalculateBlock(margin, true);
-  const paddingProps = CalculateBlock(padding, false);
+  const marginProps = CalculateBlock(margin, MPB.Margin);
+  const paddingProps = CalculateBlock(padding, MPB.Padiing);
 
   const styleProps = {
     flex,
@@ -72,7 +72,11 @@ const Scroll: React.FC<IProps> = ({
   };
 
   return (
-    <ScrollV onScroll={onScroll} {...styleProps}>
+    <ScrollV
+      onScroll={onScroll}
+      contentContainerStyle={{ flexGrow: 1 }}
+      {...styleProps}
+    >
       {children}
     </ScrollV>
   );

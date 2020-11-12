@@ -46,7 +46,7 @@ interface IProps extends IComponentProps {
   children?: React.ReactNode;
   flexDirection?: FlexDirection;
   backgroundColor?: ColorType;
-  borderRadius?: number;
+  borderRadius?: [number, number?, number?, number?];
   borderStyle?: string;
   borderColor?: string;
   border?: [number, number?, number?, number?];
@@ -69,7 +69,10 @@ interface IStyleProps {
   borderRightWidth?: number;
   borderBottomWidth?: number;
   borderLeftWidth?: number;
-  borderRadius?: number;
+  borderTopLeftRadius?: number;
+  borderTopRightRadius?: number;
+  borderBottomLeftRadius?: number;
+  borderBottomRightRadius?: number;
   borderStyle?: string;
   borderColor?: string;
   flexDirection?: FlexDirection;
@@ -94,7 +97,10 @@ const V = styled.View<IStyleProps>`
   border-right-width: ${(props) => props.borderRightWidth}px;
   border-bottom-width: ${(props) => props.borderBottomWidth}px;
   border-left-width: ${(props) => props.borderLeftWidth}px;
-  ${(props) => props.borderRadius && `border-radius: ${props.borderRadius}px;`};
+  border-top-left-radius: ${(props) => props.borderTopLeftRadius}px;
+  border-top-right-radius: ${(props) => props.borderTopRightRadius}px;
+  border-bottom-left-radius: ${(props) => props.borderBottomLeftRadius}px;
+  border-bottom-right-radius: ${(props) => props.borderBottomRightRadius}px;
   border-style: ${(props) => props.borderStyle};
   border-color: ${(props) => props.borderColor};
   justify-content: ${(props) => props.justifyContent};
@@ -104,6 +110,8 @@ const V = styled.View<IStyleProps>`
   ${(props) => props.height && `height: ${props.height};`};
   overflow: hidden;
 `;
+
+// ${(props) => props.borderRadius && `border-radius: ${props.borderRadius}px;`};
 
 export const CalculateSort = (sort: Sort): string[] => {
   const horizontalNumber = sort % 10;
@@ -130,7 +138,7 @@ const Block: React.FC<IProps> = ({
   margin = [0],
   padding = [0],
   border = [0],
-  borderRadius,
+  borderRadius = [0],
   borderStyle = BorderStyle.SOLID,
   flexDirection = FlexDirection.COLUMN,
   backgroundColor = ColorPalette.White.TANSPARENT,
@@ -143,6 +151,7 @@ const Block: React.FC<IProps> = ({
   const marginProps = CalculateBlock(margin, MPB.Margin);
   const paddingProps = CalculateBlock(padding, MPB.Padiing);
   const borderProps = CalculateBlock(border, MPB.Border);
+  const borderRadiusProps = CalculateBlock(borderRadius, MPB.BorderRadius);
 
   const [horizontal, vertical] = CalculateSort(sort);
 
@@ -163,7 +172,7 @@ const Block: React.FC<IProps> = ({
     ...marginProps,
     ...paddingProps,
     ...borderProps,
-    borderRadius,
+    ...borderRadiusProps,
     borderStyle,
     borderColor,
     width,

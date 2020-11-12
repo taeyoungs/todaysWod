@@ -10,7 +10,7 @@ interface IProps extends IComponentProps {
   flex?: number;
   flexDirection?: FlexDirection;
   backgroundColor?: ColorType;
-  borderRadius?: number;
+  borderRadius?: [number, number?, number?, number?];
   borderStyle?: string;
   borderColor?: string;
   border?: [number, number?, number?, number?];
@@ -32,7 +32,10 @@ interface IStyleProps {
   borderRightWidth?: number;
   borderBottomWidth?: number;
   borderLeftWidth?: number;
-  borderRadius?: number;
+  borderTopLeftRadius?: number;
+  borderTopRightRadius?: number;
+  borderBottomLeftRadius?: number;
+  borderBottomRightRadius?: number;
   borderStyle?: string;
   borderColor?: string;
   flex?: number;
@@ -59,7 +62,10 @@ const V = styled.View<IStyleProps>`
   border-right-width: ${(props) => props.borderRightWidth}px;
   border-bottom-width: ${(props) => props.borderBottomWidth}px;
   border-left-width: ${(props) => props.borderLeftWidth}px;
-  border-radius: ${(props) => props.borderRadius}px;
+  border-top-left-radius: ${(props) => props.borderTopLeftRadius}px;
+  border-top-right-radius: ${(props) => props.borderTopRightRadius}px;
+  border-bottom-left-radius: ${(props) => props.borderBottomLeftRadius}px;
+  border-bottom-right-radius: ${(props) => props.borderBottomRightRadius}px;
   border-style: ${(props) => props.borderStyle};
   border-color: ${(props) => props.borderColor};
   justify-content: ${(props) => props.justifyContent};
@@ -98,7 +104,7 @@ const Flex: React.FC<IProps> = ({
   padding = [0],
   flex = 1,
   border = [0],
-  borderRadius = 0,
+  borderRadius = [0],
   borderStyle = BorderStyle.SOLID,
   flexDirection = FlexDirection.COLUMN,
   backgroundColor = ColorPalette.Main.BG,
@@ -110,6 +116,7 @@ const Flex: React.FC<IProps> = ({
   const marginProps = CalculateBlock(margin, MPB.Margin);
   const paddingProps = CalculateBlock(padding, MPB.Padiing);
   const borderProps = CalculateBlock(border, MPB.Border);
+  const borderRadiusProps = CalculateBlock(borderRadius, MPB.BorderRadius);
 
   const [horizontal, vertical] = CalculateSort(sort);
 
@@ -126,7 +133,7 @@ const Flex: React.FC<IProps> = ({
     ...marginProps,
     ...paddingProps,
     ...borderProps,
-    borderRadius,
+    ...borderRadiusProps,
     borderStyle,
     borderColor,
     width,

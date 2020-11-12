@@ -50,6 +50,10 @@ const CertificationScreen: React.FC<IProps> = ({ route, navigation }) => {
       setSix={setSix}
       handleSubmit={handleSubmit}
       loading={loading}
+      title="인증번호 입력"
+      subtitle="이메일에 적혀있는 인증번호를 입력해주세요. 
+      인증번호가 맞다면 비밀번호 재설정 화면으로 이동합니다."
+      btnText="확인"
     />
   );
 };

@@ -1,15 +1,14 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import Auth from 'navigations/Auth/index';
-import { RootState } from 'store/rootReducer';
-import { useSelector } from 'react-redux';
+import useUser from '../../hooks/useUser';
 
 interface IProps {
   childern?: React.ReactNode;
 }
 
 const Gate: React.FC<IProps> = () => {
-  // const { isLoggedIn } = useSelector((state: RootState) => state.usersSlice);
+  const { isLoggedIn, boxId } = useUser();
   return (
     <NavigationContainer>
       <Auth />
