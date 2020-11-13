@@ -1,24 +1,21 @@
 import api from 'api';
 import useUser from 'hooks/useUser';
-import { useCallback, useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { logIn } from 'store/usersSlice';
+import useUserActions from 'hooks/useUserActions';
+import { IUserProps } from 'models/common';
+import { useEffect, useState } from 'react';
 
-const useUserRetrieve = () => {
+const useUserRetrieve = (refreshing: boolean): IUserProps => {
   const [info, setInfo] = useState({});
-  const { userId } = useUser();
-
-  // const getUserInfo = useCallback(() => {
-
-  // })
+  const { userId, boxId } = useUser();
+  const { onUpdateRState } = useUserActions();
 
   useEffect(() => {
-    api.user(userId).then((res) => {
+    api.getUser(userId).then((res) => {
       setInfo(res.data);
+      onUpdateRState({ registrationState: res.data.registration_state });
     });
-  }, []);
+  }, [refreshing, boxId]);
 
-  // return useCallback(() => dispatch(logIn(token)), [dispatch, token]);
   return info;
 };
 

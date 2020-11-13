@@ -4,6 +4,7 @@ import {
   StatusBar,
   TouchableOpacity,
 } from 'react-native';
+import Icon from 'components/atoms/Icon';
 import TInput, { KeyboardType } from 'components/atoms/TInput';
 import Img from 'components/atoms/Img';
 import T, { FontFamily, TextAlign } from 'components/atoms/T';
@@ -18,7 +19,6 @@ import PositionBlock, { Position } from 'components/molecules/PositionBlock';
 import KeyboardDismiss from 'components/molecules/KeyboardDismiss';
 import Logo from 'components/organisms/Logo';
 import InputBox from 'components/organisms/InputBox';
-import Icon from 'components/atoms/Icon';
 import { ColorPalette } from 'models/color';
 
 interface IProps {

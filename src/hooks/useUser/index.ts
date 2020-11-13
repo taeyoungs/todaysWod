@@ -6,9 +6,11 @@ interface IState {
   token: string | null;
   userId: string | null;
   boxId: string | null;
+  registrationState: string;
 }
 
 export default function useUser(): IState {
   const user = useSelector((state: RootState) => state.usersSlice);
+  // console.log(user);
   return user;
 }

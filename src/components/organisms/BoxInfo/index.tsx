@@ -6,19 +6,20 @@ import T, { FontFamily, TextAlign } from 'components/atoms/T';
 import Flex from 'components/molecules/Flex';
 import Block, { FlexDirection, Sort } from 'components/molecules/Block';
 import { ColorPalette } from 'models/color';
+import { IUserProps } from 'models/common';
 
 interface IProps {
-  name: string;
-  address: string;
+  name?: string;
+  address?: string;
   phone?: string;
   time?: string;
   insta?: string;
   facebook?: string;
+  box: IUserProps['box'];
 }
 
 const BoxInfo: React.FC<IProps> = ({
-  name,
-  address,
+  box,
   phone = '02-516-6744',
   time = '06:30 ~ 23:00',
   insta = '@cfgn_nh',
@@ -67,7 +68,7 @@ const BoxInfo: React.FC<IProps> = ({
               size={20}
               fontFamily={FontFamily.NANUM_BOLD}
             >
-              {name}
+              {box?.name}
             </T>
           </Block>
         </Block>
@@ -99,7 +100,7 @@ const BoxInfo: React.FC<IProps> = ({
             color={ColorPalette.Main.BG_DARK}
             fontFamily={FontFamily.NANUM_BOLD}
           >
-            {address}
+            {box?.address}
           </T>
         </Block>
         <Block

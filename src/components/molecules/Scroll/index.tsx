@@ -1,6 +1,11 @@
 import React from 'react';
 import styled from 'styled-components/native';
-import { NativeScrollEvent, NativeSyntheticEvent } from 'react-native';
+import {
+  NativeScrollEvent,
+  NativeSyntheticEvent,
+  RefreshControl,
+  RefreshControlProps,
+} from 'react-native';
 import { CalculateBlock, MPB } from 'utils';
 import { IComponentProps } from 'models/common';
 import { ColorPalette, ColorType } from 'models/color';
@@ -15,6 +20,8 @@ interface IProps extends IComponentProps {
   width?: string;
   height?: string;
   onScroll?: (event: NativeSyntheticEvent<NativeScrollEvent>) => void;
+  refreshing?: boolean;
+  onRefresh?(): void;
 }
 
 interface IStyleProps {
@@ -58,6 +65,8 @@ const Scroll: React.FC<IProps> = ({
   width = '100%',
   height = '100%',
   onScroll,
+  refreshing = false,
+  onRefresh,
 }) => {
   const marginProps = CalculateBlock(margin, MPB.Margin);
   const paddingProps = CalculateBlock(padding, MPB.Padiing);
@@ -75,6 +84,13 @@ const Scroll: React.FC<IProps> = ({
     <ScrollV
       onScroll={onScroll}
       contentContainerStyle={{ flexGrow: 1 }}
+      refreshControl={
+        <RefreshControl
+          refreshing={refreshing}
+          onRefresh={onRefresh}
+          tintColor="white"
+        />
+      }
       {...styleProps}
     >
       {children}

@@ -1,19 +1,16 @@
 import React, { useState } from 'react';
-import LogIn from 'components/templates/Auth/LogIn';
 import { GestureResponderEvent } from 'react-native';
-import { LogInScreenProps } from 'models/types';
+import LogIn from 'components/templates/Auth/LogIn';
 import { createOneButtonAlert, validateEmail } from 'utils';
-import useUser from 'hooks/useUser';
-import BoxScreen from '../BoxScreen';
-import api from 'api/index';
 import useUserActions from 'hooks/useUserActions';
+import api from 'api/index';
+import { LogInScreenProps } from 'models/types';
 
 interface IProps {
   navigation: LogInScreenProps['navigation'];
 }
 
 const LogInScreen: React.FC<IProps> = ({ navigation }) => {
-  const { isLoggedIn } = useUser();
   const { onLogIn } = useUserActions();
   const [email, setEmail] = useState('lolollg@naver.com');
   const [pw, setPw] = useState('xodud9411!');
@@ -45,21 +42,15 @@ const LogInScreen: React.FC<IProps> = ({ navigation }) => {
   const goSignUp = () => navigation.navigate('SignUpScreen');
   const goPwChange = () => navigation.navigate('PwScreen');
   return (
-    <>
-      {!isLoggedIn ? (
-        <LogIn
-          email={email}
-          setEmail={setEmail}
-          pw={pw}
-          onPwChange={onPwChange}
-          onPress={onPress}
-          goSignUp={goSignUp}
-          goPwChange={goPwChange}
-        />
-      ) : (
-        <BoxScreen />
-      )}
-    </>
+    <LogIn
+      email={email}
+      setEmail={setEmail}
+      pw={pw}
+      onPwChange={onPwChange}
+      onPress={onPress}
+      goSignUp={goSignUp}
+      goPwChange={goPwChange}
+    />
   );
 };
 

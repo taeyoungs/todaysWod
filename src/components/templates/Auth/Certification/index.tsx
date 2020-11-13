@@ -6,7 +6,7 @@ import Flex from 'components/molecules/Flex';
 import KeyboardDismiss from 'components/molecules/KeyboardDismiss';
 import NInputs from 'components/organisms/NInputs';
 import { ColorPalette } from 'models/color';
-import { ActivityIndicator } from 'react-native';
+import { ActivityIndicator, StatusBar } from 'react-native';
 // import NInput from 'components/organisms/NInput';
 
 interface IProps {
@@ -50,6 +50,7 @@ const Certification: React.FC<IProps> = ({
 }) => {
   return (
     <KeyboardDismiss>
+      <StatusBar barStyle="light-content" />
       <Flex>
         <Flex sort={Sort.CENTER_BOTTOM}>
           <Block width={'80%'} margin={[0, 0, 10, 0]}>

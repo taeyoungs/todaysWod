@@ -1,9 +1,17 @@
 import React, { useState } from 'react';
 import Certification from 'components/templates/Auth/Certification';
+import useUserActions from 'hooks/useUserActions';
+import useUser from 'hooks/useUser';
+import { BoxEnrollScreenProps } from 'models/types';
+import api from 'api';
 
-interface IProps {}
+interface IProps {
+  navigation: BoxEnrollScreenProps['navigation'];
+}
 
-const BoxErollScreen: React.FC<IProps> = () => {
+const BoxErollScreen: React.FC<IProps> = ({ navigation }) => {
+  const { onEnrollBox } = useUserActions();
+  const { token } = useUser();
   const [loading, setLoading] = useState(false);
   const [one, setOne] = useState('');
   const [two, setTwo] = useState('');
@@ -11,8 +19,22 @@ const BoxErollScreen: React.FC<IProps> = () => {
   const [four, setFour] = useState('');
   const [five, setFive] = useState('');
   const [six, setSix] = useState('');
-  const handleSubmit = () => console.log('클릭');
-  // console.log(route);
+  const handleSubmit = async () => {
+    const form = {
+      certification_code: `${one}${two}${three}${four}${five}${six}`,
+    };
+    setLoading(true);
+    try {
+      const results = await api.boxAuthentication(form, token);
+      // console.log(results.data);
+      onEnrollBox(results.data);
+    } catch (error) {
+      console.warn(error);
+    } finally {
+      setLoading(false);
+      navigation.navigate('BoxScreen');
+    }
+  };
   return (
     <Certification
       one={one}

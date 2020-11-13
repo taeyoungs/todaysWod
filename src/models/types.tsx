@@ -1,7 +1,6 @@
 import { StackScreenProps } from '@react-navigation/stack';
 
-export type RootStackParamList = {
-  Welcome: undefined;
+export type AuthStackParamList = {
   LogInScreen: undefined;
   SignUpScreen: undefined;
   PwScreen: undefined;
@@ -11,22 +10,34 @@ export type RootStackParamList = {
   BoxEnrollScreen: undefined;
 };
 
-export type WelcomeProps = StackScreenProps<RootStackParamList, 'Welcome'>;
+export type BoxStackParamList = {
+  BoxScreen: undefined;
+  BoxEnrollScreen: undefined;
+};
+
+export type MainStackParamList = {
+  Home: undefined;
+};
+
 export type LogInScreenProps = StackScreenProps<
-  RootStackParamList,
+  AuthStackParamList,
   'LogInScreen'
 >;
 export type SignUpScreenProps = StackScreenProps<
-  RootStackParamList,
+  AuthStackParamList,
   'SignUpScreen'
 >;
-export type PwScreenProps = StackScreenProps<RootStackParamList, 'PwScreen'>;
+export type PwScreenProps = StackScreenProps<AuthStackParamList, 'PwScreen'>;
 export type CertificationScreenProps = StackScreenProps<
-  RootStackParamList,
+  AuthStackParamList,
   'CertificationScreen'
 >;
 export type PwResetScreenProps = StackScreenProps<
-  RootStackParamList,
+  AuthStackParamList,
   'PwResetScreen'
 >;
-export type BoxScreenProps = StackScreenProps<RootStackParamList, 'BoxScreen'>;
+export type BoxScreenProps = StackScreenProps<BoxStackParamList, 'BoxScreen'>;
+export type BoxEnrollScreenProps = StackScreenProps<
+  BoxStackParamList,
+  'BoxEnrollScreen'
+>;
