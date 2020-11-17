@@ -12,17 +12,12 @@ import useUserRetrieve from 'hooks/useUserRetrieve';
 import useUser from 'hooks/useUser';
 import { BoxScreenProps } from 'models/types';
 import { ColorPalette } from 'models/color';
+import { wait } from 'utils';
 
 interface IProps {
   navigation: BoxScreenProps['navigation'];
   route: BoxScreenProps['route'];
 }
-
-const wait = (timeout: number) => {
-  return new Promise((resolve) => {
-    setTimeout(resolve, timeout);
-  });
-};
 
 const BoxScreen: React.FC<IProps> = ({ navigation }) => {
   const [refreshing, setRefreshing] = useState(false);

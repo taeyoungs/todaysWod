@@ -1,3 +1,4 @@
+import { IWodProps } from 'models/common';
 import { Alert } from 'react-native';
 
 export function CalculateBox(
@@ -110,4 +111,75 @@ export const createOneButtonAlert = (errorMsg: string): void => {
     [{ text: '확인', onPress: () => null }],
     { cancelable: false }
   );
+};
+
+export const validateEmpty = (
+  one: string,
+  two: string,
+  three: string,
+  four: string,
+  five: string,
+  six: string
+): boolean => {
+  if (
+    one === '' ||
+    two === '' ||
+    three === '' ||
+    four === '' ||
+    five === '' ||
+    six === ''
+  ) {
+    return false;
+  }
+  return true;
+};
+
+export const checkTodayIdx = (wods: Array<IWodProps>): number => {
+  const date: Date = new Date(Date.now());
+  const fullDate = `${date.getFullYear()}-${
+    date.getMonth() + 1
+  }-${date.getDate()}`;
+  // wods.forEach((wod, index) => {
+  //   console.log(wod.date);
+  //   console.log(wod.date === fullDate);
+  // });
+  return wods.findIndex((wod) => wod.date === fullDate);
+};
+
+export const wait = (timeout: number) => {
+  return new Promise((resolve) => {
+    setTimeout(resolve, timeout);
+  });
+};
+
+export const dayOfTheWeek = (d: string): string => {
+  const date = new Date(d);
+  const day = date.getDay();
+  let result = '';
+  switch (day) {
+    case 0:
+      result = '일';
+      break;
+    case 1:
+      result = '월';
+      break;
+    case 2:
+      result = '화';
+      break;
+    case 3:
+      result = '수';
+      break;
+    case 4:
+      result = '목';
+      break;
+    case 5:
+      result = '금';
+      break;
+    case 6:
+      result = '토';
+      break;
+    default:
+      break;
+  }
+  return result;
 };

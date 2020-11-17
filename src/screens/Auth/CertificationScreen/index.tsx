@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Certification from 'components/templates/Auth/Certification';
 import { CertificationScreenProps } from 'models/types';
+import { createOneButtonAlert, validateEmpty } from 'utils';
 import api from 'api';
 
 interface IProps {
@@ -17,6 +18,10 @@ const CertificationScreen: React.FC<IProps> = ({ route, navigation }) => {
   const [five, setFive] = useState('');
   const [six, setSix] = useState('');
   const handleSubmit = async () => {
+    if (!validateEmpty(one, two, three, four, five, six)) {
+      createOneButtonAlert('6자리 모두 입력해주세요.');
+      return;
+    }
     try {
       const form = {
         certification_number: `${one}${two}${three}${four}${five}${six}`,

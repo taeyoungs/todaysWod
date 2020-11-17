@@ -24,3 +24,16 @@ export interface IUserProps {
   registration_state?: string;
   username?: string;
 }
+
+export interface IWodProps {
+  id: number;
+  title: Record<string, string>;
+  content: string;
+  comment?: string;
+  time?: number | null;
+  rounds?: number | null;
+  rest_sec?: number | null;
+  round_sec?: number | null;
+  box: IBoxProps;
+  date: string;
+}

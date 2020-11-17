@@ -4,6 +4,7 @@ import useUserActions from 'hooks/useUserActions';
 import useUser from 'hooks/useUser';
 import { BoxEnrollScreenProps } from 'models/types';
 import api from 'api';
+import { createOneButtonAlert, validateEmpty } from 'utils';
 
 interface IProps {
   navigation: BoxEnrollScreenProps['navigation'];
@@ -20,6 +21,10 @@ const BoxErollScreen: React.FC<IProps> = ({ navigation }) => {
   const [five, setFive] = useState('');
   const [six, setSix] = useState('');
   const handleSubmit = async () => {
+    if (!validateEmpty(one, two, three, four, five, six)) {
+      createOneButtonAlert('6자리 모두 입력해주세요.');
+      return;
+    }
     const form = {
       certification_code: `${one}${two}${three}${four}${five}${six}`,
     };

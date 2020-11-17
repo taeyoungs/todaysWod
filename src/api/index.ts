@@ -10,7 +10,7 @@ enum Method {
 const callApi = async (
   method: Method,
   path: string,
-  data?: Record<string, string>,
+  data?: Record<string, string> | null,
   jwt?: string | null,
   params?: Record<string, string>
 ) => {
@@ -18,8 +18,8 @@ const callApi = async (
     'Authorization': jwt != null ? `Bearer ${jwt}` : null,
     'Content-Type': 'application/json',
   };
-  // const baseUrl = 'http://192.168.0.25:8000/api/v1';
-  const baseUrl = 'http://172.30.1.40:8000/api/v1';
+  const baseUrl = 'http://192.168.0.25:8000/api/v1';
+  // const baseUrl = 'http://172.30.1.47:8000/api/v1';
   const fullUrl = `${baseUrl}${path}`;
 
   if (method === 'get' || method === 'delete') {
@@ -47,6 +47,8 @@ const api = {
     token: string | null
   ): Promise<AxiosResponse<any>> =>
     callApi(Method.POST, `/users/box_authentication/`, form, token),
+  getWods: (token: string | null): Promise<AxiosResponse<any>> =>
+    callApi(Method.GET, `/wods/`, null, token),
 };
 
 export default api;

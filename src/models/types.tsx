@@ -1,4 +1,6 @@
-import { StackScreenProps } from '@react-navigation/stack';
+import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
+import { CompositeNavigationProp } from '@react-navigation/native';
+import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack';
 
 export type AuthStackParamList = {
   LogInScreen: undefined;
@@ -16,8 +18,20 @@ export type BoxStackParamList = {
 };
 
 export type MainStackParamList = {
-  Home: undefined;
+  Tabs: undefined;
 };
+
+export type MainTabsParamList = {
+  Home: undefined;
+  Reservation: undefined;
+  Alerts: undefined;
+  Profile: undefined;
+};
+
+export type CombineNavigationProps = CompositeNavigationProp<
+  BottomTabNavigationProp<MainTabsParamList>,
+  StackNavigationProp<MainStackParamList>
+>;
 
 export type LogInScreenProps = StackScreenProps<
   AuthStackParamList,

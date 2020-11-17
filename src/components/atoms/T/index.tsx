@@ -37,6 +37,7 @@ interface IProps extends IComponentProps {
   transform?: TextTransform;
   decoration?: TextDecoration;
   fontFamily?: FontFamily;
+  lineHeight?: number;
 }
 
 interface IStyleProps {
@@ -47,6 +48,7 @@ interface IStyleProps {
   margin?: string;
   decoration?: string;
   fontFamily?: string;
+  lineHeight?: number;
 }
 
 const Text = styled.Text<IStyleProps>`
@@ -57,6 +59,7 @@ const Text = styled.Text<IStyleProps>`
   margin: ${(props) => props.margin};
   text-decoration: ${(props) => props.decoration};
   font-family: ${(props) => props.fontFamily};
+  ${(props) => props.lineHeight && `line-height: ${props.lineHeight}px`};
 `;
 
 const T: React.FC<IProps> = ({
@@ -69,6 +72,7 @@ const T: React.FC<IProps> = ({
   transform = TextTransform.NONE,
   decoration = TextDecoration.NONE,
   fontFamily = FontFamily.NANUM_REGULAR,
+  lineHeight,
 }) => {
   // const classProps = className;
   const styleProps = {
@@ -79,6 +83,7 @@ const T: React.FC<IProps> = ({
     margin: CalculateBox(margin),
     decoration,
     fontFamily,
+    lineHeight,
   };
 
   return <Text {...styleProps}>{children}</Text>;
