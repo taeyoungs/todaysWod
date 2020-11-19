@@ -1,15 +1,15 @@
+import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
-import { MainStackParamList, MainTabsParamList } from 'models/types';
-import React from 'react';
-import Home from 'screens/Main/Home';
+import Icon from 'components/atoms/Icon';
+import BackButton from 'components/organisms/BackButton';
 import Reservation from 'screens/Main/Reservation';
 import Alerts from 'screens/Main/Alerts';
 import Profile from 'screens/Main/Profile';
-import T from 'components/atoms/T';
+import Home from 'screens/Main/Home';
+import Membership from 'screens/Main/Membership';
 import { ColorPalette } from 'models/color';
-import Block from 'components/molecules/Block';
-import Icon from 'components/atoms/Icon';
+import { MainStackParamList, MainTabsParamList } from 'models/types';
 
 const Tab = createBottomTabNavigator<MainTabsParamList>();
 const Main = createStackNavigator<MainStackParamList>();
@@ -17,6 +17,9 @@ const Main = createStackNavigator<MainStackParamList>();
 const Tabs = () => {
   return (
     <Tab.Navigator
+      tabBarOptions={{
+        style: { borderTopColor: ColorPalette.Main.BG_DARK },
+      }}
       screenOptions={({ route }) => ({
         tabBarLabel: ({ focused }) => {
           // if (route.name === 'Home' && focused) {
@@ -48,7 +51,7 @@ const Tabs = () => {
             iconName = 'contact';
             size = 20;
           }
-          color = focused ? ColorPalette.Main.BG : ColorPalette.Gray.SLATE;
+          color = focused ? ColorPalette.Main.BG : ColorPalette.Gray.SILVER;
 
           return <Icon name={iconName} size={size} color={color} />;
         },
@@ -62,13 +65,18 @@ const Tabs = () => {
   );
 };
 
-export default () => {
+export default (): JSX.Element => {
   return (
-    <Main.Navigator>
+    <Main.Navigator mode="modal">
       <Main.Screen
         component={Tabs}
         name="Tabs"
         options={{ header: () => null }}
+      />
+      <Main.Screen
+        component={Membership}
+        name="Membership"
+        options={{ header: () => <BackButton isWhite={true} /> }}
       />
     </Main.Navigator>
   );

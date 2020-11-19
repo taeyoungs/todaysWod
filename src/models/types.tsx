@@ -19,6 +19,7 @@ export type BoxStackParamList = {
 
 export type MainStackParamList = {
   Tabs: undefined;
+  Membership: undefined;
 };
 
 export type MainTabsParamList = {
@@ -55,3 +56,5 @@ export type BoxEnrollScreenProps = StackScreenProps<
   BoxStackParamList,
   'BoxEnrollScreen'
 >;
+
+export type HomeScreenProps = StackScreenProps<MainStackParamList>;

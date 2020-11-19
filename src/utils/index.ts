@@ -183,3 +183,32 @@ export const dayOfTheWeek = (d: string): string => {
   }
   return result;
 };
+
+export const formatTime = (time: string): string => {
+  const sliceTime = time.split(':');
+
+  if (parseInt(sliceTime[0]) > 12) {
+    const t = parseInt(sliceTime[0]) - 12;
+    if (t.toString().length === 1) {
+      return `오후 0${t}:${sliceTime[1]}`;
+    } else {
+      return `오후 ${sliceTime[0]}:${sliceTime[1]}`;
+    }
+  } else {
+    return `오전 ${sliceTime[0]}:${sliceTime[1]}`;
+  }
+};
+
+export const isPassDate = (date: string): boolean => {
+  const d = new Date(date);
+  const now = new Date();
+  const exceptTime = new Date(
+    `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()}`
+  );
+
+  return d >= exceptTime;
+};
+
+export function daysInMonth(iMonth: number, iYear: number): number {
+  return 32 - new Date(iYear, iMonth, 32).getDate();
+}

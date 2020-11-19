@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components/native';
 import { IComponentProps } from 'models/common';
-import { CalculateBlock, MPB } from 'utils';
 import { ColorPalette, ColorType } from 'models/color';
+import { CalculateBlock, MPB } from 'utils';
 
 export enum FlexDirection {
   ROW = 'row',

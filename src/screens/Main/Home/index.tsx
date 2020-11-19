@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import Icon from 'components/atoms/Icon';
 import T from 'components/atoms/T';
+import Btn from 'components/atoms/Button';
 import Scroll from 'components/molecules/Scroll';
 import Block, { FlexDirection } from 'components/molecules/Block';
 import DayButton from 'components/organisms/DayButton';
@@ -15,12 +16,15 @@ import WodList from 'components/organisms/WodList';
 import useWods from 'hooks/useWods';
 import { ColorPalette } from 'models/color';
 import { checkTodayIdx, wait } from 'utils';
+import { HomeScreenProps } from 'models/types';
 
 const { width } = Dimensions.get('screen');
 
-interface IProps {}
+interface IProps {
+  navigation: HomeScreenProps['navigation'];
+}
 
-const Home: React.FC<IProps> = () => {
+const Home: React.FC<IProps> = ({ navigation }) => {
   const [refreshing, setRefreshing] = useState(false);
   const [today, setToday] = useState(new Date(Date.now()).getDate());
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -133,18 +137,20 @@ const Home: React.FC<IProps> = () => {
         {wods && wods.map((wod, index) => <WodList wod={wod} key={index} />)}
       </ScrollView>
       <Block height={'120px'} padding={[20]} margin={[0, 0, 20, 0]}>
-        <Block
-          backgroundColor={ColorPalette.White.WHITE}
-          width={'100%'}
-          height={'100%'}
-          borderRadius={[10]}
-          flexDirection={FlexDirection.ROW}
-        >
-          <T color={ColorPalette.Main.BG_DARK} margin={[10]}>
-            회원권 정보
-          </T>
-          <Icon name="barcode" size={26} color={ColorPalette.Main.BG_DARK} />
-        </Block>
+        <Btn onPress={() => navigation.navigate('Membership')}>
+          <Block
+            backgroundColor={ColorPalette.White.WHITE}
+            width={'100%'}
+            height={'100%'}
+            borderRadius={[10]}
+            flexDirection={FlexDirection.ROW}
+          >
+            <T color={ColorPalette.Main.BG_DARK} margin={[10]}>
+              회원권 정보
+            </T>
+            <Icon name="barcode" size={26} color={ColorPalette.Main.BG_DARK} />
+          </Block>
+        </Btn>
       </Block>
     </Scroll>
   );
