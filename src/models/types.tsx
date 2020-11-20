@@ -20,6 +20,8 @@ export type BoxStackParamList = {
 export type MainStackParamList = {
   Tabs: undefined;
   Membership: undefined;
+  Schedule: { date: string };
+  Wod: { date: string };
 };
 
 export type MainTabsParamList = {
@@ -58,3 +60,10 @@ export type BoxEnrollScreenProps = StackScreenProps<
 >;
 
 export type HomeScreenProps = StackScreenProps<MainStackParamList>;
+
+export type ScheduleScreenProps = StackScreenProps<
+  MainStackParamList,
+  'Schedule'
+>;
+
+export type WodScreenProps = StackScreenProps<MainStackParamList, 'Wod'>;

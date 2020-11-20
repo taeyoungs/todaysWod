@@ -22,6 +22,7 @@ interface IProps extends IComponentProps {
   onScroll?: (event: NativeSyntheticEvent<NativeScrollEvent>) => void;
   refreshing?: boolean;
   onRefresh?(): void;
+  refreshColor?: string;
 }
 
 interface IStyleProps {
@@ -39,6 +40,7 @@ interface IStyleProps {
   alignItems?: string;
   width?: string;
   height?: string;
+  backgroundColor?: string;
 }
 
 const ScrollV = styled.ScrollView<IStyleProps>`
@@ -53,7 +55,7 @@ const ScrollV = styled.ScrollView<IStyleProps>`
   padding-left: ${(props) => props.paddingLeft}px;
   ${(props) => props.width && `width: ${props.width}`};
   ${(props) => props.height && `height: ${props.height}`};
-  background-color: ${ColorPalette.Main.BG};
+  background-color: ${(props) => props.backgroundColor};
 `;
 
 const Scroll: React.FC<IProps> = ({
@@ -67,6 +69,8 @@ const Scroll: React.FC<IProps> = ({
   onScroll,
   refreshing = false,
   onRefresh,
+  backgroundColor = ColorPalette.Main.BG,
+  refreshColor = 'white',
 }) => {
   const marginProps = CalculateBlock(margin, MPB.Margin);
   const paddingProps = CalculateBlock(padding, MPB.Padiing);
@@ -78,6 +82,7 @@ const Scroll: React.FC<IProps> = ({
     ...paddingProps,
     width,
     height,
+    backgroundColor,
   };
 
   return (
@@ -88,7 +93,7 @@ const Scroll: React.FC<IProps> = ({
         <RefreshControl
           refreshing={refreshing}
           onRefresh={onRefresh}
-          tintColor="white"
+          tintColor={refreshColor}
         />
       }
       {...styleProps}

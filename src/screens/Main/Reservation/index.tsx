@@ -3,38 +3,40 @@ import { Dimensions } from 'react-native';
 import { Calendar, LocaleConfig } from 'react-native-calendars';
 import T, { FontFamily } from 'components/atoms/T';
 import Flex from 'components/molecules/Flex';
+import Scroll from 'components/molecules/Scroll';
 import Block, { FlexDirection, Sort } from 'components/molecules/Block';
 import Ticket from 'components/organisms/Ticket';
 import useMonthRecords from 'hooks/useMonthRecords';
+import useExistWods from 'hooks/useExistWods';
 import { ColorPalette } from 'models/color';
 import { lconfig } from 'models/cal';
-import Scroll from 'components/molecules/Scroll';
+import { HomeScreenProps } from 'models/types';
 import { daysInMonth, isPassDate } from 'utils';
-import useExistWods from 'hooks/useExistWods';
 
 LocaleConfig.locales['kr'] = lconfig;
 LocaleConfig.defaultLocale = 'kr';
 
 const { width } = Dimensions.get('screen');
 
-interface IProps {}
+interface IProps {
+  navigation: HomeScreenProps['navigation'];
+}
 
 interface IOptionProps {
   text: string;
   color: string;
 }
 
-const Reservation: React.FC<IProps> = () => {
+const Reservation: React.FC<IProps> = ({ navigation }) => {
   const [year, setYear] = useState(new Date().getFullYear());
   const [month, setMonth] = useState(new Date().getMonth() + 1);
-  const records = useMonthRecords();
-  const existWods = useExistWods();
+  const records = useMonthRecords(year, month);
+  const existWods = useExistWods(year, month);
   // console.log(existWods);
   // console.log(records);
 
   // ToDo1: ScrollView로 변형 (V)
   // ToDo2: Dot, disabled 처리 (V)
-  // ToDo3: markList useCallback 처리
 
   const markList = () => {
     const objRecords: Record<string, Record<string, string | boolean>> = {};
@@ -99,6 +101,14 @@ const Reservation: React.FC<IProps> = () => {
             markingType="simple"
             markedDates={markList()}
             hideExtraDays={true}
+            onDayPress={(day) => {
+              navigation.navigate('Schedule', { date: `${day.dateString}` });
+            }}
+            onMonthChange={(month) => {
+              console.log('month changed', month);
+              setYear(month.year);
+              setMonth(month.month);
+            }}
             theme={{
               arrowColor: ColorPalette.Main.BG_DARK,
               dayTextColor: ColorPalette.Main.BG_DARK,

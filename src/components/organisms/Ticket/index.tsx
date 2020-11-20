@@ -40,7 +40,7 @@ const Ticket: React.FC<IProps> = ({ date, startTime, endTime, name }) => {
         </Block>
         <Block sort={Sort.LEFT_CENTER} padding={[0, 20]}>
           <T margin={[0, 0, 5, 0]}>
-            {formatTime(startTime)} ~ {formatTime(endTime)}
+            {formatTime(startTime)} - {formatTime(endTime)}
           </T>
           <T size={12} color={ColorPalette.Gray.GRAY}>
             Coach {name}

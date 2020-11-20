@@ -35,6 +35,7 @@ const Shadow: React.FC<IProps> = ({
         shadowRadius,
         elevation,
         marginBottom: 10,
+        alignItems: 'center',
       }}
     >
       {children}

@@ -19,7 +19,7 @@ const callApi = async (
     'Content-Type': 'application/json',
   };
   // const baseUrl = 'http://192.168.0.25:8000/api/v1';
-  const baseUrl = 'http://172.30.1.51:8000/api/v1';
+  const baseUrl = 'http://172.30.1.46:8000/api/v1';
   const fullUrl = `${baseUrl}${path}`;
 
   if (method === 'get' || method === 'delete') {
@@ -52,13 +52,26 @@ const api = {
     param?: Record<string, string>
   ): Promise<AxiosResponse<any>> =>
     callApi(Method.GET, `/wods/`, null, token, param),
+  getWod: (
+    token: string | null,
+    param?: Record<string, string>
+  ): Promise<AxiosResponse<any>> =>
+    callApi(Method.GET, `/wods/date/`, null, token, param),
   getMembership: (
     token: string | null,
     id: string | null
   ): Promise<AxiosResponse<any>> =>
     callApi(Method.GET, `/memberships/${id}/`, null, token),
-  getMonthRecords: (token: string | null): Promise<AxiosResponse<any>> =>
-    callApi(Method.GET, `/reservations/`, null, token),
+  getMonthRecords: (
+    token: string | null,
+    param?: Record<string, string>
+  ): Promise<AxiosResponse<any>> =>
+    callApi(Method.GET, `/reservations/`, null, token, param),
+  getSchedules: (
+    token: string | null,
+    param: Record<string, string>
+  ): Promise<AxiosResponse<any>> =>
+    callApi(Method.GET, `/schedules/`, null, token, param),
 };
 
 export default api;

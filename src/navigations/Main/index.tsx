@@ -10,6 +10,8 @@ import Home from 'screens/Main/Home';
 import Membership from 'screens/Main/Membership';
 import { ColorPalette } from 'models/color';
 import { MainStackParamList, MainTabsParamList } from 'models/types';
+import Schedule from 'screens/Main/Schedule';
+import Wod from 'screens/Main/Wod';
 
 const Tab = createBottomTabNavigator<MainTabsParamList>();
 const Main = createStackNavigator<MainStackParamList>();
@@ -77,6 +79,16 @@ export default (): JSX.Element => {
         component={Membership}
         name="Membership"
         options={{ header: () => <BackButton isWhite={true} /> }}
+      />
+      <Main.Screen
+        component={Schedule}
+        name="Schedule"
+        options={{ header: () => null }}
+      />
+      <Main.Screen
+        component={Wod}
+        name="Wod"
+        options={{ header: () => null }}
       />
     </Main.Navigator>
   );
