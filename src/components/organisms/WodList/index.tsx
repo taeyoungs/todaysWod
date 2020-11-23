@@ -76,11 +76,13 @@ const WodList: React.FC<IProps> = ({ wod }) => {
           align={TextAlign.LEFT}
           lineHeight={22}
         >
-          {wod.content.replaceAll('\r\n\r\n', '\r\n')}
+          {wod.content}
         </T>
       </Block>
     </Block>
   );
 };
+
+// .replaceAll('\r\n\r\n', '\r\n')
 
 export default WodList;

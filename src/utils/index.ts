@@ -113,6 +113,27 @@ export const createOneButtonAlert = (errorMsg: string): void => {
   );
 };
 
+export const createTwoButtonAlert = (
+  date: string,
+  startTime: string,
+  endTime: string,
+  onP: () => void
+): void => {
+  return Alert.alert(
+    '정말 취소하시겠습니까?',
+    `${date} ${startTime} - ${endTime}`,
+    [
+      {
+        text: 'Cancel',
+        onPress: () => console.log('Cancel Pressed'),
+        style: 'cancel',
+      },
+      { text: 'OK', onPress: onP },
+    ],
+    { cancelable: false }
+  );
+};
+
 export const validateEmpty = (
   one: string,
   two: string,

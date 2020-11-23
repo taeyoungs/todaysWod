@@ -4,12 +4,13 @@ import Icon from 'components/atoms/Icon';
 import Btn from 'components/atoms/Button';
 import Flex from 'components/molecules/Flex';
 import Block, { FlexDirection, Sort } from 'components/molecules/Block';
-import ScheduleItem from 'components/organisms/ScheduleItem';
 import Scroll from 'components/molecules/Scroll';
+import ScheduleItem from 'components/organisms/ScheduleItem';
 import useSchedules from 'hooks/useSchedules';
 import { ColorPalette } from 'models/color';
 import { ScheduleScreenProps } from 'models/types';
-import { isPassDate } from 'utils';
+import { IScheduleProps } from 'models/common';
+import { wait } from 'utils';
 
 interface IProps {
   navigation: ScheduleScreenProps['navigation'];
@@ -17,9 +18,13 @@ interface IProps {
 }
 
 const Schedule: React.FC<IProps> = ({ navigation, route }) => {
-  const schedules = useSchedules(route.params.date);
+  const [refreshing, setRefreshing] = useState(false);
+  const schedules = useSchedules(route.params.date, refreshing);
 
-  // console.log(schedules);
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    wait(1000).then(() => setRefreshing(false));
+  }, []);
   useLayoutEffect(() => {
     navigation.setOptions({
       cardStyle: { backgroundColor: 'transparent' },
@@ -27,6 +32,8 @@ const Schedule: React.FC<IProps> = ({ navigation, route }) => {
     });
   }, []);
   const d = route.params.date.split('-');
+  const goCheck = (date: string, schedule: IScheduleProps) =>
+    navigation.navigate('Check', { date, schedule });
   return (
     <>
       <Flex
@@ -51,6 +58,8 @@ const Schedule: React.FC<IProps> = ({ navigation, route }) => {
           <Scroll
             backgroundColor={ColorPalette.White.SMOKE}
             refreshColor={ColorPalette.Main.BG}
+            refreshing={refreshing}
+            onRefresh={onRefresh}
           >
             <Block
               height={'50px'}
@@ -82,7 +91,8 @@ const Schedule: React.FC<IProps> = ({ navigation, route }) => {
                 <ScheduleItem
                   schedule={schedule}
                   key={schedule.id}
-                  isPass={isPassDate(route.params.date)}
+                  date={route.params.date}
+                  goCheck={goCheck}
                 />
               ))}
           </Scroll>

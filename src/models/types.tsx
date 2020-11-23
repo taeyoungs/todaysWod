@@ -1,6 +1,10 @@
-import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
+import {
+  BottomTabNavigationProp,
+  BottomTabScreenProps,
+} from '@react-navigation/bottom-tabs';
 import { CompositeNavigationProp } from '@react-navigation/native';
 import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack';
+import { IScheduleProps } from './common';
 
 export type AuthStackParamList = {
   LogInScreen: undefined;
@@ -22,6 +26,7 @@ export type MainStackParamList = {
   Membership: undefined;
   Schedule: { date: string };
   Wod: { date: string };
+  Check: { date: string; schedule: IScheduleProps };
 };
 
 export type MainTabsParamList = {
@@ -67,3 +72,9 @@ export type ScheduleScreenProps = StackScreenProps<
 >;
 
 export type WodScreenProps = StackScreenProps<MainStackParamList, 'Wod'>;
+export type CheckScreenProps = StackScreenProps<MainStackParamList, 'Check'>;
+
+export type ReservationTabScreenProps = BottomTabScreenProps<
+  MainTabsParamList,
+  'Reservation'
+>;

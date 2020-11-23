@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Dimensions } from 'react-native';
 import { Calendar, LocaleConfig } from 'react-native-calendars';
 import T, { FontFamily } from 'components/atoms/T';
@@ -8,10 +8,12 @@ import Block, { FlexDirection, Sort } from 'components/molecules/Block';
 import Ticket from 'components/organisms/Ticket';
 import useMonthRecords from 'hooks/useMonthRecords';
 import useExistWods from 'hooks/useExistWods';
+import useReservationActions from 'hooks/useReservationActions';
+import useReservations from 'hooks/useReservations';
 import { ColorPalette } from 'models/color';
 import { lconfig } from 'models/cal';
 import { HomeScreenProps } from 'models/types';
-import { daysInMonth, isPassDate } from 'utils';
+import { daysInMonth, isPassDate, wait } from 'utils';
 
 LocaleConfig.locales['kr'] = lconfig;
 LocaleConfig.defaultLocale = 'kr';
@@ -28,15 +30,27 @@ interface IOptionProps {
 }
 
 const Reservation: React.FC<IProps> = ({ navigation }) => {
+  const [refreshing, setRefreshing] = useState(false);
   const [year, setYear] = useState(new Date().getFullYear());
   const [month, setMonth] = useState(new Date().getMonth() + 1);
   const records = useMonthRecords(year, month);
-  const existWods = useExistWods(year, month);
-  // console.log(existWods);
-  // console.log(records);
+  const existWods = useExistWods(year, month, refreshing);
+  const { onSetReservations } = useReservationActions();
+  const reservations = useReservations(month);
 
-  // ToDo1: ScrollView로 변형 (V)
-  // ToDo2: Dot, disabled 처리 (V)
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    wait(1000).then(() => setRefreshing(false));
+  }, []);
+
+  useEffect(() => {
+    // 이번 달 이전의 예약 목록은 저장하지 않음 => X 다시 저장하는 걸로 변경
+    // const thisMonth = new Date().getMonth() + 1;
+    // if (thisMonth <= month) {
+    //   const reservations = records.filter((value) => isPassDate(value.date));
+    // }
+    onSetReservations({ month, reservations: records });
+  }, [records]);
 
   const markList = () => {
     const objRecords: Record<string, Record<string, string | boolean>> = {};
@@ -55,15 +69,20 @@ const Reservation: React.FC<IProps> = ({ navigation }) => {
       }
     });
 
-    records.forEach((record) => {
-      const dotColor =
-        record.state === 'pending'
-          ? ColorPalette.Main.TXT
-          : record.state === 'confirmed'
-          ? ColorPalette.Main.BG_DARK
-          : ColorPalette.Red.RED;
-      Object.assign(objRecords[record.date], { marked: true, dotColor });
-    });
+    reservations &&
+      reservations.forEach((reservation) => {
+        const dotColor =
+          reservation.state === 'pending'
+            ? ColorPalette.Main.TXT
+            : reservation.state === 'confirmed'
+            ? ColorPalette.Main.BG_DARK
+            : ColorPalette.Red.RED;
+        objRecords[reservation.date] &&
+          Object.assign(objRecords[reservation.date], {
+            marked: true,
+            dotColor,
+          });
+      });
 
     return objRecords;
   };
@@ -86,7 +105,7 @@ const Reservation: React.FC<IProps> = ({ navigation }) => {
   };
 
   return (
-    <Scroll>
+    <Scroll refreshing={refreshing} onRefresh={onRefresh}>
       <Flex
         backgroundColor={ColorPalette.White.WHITE}
         width={'100%'}
@@ -105,7 +124,7 @@ const Reservation: React.FC<IProps> = ({ navigation }) => {
               navigation.navigate('Schedule', { date: `${day.dateString}` });
             }}
             onMonthChange={(month) => {
-              console.log('month changed', month);
+              // console.log('month changed', month);
               setYear(month.year);
               setMonth(month.month);
             }}
@@ -150,17 +169,11 @@ const Reservation: React.FC<IProps> = ({ navigation }) => {
           <T size={13} margin={[15, 0]}>
             {month}월 예약
           </T>
-          {records &&
-            records
+          {reservations &&
+            reservations
               .filter((value) => isPassDate(value.date))
-              .map((record, index) => (
-                <Ticket
-                  key={index}
-                  date={record.date}
-                  startTime={record.schedule.start_time}
-                  endTime={record.schedule.end_time}
-                  name={record.schedule.coach.last_name}
-                />
+              .map((reservation, index) => (
+                <Ticket key={index} reservation={reservation} />
               ))}
         </Flex>
       </Flex>

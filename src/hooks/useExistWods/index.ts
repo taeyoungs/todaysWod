@@ -8,14 +8,18 @@ interface IProps {
   title: Record<string, string>;
 }
 
-const useExistWods = (year: number, month: number): Array<IProps> => {
+const useExistWods = (
+  year: number,
+  month: number,
+  refreshing: boolean
+): Array<IProps> => {
   const [existWods, setExistWods] = useState([]);
   const { token } = useUser();
   useEffect(() => {
     api.getWods(token, { period: `${year}-${month}` }).then((res) => {
       setExistWods(res.data);
     });
-  }, [month]);
+  }, [month, refreshing]);
 
   return existWods;
 };

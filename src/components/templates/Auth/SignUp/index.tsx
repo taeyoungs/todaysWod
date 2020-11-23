@@ -110,7 +110,7 @@ const SignUp: React.FC<IProps> = ({
             <Block
               border={[3]}
               borderColor={ColorPalette.Main.BG_DARK}
-              borderRadius={100}
+              borderRadius={[100]}
               borderStyle={BorderStyle.DASHED}
               padding={[30]}
             >

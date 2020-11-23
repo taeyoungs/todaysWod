@@ -7,14 +7,19 @@ import Block, { FlexDirection, Sort } from 'components/molecules/Block';
 import Shadow from 'components/molecules/Shadow';
 import { ColorPalette } from 'models/color';
 import { IScheduleProps } from 'models/common';
-import { formatTime } from 'utils';
+import { formatTime, isPassDate } from 'utils';
+import useReservationActions from 'hooks/useReservationActions';
 
 interface IProps {
   schedule: IScheduleProps;
-  isPass: boolean;
+  date: string;
+  goCheck: (date: string, schedule: IScheduleProps) => void;
 }
 
-const ScheduleItem: React.FC<IProps> = ({ schedule, isPass }) => {
+const ScheduleItem: React.FC<IProps> = ({ schedule, date, goCheck }) => {
+  const { getReservation } = useReservationActions();
+
+  const reservation = getReservation(date);
   return (
     <Shadow>
       <Block
@@ -52,17 +57,29 @@ const ScheduleItem: React.FC<IProps> = ({ schedule, isPass }) => {
             </T>
           </Block>
         </Block>
-        <Block>
-          {isPass ? (
-            <Btn onPress={() => console.log('클릭')}>
-              <T
-                color={ColorPalette.Main.BG_DARK}
-                fontFamily={FontFamily.NANUM_BOLD}
-                size={15}
-              >
-                예약
-              </T>
-            </Btn>
+        <Block padding={[5]}>
+          {isPassDate(date) ? (
+            reservation?.schedule.id === schedule.id ? (
+              <Block>
+                <T
+                  color={ColorPalette.Gray.GAINSBORO}
+                  fontFamily={FontFamily.NANUM_BOLD}
+                  size={15}
+                >
+                  예약
+                </T>
+              </Block>
+            ) : (
+              <Btn onPress={() => goCheck(date, schedule)}>
+                <T
+                  color={ColorPalette.Main.BG_DARK}
+                  fontFamily={FontFamily.NANUM_BOLD}
+                  size={15}
+                >
+                  예약
+                </T>
+              </Btn>
+            )
           ) : (
             <T
               color={ColorPalette.Gray.GAINSBORO}

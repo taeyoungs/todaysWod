@@ -3,17 +3,17 @@ import T, { TextAlign } from 'components/atoms/T';
 import Shadow from 'components/molecules/Shadow';
 import Block, { FlexDirection, Sort } from 'components/molecules/Block';
 import { ColorPalette } from 'models/color';
-import { dayOfTheWeek, formatTime } from 'utils';
+import { createTwoButtonAlert, dayOfTheWeek, formatTime } from 'utils';
+import Icon from 'components/atoms/Icon';
+import Btn from 'components/atoms/Button';
+import { IReservationProps } from 'models/common';
 
 interface IProps {
-  date: string;
-  startTime: string;
-  endTime: string;
-  name: string;
+  reservation: IReservationProps;
 }
 
-const Ticket: React.FC<IProps> = ({ date, startTime, endTime, name }) => {
-  const d = date.split('-');
+const Ticket: React.FC<IProps> = ({ reservation }) => {
+  const d = reservation.date.split('-');
   return (
     <Shadow>
       <Block
@@ -35,16 +35,35 @@ const Ticket: React.FC<IProps> = ({ date, startTime, endTime, name }) => {
             {`${d[1]}/${d[2]}`}
           </T>
           <T size={12} align={TextAlign.CENTER} color={ColorPalette.Gray.GRAY}>
-            {dayOfTheWeek(date)}
+            {dayOfTheWeek(reservation.date)}
           </T>
         </Block>
         <Block sort={Sort.LEFT_CENTER} padding={[0, 20]}>
           <T margin={[0, 0, 5, 0]}>
-            {formatTime(startTime)} - {formatTime(endTime)}
+            {formatTime(reservation.schedule.start_time)} -{' '}
+            {formatTime(reservation.schedule.end_time)}
           </T>
           <T size={12} color={ColorPalette.Gray.GRAY}>
-            Coach {name}
+            Coach {reservation.schedule.coach.last_name}
           </T>
+        </Block>
+        <Block>
+          <Btn
+            onPress={() => {
+              createTwoButtonAlert(
+                reservation.date,
+                formatTime(reservation.schedule.start_time),
+                formatTime(reservation.schedule.end_time),
+                () => console.log('blah')
+              );
+            }}
+          >
+            <Icon
+              name="close-circle-outline"
+              color={ColorPalette.Gray.GAINSBORO}
+              size={20}
+            />
+          </Btn>
         </Block>
       </Block>
     </Shadow>

@@ -7,13 +7,14 @@ import WodList from 'components/organisms/WodList';
 import useWod from 'hooks/useWod';
 import { ColorPalette } from 'models/color';
 import { WodScreenProps } from 'models/types';
+import Transparent from 'components/molecules/Transparent';
 
 interface IProps {
   navigation: WodScreenProps['navigation'];
   route: WodScreenProps['route'];
 }
 
-const { width, height } = Dimensions.get('screen');
+const { width } = Dimensions.get('screen');
 
 const Wod: React.FC<IProps> = ({ navigation, route }) => {
   const w = useWod(route.params.date);
@@ -26,21 +27,7 @@ const Wod: React.FC<IProps> = ({ navigation, route }) => {
 
   const back = () => navigation.goBack();
   return (
-    <>
-      <TouchableWithoutFeedback onPress={back}>
-        <View
-          style={{
-            flex: 1,
-            backgroundColor: ColorPalette.Black.LIGHT,
-            opacity: 0.8,
-            alignItems: 'center',
-            justifyContent: 'center',
-            position: 'absolute',
-            width: width,
-            height: height,
-          }}
-        ></View>
-      </TouchableWithoutFeedback>
+    <Transparent back={back}>
       <Block margin={[80, 20, 0, 20]} width={`${width - 40}px`}>
         {w && w.map((wod) => <WodList wod={wod} key={wod.id} />)}
         <Btn onPress={back}>
@@ -53,7 +40,7 @@ const Wod: React.FC<IProps> = ({ navigation, route }) => {
           </T>
         </Btn>
       </Block>
-    </>
+    </Transparent>
   );
 };
 

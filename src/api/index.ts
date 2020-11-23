@@ -18,8 +18,8 @@ const callApi = async (
     'Authorization': jwt != null ? `Bearer ${jwt}` : null,
     'Content-Type': 'application/json',
   };
-  // const baseUrl = 'http://192.168.0.25:8000/api/v1';
-  const baseUrl = 'http://172.30.1.46:8000/api/v1';
+  const baseUrl = 'http://192.168.0.25:8000/api/v1';
+  // const baseUrl = 'http://172.30.1.9:8000/api/v1';
   const fullUrl = `${baseUrl}${path}`;
 
   if (method === 'get' || method === 'delete') {
@@ -72,6 +72,17 @@ const api = {
     param: Record<string, string>
   ): Promise<AxiosResponse<any>> =>
     callApi(Method.GET, `/schedules/`, null, token, param),
+  setNewReservation: (
+    token: string | null,
+    data: Record<string, string> | null
+  ): Promise<AxiosResponse<any>> =>
+    callApi(Method.POST, `/reservations/`, data, token),
+  updateReservation: (
+    token: string | null,
+    data: Record<string, string> | null,
+    id: number | null
+  ): Promise<AxiosResponse<any>> =>
+    callApi(Method.PATCH, `/reservations/${id}/`, data, token),
 };
 
 export default api;

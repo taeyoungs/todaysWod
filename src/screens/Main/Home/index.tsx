@@ -15,8 +15,8 @@ import DayButton from 'components/organisms/DayButton';
 import WodList from 'components/organisms/WodList';
 import useWods from 'hooks/useWods';
 import { ColorPalette } from 'models/color';
-import { checkTodayIdx, wait } from 'utils';
 import { HomeScreenProps } from 'models/types';
+import { checkTodayIdx, wait } from 'utils';
 
 const { width } = Dimensions.get('screen');
 

@@ -12,6 +12,8 @@ import { ColorPalette } from 'models/color';
 import { MainStackParamList, MainTabsParamList } from 'models/types';
 import Schedule from 'screens/Main/Schedule';
 import Wod from 'screens/Main/Wod';
+import Check from 'screens/Main/Check';
+import T from 'components/atoms/T';
 
 const Tab = createBottomTabNavigator<MainTabsParamList>();
 const Main = createStackNavigator<MainStackParamList>();
@@ -24,18 +26,24 @@ const Tabs = () => {
       }}
       screenOptions={({ route }) => ({
         tabBarLabel: ({ focused }) => {
-          // if (route.name === 'Home' && focused) {
-          //   return <T color={ColorPalette.Main.BG}>홈</T>;
-          // } else if (route.name === 'Reservation' && focused) {
-          //   return <T>와드</T>;
-          // } else if (route.name === 'Alerts' && focused) {
-          //   return <T>알림</T>;
-          // } else if (route.name === 'Profile' && focused) {
-          //   return <T>프로필</T>;
-          // } else {
-          //   return null;
-          // }
-          return null;
+          let name = '';
+          if (route.name === 'Home') {
+            name = '와드';
+          } else if (route.name === 'Reservation') {
+            name = '예약';
+          } else if (route.name === 'Alerts') {
+            name = '알림';
+          } else {
+            name = '프로필';
+          }
+          const color = focused
+            ? ColorPalette.Main.BG
+            : ColorPalette.Gray.SILVER;
+          return (
+            <T color={color} size={10} margin={[-5, 0, 5, 0]}>
+              {name}
+            </T>
+          );
         },
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
@@ -88,6 +96,11 @@ export default (): JSX.Element => {
       <Main.Screen
         component={Wod}
         name="Wod"
+        options={{ header: () => null }}
+      />
+      <Main.Screen
+        component={Check}
+        name="Check"
         options={{ header: () => null }}
       />
     </Main.Navigator>
