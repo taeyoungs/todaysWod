@@ -1,21 +1,25 @@
 import React from 'react';
-import { GestureResponderEvent, StatusBar } from 'react-native';
+import {
+  ActivityIndicator,
+  GestureResponderEvent,
+  StatusBar,
+  TouchableOpacity,
+} from 'react-native';
 import TInput, { KeyboardType } from 'components/atoms/TInput';
 import Img from 'components/atoms/Img';
 import T, { FontFamily, TextAlign } from 'components/atoms/T';
+import Btn from 'components/atoms/Button';
 import Block, {
   BorderStyle,
   FlexDirection,
   Sort,
 } from 'components/molecules/Block';
-import Btn from 'components/atoms/Button';
 import Flex from 'components/molecules/Flex';
 import PositionBlock, { Position } from 'components/molecules/PositionBlock';
+import KeyboardDismiss from 'components/molecules/KeyboardDismiss';
 import Logo from 'components/organisms/Logo';
 import InputBox from 'components/organisms/InputBox';
 import { ColorPalette } from 'models/color';
-import KeyboardDismiss from 'components/molecules/KeyboardDismiss';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 
 interface IProps {
   email: string;
@@ -26,6 +30,7 @@ interface IProps {
   onConfirmPwChange(text: string): void;
   onPress(event: GestureResponderEvent): void;
   goLogIn(): void;
+  loading: boolean;
 }
 
 const SignUp: React.FC<IProps> = ({
@@ -37,6 +42,7 @@ const SignUp: React.FC<IProps> = ({
   pw,
   confirmPw,
   goLogIn,
+  loading,
 }) => {
   return (
     <>
@@ -88,13 +94,17 @@ const SignUp: React.FC<IProps> = ({
                 backgroundColor={ColorPalette.Main.TXT}
                 borderRadius={20}
               >
-                <T
-                  color={ColorPalette.Main.BG}
-                  fontFamily={FontFamily.NANUM_BOLD}
-                  align={TextAlign.CENTER}
-                >
-                  회원가입
-                </T>
+                {loading ? (
+                  <ActivityIndicator color={ColorPalette.Main.BG_DARK} />
+                ) : (
+                  <T
+                    color={ColorPalette.Main.BG}
+                    fontFamily={FontFamily.NANUM_BOLD}
+                    align={TextAlign.CENTER}
+                  >
+                    회원가입
+                  </T>
+                )}
               </Btn>
               <Block flexDirection={FlexDirection.ROW} width={'100%'}>
                 <T color={ColorPalette.Main.TXT_LIGHT}>

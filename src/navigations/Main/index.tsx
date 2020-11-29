@@ -1,24 +1,29 @@
 import React from 'react';
+import { View } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import Icon from 'components/atoms/Icon';
+import T from 'components/atoms/T';
+import PositionBlock, { Position } from 'components/molecules/PositionBlock';
+import Block from 'components/molecules/Block';
 import BackButton from 'components/organisms/BackButton';
 import Reservation from 'screens/Main/Reservation';
 import Alerts from 'screens/Main/Alerts';
 import Profile from 'screens/Main/Profile';
 import Home from 'screens/Main/Home';
 import Membership from 'screens/Main/Membership';
-import { ColorPalette } from 'models/color';
-import { MainStackParamList, MainTabsParamList } from 'models/types';
 import Schedule from 'screens/Main/Schedule';
 import Wod from 'screens/Main/Wod';
 import Check from 'screens/Main/Check';
-import T from 'components/atoms/T';
+import { ColorPalette } from 'models/color';
+import { MainStackParamList, MainTabsParamList } from 'models/types';
+import useUser from 'hooks/useUser';
 
 const Tab = createBottomTabNavigator<MainTabsParamList>();
 const Main = createStackNavigator<MainStackParamList>();
 
 const Tabs = () => {
+  const { hasNewAlert } = useUser();
   return (
     <Tab.Navigator
       tabBarOptions={{
@@ -63,7 +68,20 @@ const Tabs = () => {
           }
           color = focused ? ColorPalette.Main.BG : ColorPalette.Gray.SILVER;
 
-          return <Icon name={iconName} size={size} color={color} />;
+          return (
+            <View>
+              <Icon name={iconName} size={size} color={color} />
+              {route.name === 'Alerts' && hasNewAlert && (
+                <PositionBlock position={Position.ABSOLUTE} top={0} right={-5}>
+                  <Block
+                    padding={[4]}
+                    borderRadius={[100]}
+                    backgroundColor={ColorPalette.Main.TXT}
+                  ></Block>
+                </PositionBlock>
+              )}
+            </View>
+          );
         },
       })}
     >

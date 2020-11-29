@@ -17,6 +17,7 @@ import useWods from 'hooks/useWods';
 import { ColorPalette } from 'models/color';
 import { HomeScreenProps } from 'models/types';
 import { checkTodayIdx, wait } from 'utils';
+import useNewAlert from 'hooks/useNewAlert';
 
 const { width } = Dimensions.get('screen');
 
@@ -33,6 +34,7 @@ const Home: React.FC<IProps> = ({ navigation }) => {
   const svRef = useRef<ScrollView>(null);
   const wodRef = useRef<ScrollView>(null);
   const wods = useWods(refreshing);
+  useNewAlert(refreshing);
 
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);

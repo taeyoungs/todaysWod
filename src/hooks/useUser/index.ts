@@ -7,6 +7,7 @@ interface IState {
   userId: string | null;
   boxId: string | null;
   registrationState: string;
+  hasNewAlert: boolean;
 }
 
 export default function useUser(): IState {

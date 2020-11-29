@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  ActivityIndicator,
   GestureResponderEvent,
   StatusBar,
   TouchableOpacity,
@@ -29,6 +30,7 @@ interface IProps {
   onPress(event: GestureResponderEvent): void;
   goSignUp(): void;
   goPwChange(): void;
+  loading: boolean;
 }
 
 const LogIn: React.FC<IProps> = ({
@@ -39,6 +41,7 @@ const LogIn: React.FC<IProps> = ({
   goPwChange,
   email,
   pw,
+  loading,
 }) => {
   return (
     <>
@@ -97,13 +100,17 @@ const LogIn: React.FC<IProps> = ({
                 backgroundColor={ColorPalette.Main.TXT}
                 borderRadius={20}
               >
-                <T
-                  color={ColorPalette.Main.BG}
-                  fontFamily={FontFamily.NANUM_BOLD}
-                  align={TextAlign.CENTER}
-                >
-                  로그인
-                </T>
+                {loading ? (
+                  <ActivityIndicator color={ColorPalette.Main.BG_DARK} />
+                ) : (
+                  <T
+                    color={ColorPalette.Main.BG}
+                    fontFamily={FontFamily.NANUM_BOLD}
+                    align={TextAlign.CENTER}
+                  >
+                    로그인
+                  </T>
+                )}
               </Btn>
               <Block flexDirection={FlexDirection.ROW} width={'100%'}>
                 <T color={ColorPalette.Main.TXT_LIGHT}>

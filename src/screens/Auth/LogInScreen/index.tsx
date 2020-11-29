@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { GestureResponderEvent } from 'react-native';
 import LogIn from 'components/templates/Auth/LogIn';
-import { createOneButtonAlert, validateEmail } from 'utils';
 import useUserActions from 'hooks/useUserActions';
-import api from 'api/index';
 import { LogInScreenProps } from 'models/types';
+import { createOneButtonAlert, validateEmail } from 'utils';
+import api from 'api';
 
 interface IProps {
   navigation: LogInScreenProps['navigation'];
@@ -12,6 +12,7 @@ interface IProps {
 
 const LogInScreen: React.FC<IProps> = ({ navigation }) => {
   const { onLogIn } = useUserActions();
+  const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState('lolollg@naver.com');
   const [pw, setPw] = useState('xodud9411!');
   const onPwChange = (text: string) => setPw(text);
@@ -28,6 +29,7 @@ const LogInScreen: React.FC<IProps> = ({ navigation }) => {
       return;
     }
     try {
+      setLoading(true);
       const form = {
         username: email,
         password: pw,
@@ -37,6 +39,8 @@ const LogInScreen: React.FC<IProps> = ({ navigation }) => {
       onLogIn(results.data);
     } catch (error) {
       console.warn(error);
+    } finally {
+      setLoading(false);
     }
   };
   const goSignUp = () => navigation.navigate('SignUpScreen');
@@ -50,6 +54,7 @@ const LogInScreen: React.FC<IProps> = ({ navigation }) => {
       onPress={onPress}
       goSignUp={goSignUp}
       goPwChange={goPwChange}
+      loading={loading}
     />
   );
 };

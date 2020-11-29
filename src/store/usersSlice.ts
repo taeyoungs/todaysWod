@@ -6,6 +6,7 @@ export interface IUserState {
   userId: string | null;
   boxId: string | null;
   registrationState: string;
+  hasNewAlert: boolean;
 }
 
 const initialState: IUserState = {
@@ -14,6 +15,7 @@ const initialState: IUserState = {
   userId: null,
   boxId: null,
   registrationState: 'unregistered',
+  hasNewAlert: false,
 };
 
 const usersSlice = createSlice({
@@ -41,9 +43,18 @@ const usersSlice = createSlice({
     updateRState: (state, action: PayloadAction<Record<string, string>>) => {
       state.registrationState = action.payload.registrationState;
     },
+    setNewAlert: (state, action: PayloadAction<boolean>) => {
+      state.hasNewAlert = action.payload;
+    },
   },
 });
 
-export const { logIn, logOut, enrollBox, updateRState } = usersSlice.actions;
+export const {
+  logIn,
+  logOut,
+  enrollBox,
+  updateRState,
+  setNewAlert,
+} = usersSlice.actions;
 
 export default usersSlice.reducer;

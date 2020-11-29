@@ -9,6 +9,7 @@ interface IProps {
 }
 
 const SignUpScreen: React.FC<IProps> = ({ navigation }) => {
+  const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState('');
   const [pw, setPw] = useState('');
   const [confirmPw, setConfirmPw] = useState('');
@@ -17,6 +18,7 @@ const SignUpScreen: React.FC<IProps> = ({ navigation }) => {
   const onConfirmPwChange = (text: string) => setConfirmPw(text);
   const onPress = async (event: GestureResponderEvent) => {
     try {
+      setLoading(true);
       const form = {
         username: email,
         email,
@@ -28,6 +30,7 @@ const SignUpScreen: React.FC<IProps> = ({ navigation }) => {
     } catch (error) {
       console.log(error);
     } finally {
+      setLoading(false);
       navigation.navigate('LogInScreen');
     }
   };
@@ -42,6 +45,7 @@ const SignUpScreen: React.FC<IProps> = ({ navigation }) => {
       onEmailChange={onEmailChange}
       onPress={onPress}
       goLogIn={goLogIn}
+      loading={loading}
     />
   );
 };
