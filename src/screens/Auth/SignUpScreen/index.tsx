@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { GestureResponderEvent } from 'react-native';
 import SignUp from 'components/templates/Auth/SignUp';
 import { LogInScreenProps } from 'models/types';
+import api from 'api';
 
 interface IProps {
   navigation: LogInScreenProps['navigation'];
@@ -14,8 +15,21 @@ const SignUpScreen: React.FC<IProps> = ({ navigation }) => {
   const onEmailChange = (text: string) => setEmail(text);
   const onPwChange = (text: string) => setPw(text);
   const onConfirmPwChange = (text: string) => setConfirmPw(text);
-  const onPress = (event: GestureResponderEvent) => {
-    console.log(email, pw, confirmPw);
+  const onPress = async (event: GestureResponderEvent) => {
+    try {
+      const form = {
+        username: email,
+        email,
+        password: pw,
+        gender: '남',
+      };
+      const results = await api.signUp(form);
+      console.log(results.status);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      navigation.navigate('LogInScreen');
+    }
   };
   const goLogIn = () => navigation.navigate('LogInScreen');
   return (

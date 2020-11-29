@@ -5,6 +5,7 @@ import {
   setRervations,
   setReservation,
   updateReservation,
+  deleteReservation,
 } from 'store/reservationsSlice';
 import { RootState } from 'store/rootReducer';
 
@@ -30,6 +31,11 @@ const useReservationActions = () => {
     [dispatch]
   );
 
+  const onDeleteReservaton = useCallback(
+    (data: { month: number; id: number }) => dispatch(deleteReservation(data)),
+    [dispatch]
+  );
+
   const getReservation = (date: string): IReservationProps | undefined => {
     const month = date.split('-')[1];
     const reservations = rSlice.reservations[parseInt(month)];
@@ -41,6 +47,7 @@ const useReservationActions = () => {
     onSetReservations,
     onSetReservation,
     onUpdateReservation,
+    onDeleteReservaton,
     getReservation,
   };
 };

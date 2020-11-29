@@ -22,6 +22,12 @@ interface IReservationActionProps {
   reservation: IReservationProps;
 }
 
+function compareReservations(a: IReservationProps, b: IReservationProps) {
+  const aDate = new Date(a.date).getTime();
+  const bDate = new Date(b.date).getTime();
+  return aDate - bDate;
+}
+
 const reservationsSlice = createSlice({
   name: 'reservations',
   initialState,
@@ -34,11 +40,6 @@ const reservationsSlice = createSlice({
     },
     setReservation: (state, action: PayloadAction<IReservationActionProps>) => {
       const { month, reservation } = action.payload;
-      function compareReservations(a: IReservationProps, b: IReservationProps) {
-        const aDate = new Date(a.date).getTime();
-        const bDate = new Date(b.date).getTime();
-        return aDate - bDate;
-      }
       state.reservations[month] = [
         ...state.reservations[month],
         reservation,
@@ -49,11 +50,6 @@ const reservationsSlice = createSlice({
       action: PayloadAction<IReservationActionProps>
     ) => {
       const { month, reservation } = action.payload;
-      function compareReservations(a: IReservationProps, b: IReservationProps) {
-        const aDate = new Date(a.date).getTime();
-        const bDate = new Date(b.date).getTime();
-        return aDate - bDate;
-      }
       state.reservations[month] = state.reservations[month].filter(
         (r) => r.id !== reservation.id
       );
@@ -62,6 +58,15 @@ const reservationsSlice = createSlice({
         reservation,
       ].sort(compareReservations);
     },
+    deleteReservation: (
+      state,
+      action: PayloadAction<{ month: number; id: number }>
+    ) => {
+      const { month, id } = action.payload;
+      state.reservations[month] = state.reservations[month].filter(
+        (r) => r.id !== id
+      );
+    },
   },
 });
 
@@ -69,6 +74,7 @@ export const {
   setRervations,
   setReservation,
   updateReservation,
+  deleteReservation,
 } = reservationsSlice.actions;
 
 export default reservationsSlice.reducer;

@@ -1,12 +1,15 @@
 import React from 'react';
 import T, { TextAlign } from 'components/atoms/T';
+import Icon from 'components/atoms/Icon';
+import Btn from 'components/atoms/Button';
 import Shadow from 'components/molecules/Shadow';
 import Block, { FlexDirection, Sort } from 'components/molecules/Block';
 import { ColorPalette } from 'models/color';
-import { createTwoButtonAlert, dayOfTheWeek, formatTime } from 'utils';
-import Icon from 'components/atoms/Icon';
-import Btn from 'components/atoms/Button';
 import { IReservationProps } from 'models/common';
+import { createTwoButtonAlert, dayOfTheWeek, formatTime } from 'utils';
+import useReservationActions from 'hooks/useReservationActions';
+import api from 'api';
+import useUser from 'hooks/useUser';
 
 interface IProps {
   reservation: IReservationProps;
@@ -14,6 +17,16 @@ interface IProps {
 
 const Ticket: React.FC<IProps> = ({ reservation }) => {
   const d = reservation.date.split('-');
+  const { onDeleteReservaton } = useReservationActions();
+  const { token } = useUser();
+  const handleDelete = async () => {
+    try {
+      onDeleteReservaton({ month: parseInt(d[1]), id: reservation.id });
+      await api.deleteReservation(token, reservation.id);
+    } catch (error) {
+      console.warn(error);
+    }
+  };
   return (
     <Shadow>
       <Block
@@ -54,7 +67,7 @@ const Ticket: React.FC<IProps> = ({ reservation }) => {
                 reservation.date,
                 formatTime(reservation.schedule.start_time),
                 formatTime(reservation.schedule.end_time),
-                () => console.log('blah')
+                handleDelete
               );
             }}
           >

@@ -56,10 +56,11 @@ const Reservation: React.FC<IProps> = ({ navigation }) => {
     const objRecords: Record<string, Record<string, string | boolean>> = {};
 
     for (let index = 1; index <= daysInMonth(month - 1, year); index++) {
+      const formatMonth = month < 10 ? `0${month}` : month;
       if (index < 10) {
-        objRecords[`${year}-${month}-0${index}`] = { disabled: true };
+        objRecords[`${year}-${formatMonth}-0${index}`] = { disabled: true };
       } else {
-        objRecords[`${year}-${month}-${index}`] = { disabled: true };
+        objRecords[`${year}-${formatMonth}-${index}`] = { disabled: true };
       }
     }
 

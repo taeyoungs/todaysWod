@@ -46,7 +46,6 @@ const Check: React.FC<IProps> = ({ route, navigation }) => {
           form,
           reservation.id
         );
-        console.log(results.data);
         if (results.status === 200) {
           const data = {
             month: parseInt(date.split('-')[1]),
@@ -91,6 +90,30 @@ const Check: React.FC<IProps> = ({ route, navigation }) => {
       cardOverlayEnabled: true,
     });
   }, []);
+
+  const ConditionButton = ({
+    text,
+    onPress,
+  }: {
+    text: string;
+    onPress(): Promise<void>;
+  }) => {
+    return (
+      <Btn onPress={onPress}>
+        {loading ? (
+          <ActivityIndicator />
+        ) : (
+          <T
+            align={TextAlign.CENTER}
+            color={ColorPalette.Main.BG_DARK}
+            fontFamily={FontFamily.NANUM_BOLD}
+          >
+            {text}
+          </T>
+        )}
+      </Btn>
+    );
+  };
 
   return (
     <Transparent back={back}>
@@ -240,33 +263,9 @@ const Check: React.FC<IProps> = ({ route, navigation }) => {
         </Block>
         <Block width={'50%'}>
           {reservation ? (
-            <Btn onPress={handleUpdateReservation}>
-              {loading ? (
-                <ActivityIndicator />
-              ) : (
-                <T
-                  align={TextAlign.CENTER}
-                  color={ColorPalette.Main.BG_DARK}
-                  fontFamily={FontFamily.NANUM_BOLD}
-                >
-                  변경
-                </T>
-              )}
-            </Btn>
+            <ConditionButton onPress={handleUpdateReservation} text="변경" />
           ) : (
-            <Btn onPress={handleSetReservation}>
-              {loading ? (
-                <ActivityIndicator />
-              ) : (
-                <T
-                  align={TextAlign.CENTER}
-                  color={ColorPalette.Main.BG_DARK}
-                  fontFamily={FontFamily.NANUM_BOLD}
-                >
-                  예약
-                </T>
-              )}
-            </Btn>
+            <ConditionButton onPress={handleSetReservation} text="예약" />
           )}
         </Block>
       </Block>

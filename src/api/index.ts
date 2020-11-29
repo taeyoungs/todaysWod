@@ -18,8 +18,8 @@ const callApi = async (
     'Authorization': jwt != null ? `Bearer ${jwt}` : null,
     'Content-Type': 'application/json',
   };
-  const baseUrl = 'http://192.168.0.25:8000/api/v1';
-  // const baseUrl = 'http://172.30.1.9:8000/api/v1';
+  // const baseUrl = 'http://192.168.0.25:8000/api/v1';
+  const baseUrl = 'http://172.20.10.3:8000/api/v1';
   const fullUrl = `${baseUrl}${path}`;
 
   if (method === 'get' || method === 'delete') {
@@ -30,6 +30,8 @@ const callApi = async (
 };
 
 const api = {
+  signUp: (form: Record<string, string>): Promise<AxiosResponse<any>> =>
+    callApi(Method.POST, '/users/', form),
   token: (form: Record<string, string>): Promise<AxiosResponse<any>> =>
     callApi(Method.POST, '/users/token/', form),
   pw_reset: (form: Record<string, string>): Promise<AxiosResponse<any>> =>
@@ -83,6 +85,11 @@ const api = {
     id: number | null
   ): Promise<AxiosResponse<any>> =>
     callApi(Method.PATCH, `/reservations/${id}/`, data, token),
+  deleteReservation: (
+    token: string | null,
+    id: number | null
+  ): Promise<AxiosResponse<any>> =>
+    callApi(Method.DELETE, `/reservations/${id}/`, null, token),
 };
 
 export default api;
