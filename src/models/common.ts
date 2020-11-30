@@ -74,3 +74,13 @@ export interface IReservationProps {
   state: string;
   user: number;
 }
+
+export interface IAlertProps {
+  alert_type: string;
+  box: number | null;
+  content: string;
+  datetime: string;
+  id: number;
+  title: string;
+  user: number | null;
+}

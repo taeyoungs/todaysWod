@@ -43,18 +43,9 @@ const usersSlice = createSlice({
     updateRState: (state, action: PayloadAction<Record<string, string>>) => {
       state.registrationState = action.payload.registrationState;
     },
-    setNewAlert: (state, action: PayloadAction<boolean>) => {
-      state.hasNewAlert = action.payload;
-    },
   },
 });
 
-export const {
-  logIn,
-  logOut,
-  enrollBox,
-  updateRState,
-  setNewAlert,
-} = usersSlice.actions;
+export const { logIn, logOut, enrollBox, updateRState } = usersSlice.actions;
 
 export default usersSlice.reducer;

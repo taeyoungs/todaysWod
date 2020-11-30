@@ -34,7 +34,7 @@ const Home: React.FC<IProps> = ({ navigation }) => {
   const svRef = useRef<ScrollView>(null);
   const wodRef = useRef<ScrollView>(null);
   const wods = useWods(refreshing);
-  useNewAlert(refreshing);
+  // useNewAlert(refreshing);
 
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);

@@ -42,12 +42,11 @@ const api = {
     callApi(Method.POST, '/users/pw_set/', form),
   getUser: (id: string | null): Promise<AxiosResponse<any>> =>
     callApi(Method.GET, `/users/${id}/`),
-  checkAlert: (
+  getAlerts: (
     token: string | null,
-    data: Record<string, string> | null,
-    id: number | null
+    page: number
   ): Promise<AxiosResponse<any>> =>
-    callApi(Method.PATCH, `/users/${id}/`, data, token),
+    callApi(Method.GET, `/alerts/?page=${page}`, null, token),
   getBox: (id: string | null): Promise<AxiosResponse<any>> =>
     callApi(Method.GET, `/boxes/${id}/`),
   boxAuthentication: (

@@ -4,7 +4,6 @@ import {
   NativeScrollEvent,
   NativeSyntheticEvent,
   RefreshControl,
-  RefreshControlProps,
 } from 'react-native';
 import { CalculateBlock, MPB } from 'utils';
 import { IComponentProps } from 'models/common';
@@ -23,6 +22,7 @@ interface IProps extends IComponentProps {
   refreshing?: boolean;
   onRefresh?(): void;
   refreshColor?: string;
+  scrollEventThrottle?: number;
 }
 
 interface IStyleProps {
@@ -71,6 +71,7 @@ const Scroll: React.FC<IProps> = ({
   onRefresh,
   backgroundColor = ColorPalette.Main.BG,
   refreshColor = 'white',
+  scrollEventThrottle = 25,
 }) => {
   const marginProps = CalculateBlock(margin, MPB.Margin);
   const paddingProps = CalculateBlock(padding, MPB.Padiing);
@@ -89,6 +90,7 @@ const Scroll: React.FC<IProps> = ({
     <ScrollV
       onScroll={onScroll}
       contentContainerStyle={{ flexGrow: 1 }}
+      scrollEventThrottle={scrollEventThrottle}
       refreshControl={
         <RefreshControl
           refreshing={refreshing}

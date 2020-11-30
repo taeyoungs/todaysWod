@@ -1,12 +1,6 @@
 import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
-import {
-  logIn,
-  logOut,
-  enrollBox,
-  updateRState,
-  setNewAlert,
-} from 'store/usersSlice';
+import { logIn, logOut, enrollBox, updateRState } from 'store/usersSlice';
 
 const useUserActions = () => {
   const dispatch = useDispatch();
@@ -24,12 +18,8 @@ const useUserActions = () => {
     (form: Record<string, string>) => dispatch(updateRState(form)),
     [dispatch]
   );
-  const onSetNewAlert = useCallback(
-    (hasNewAlert: boolean) => dispatch(setNewAlert(hasNewAlert)),
-    []
-  );
 
-  return { onLogIn, onLogOut, onEnrollBox, onUpdateRState, onSetNewAlert };
+  return { onLogIn, onLogOut, onEnrollBox, onUpdateRState };
 };
 
 export default useUserActions;

@@ -1,11 +1,11 @@
 import { useEffect } from 'react';
 import useUser from 'hooks/useUser';
-import useUserActions from 'hooks/useUserActions';
+import useAlertActions from 'hooks/useAlertActions';
 import api from 'api';
 
 const useNewAlert = (refreshing: boolean): void => {
   const { userId } = useUser();
-  const { onSetNewAlert } = useUserActions();
+  const { onSetNewAlert } = useAlertActions();
   useEffect(() => {
     api.getUser(userId).then((res) => {
       onSetNewAlert(res.data.has_new_alert);
