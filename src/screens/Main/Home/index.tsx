@@ -6,18 +6,17 @@ import {
   ScrollView,
   StatusBar,
 } from 'react-native';
-import Icon from 'components/atoms/Icon';
 import T from 'components/atoms/T';
-import Btn from 'components/atoms/Button';
 import Scroll from 'components/molecules/Scroll';
-import Block, { FlexDirection } from 'components/molecules/Block';
+import Block from 'components/molecules/Block';
+import Header from 'components/organisms/Header';
 import DayButton from 'components/organisms/DayButton';
 import WodList from 'components/organisms/WodList';
 import useWods from 'hooks/useWods';
+import useNewAlert from 'hooks/useNewAlert';
 import { ColorPalette } from 'models/color';
 import { HomeScreenProps } from 'models/types';
 import { checkTodayIdx, wait } from 'utils';
-import useNewAlert from 'hooks/useNewAlert';
 
 const { width } = Dimensions.get('screen');
 
@@ -27,14 +26,14 @@ interface IProps {
 
 const Home: React.FC<IProps> = ({ navigation }) => {
   const [refreshing, setRefreshing] = useState(false);
-  const [today, setToday] = useState(new Date(Date.now()).getDate());
+  const [today, setToday] = useState(new Date().getDate());
   const [currentIndex, setCurrentIndex] = useState(0);
   const [offsetX, setOffsetX] = useState(0);
   const [offsetWodX, setOffsetWodX] = useState(0);
   const svRef = useRef<ScrollView>(null);
   const wodRef = useRef<ScrollView>(null);
   const wods = useWods(refreshing);
-  // useNewAlert(refreshing);
+  useNewAlert(refreshing);
 
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
@@ -54,7 +53,7 @@ const Home: React.FC<IProps> = ({ navigation }) => {
       svRef.current?.scrollTo({ x: toX, y: 0, animated: false });
       setOffsetX(toX);
       setCurrentIndex(idx);
-      setToday(new Date(Date.now()).getDate());
+      setToday(new Date().getDate());
     }
   }, [wods]);
 
@@ -74,87 +73,71 @@ const Home: React.FC<IProps> = ({ navigation }) => {
     setOffsetWodX(toWodX);
     svRef.current?.scrollTo({ x: toX, y: 0, animated: true });
     wodRef.current?.scrollTo({ x: toWodX, y: 0, animated: true });
+    const d = new Date(wods[idx].date);
+    setToday(d.getDate());
     setCurrentIndex(idx);
-    if (idx - currentIndex > 0) {
-      setToday((prevState) => prevState + (idx - currentIndex));
-    } else if (idx - currentIndex < 0) {
-      setToday((prevState) => prevState - Math.abs(idx - currentIndex));
-    }
   };
 
   return (
-    <Scroll refreshing={refreshing} onRefresh={onRefresh}>
-      <StatusBar barStyle="light-content" />
-      <Block width={'100%'} margin={[0, 0, 20, 0]}>
-        <T margin={[35, 0, 10, 0]} color={ColorPalette.Main.TXT} size={14}>
-          {wods[currentIndex]?.date.split('-')[1]}월
-        </T>
+    <>
+      <Header goMembership={() => navigation.navigate('Membership')} />
+      <Scroll refreshing={refreshing} onRefresh={onRefresh}>
+        <StatusBar barStyle="light-content" />
+        <Block width={'100%'} margin={[0, 0, 20, 0]}>
+          <T margin={[0, 0, 10, 0]} color={ColorPalette.Main.TXT} size={14}>
+            {wods[currentIndex]?.date.split('-')[1]}월
+          </T>
+          <ScrollView
+            style={{
+              height: 80,
+            }}
+            horizontal
+            scrollEventThrottle={25}
+            ref={svRef}
+            scrollEnabled={false}
+            contentContainerStyle={{
+              marginLeft: 25,
+              paddingRight: 174,
+            }}
+          >
+            {wods.length > 0 &&
+              wods.map((wod, index) => (
+                <DayButton
+                  key={index}
+                  svRef={svRef}
+                  wodRef={wodRef}
+                  wod={wod}
+                  idx={index}
+                  today={today}
+                  offsetX={offsetX}
+                  currentIndex={currentIndex}
+                  offsetWodX={offsetWodX}
+                  setOffsetWodX={setOffsetWodX}
+                  setToday={setToday}
+                  setOffsetX={setOffsetX}
+                  setCurrentIndex={setCurrentIndex}
+                />
+              ))}
+          </ScrollView>
+        </Block>
         <ScrollView
           style={{
-            height: 80,
+            flexGrow: 1,
+            width: '100%',
+            marginBottom: 30,
+            height: 400,
           }}
           horizontal
           scrollEventThrottle={25}
-          ref={svRef}
-          scrollEnabled={false}
-          contentContainerStyle={{
-            marginLeft: 25,
-            paddingRight: 174,
-          }}
+          pagingEnabled
+          showsHorizontalScrollIndicator={false}
+          onScrollEndDrag={handleScroll}
+          ref={wodRef}
         >
-          {wods.length > 0 &&
-            wods.map((wod, index) => (
-              <DayButton
-                key={index}
-                svRef={svRef}
-                wodRef={wodRef}
-                wod={wod}
-                idx={index}
-                today={today}
-                offsetX={offsetX}
-                currentIndex={currentIndex}
-                offsetWodX={offsetWodX}
-                setOffsetWodX={setOffsetWodX}
-                setToday={setToday}
-                setOffsetX={setOffsetX}
-                setCurrentIndex={setCurrentIndex}
-              />
-            ))}
+          {wods && wods.map((wod, index) => <WodList wod={wod} key={index} />)}
         </ScrollView>
-      </Block>
-      <ScrollView
-        style={{
-          flexGrow: 1,
-          width: '100%',
-          marginBottom: 10,
-          height: 400,
-        }}
-        horizontal
-        scrollEventThrottle={25}
-        pagingEnabled
-        showsHorizontalScrollIndicator={false}
-        onScrollEndDrag={handleScroll}
-        ref={wodRef}
-      >
-        {wods && wods.map((wod, index) => <WodList wod={wod} key={index} />)}
-      </ScrollView>
-      <Block height={'120px'} padding={[20]} margin={[0, 0, 20, 0]}>
-        <Btn onPress={() => navigation.navigate('Membership')}>
-          <Block
-            backgroundColor={ColorPalette.White.WHITE}
-            width={'100%'}
-            height={'100%'}
-            borderRadius={[10]}
-            flexDirection={FlexDirection.ROW}
-          >
-            <T color={ColorPalette.Main.BG_DARK} margin={[10]}>
-              회원권 정보
-            </T>
-            <Icon name="barcode" size={26} color={ColorPalette.Main.BG_DARK} />
-          </Block>
-        </Btn>
-      </Block>
-    </Scroll>
+      </Scroll>
+    </>
   );
 };
 

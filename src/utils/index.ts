@@ -155,11 +155,19 @@ export const validateEmpty = (
   return true;
 };
 
+export function formatDate(num: number): string {
+  if (num < 10) {
+    return `0${num}`;
+  } else {
+    return `${num}`;
+  }
+}
+
 export const checkTodayIdx = (wods: Array<IWodProps>): number => {
-  const date: Date = new Date(Date.now());
-  const fullDate = `${date.getFullYear()}-${
+  const date: Date = new Date();
+  const fullDate = `${date.getFullYear()}-${formatDate(
     date.getMonth() + 1
-  }-${date.getDate()}`;
+  )}-${formatDate(date.getDate())}`;
   // wods.forEach((wod, index) => {
   //   console.log(wod.date);
   //   console.log(wod.date === fullDate);
@@ -224,7 +232,9 @@ export const isPassDate = (date: string): boolean => {
   const d = new Date(date);
   const now = new Date();
   const exceptTime = new Date(
-    `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()}`
+    `${now.getFullYear()}-${formatDate(now.getMonth() + 1)}-${formatDate(
+      now.getDate()
+    )}`
   );
 
   return d >= exceptTime;

@@ -19,14 +19,10 @@ interface IOptionBoxProps {
 const WodList: React.FC<IProps> = ({ wod }) => {
   const OptionBox = ({ title, content }: IOptionBoxProps) => (
     <Block>
-      <T color={ColorPalette.Main.TXT_LIGHT} size={10}>
+      <T color={ColorPalette.Gray.GRAY} size={10}>
         {title}
       </T>
-      <T
-        color={ColorPalette.Main.BG}
-        size={16}
-        fontFamily={FontFamily.NANUM_BOLD}
-      >
+      <T size={16} fontFamily={FontFamily.NANUM_BOLD}>
         {content}
       </T>
     </Block>
@@ -36,14 +32,13 @@ const WodList: React.FC<IProps> = ({ wod }) => {
     <Block
       width={`${width - 40}px`}
       backgroundColor={ColorPalette.White.WHITE}
-      borderRadius={[20]}
+      borderRadius={[5]}
       margin={[0, 20]}
     >
       <Block backgroundColor={ColorPalette.White.WHITE} width={'100%'}>
         <T
           margin={[0, 0, 10, 0]}
           size={18}
-          color={ColorPalette.Main.BG_DARK}
           fontFamily={FontFamily.NANUM_BOLD}
           transform={TextTransform.UPPERCASE}
         >
@@ -70,12 +65,7 @@ const WodList: React.FC<IProps> = ({ wod }) => {
         padding={[0, 10]}
         height={'70%'}
       >
-        <T
-          size={16}
-          color={ColorPalette.Main.BG_DARK}
-          align={TextAlign.LEFT}
-          lineHeight={22}
-        >
+        <T size={18} align={TextAlign.LEFT} lineHeight={22}>
           {wod.content}
         </T>
       </Block>

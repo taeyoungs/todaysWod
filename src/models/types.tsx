@@ -73,6 +73,10 @@ export type ScheduleScreenProps = StackScreenProps<
 
 export type WodScreenProps = StackScreenProps<MainStackParamList, 'Wod'>;
 export type CheckScreenProps = StackScreenProps<MainStackParamList, 'Check'>;
+export type MemberScreenProps = StackScreenProps<
+  MainStackParamList,
+  'Membership'
+>;
 
 export type ReservationTabScreenProps = BottomTabScreenProps<
   MainTabsParamList,

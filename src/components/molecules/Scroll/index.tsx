@@ -91,6 +91,7 @@ const Scroll: React.FC<IProps> = ({
       onScroll={onScroll}
       contentContainerStyle={{ flexGrow: 1 }}
       scrollEventThrottle={scrollEventThrottle}
+      showsVerticalScrollIndicator={false}
       refreshControl={
         <RefreshControl
           refreshing={refreshing}

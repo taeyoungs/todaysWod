@@ -14,6 +14,7 @@ import { ColorPalette } from 'models/color';
 import { lconfig } from 'models/cal';
 import { HomeScreenProps } from 'models/types';
 import { daysInMonth, isPassDate, wait } from 'utils';
+import Header from 'components/organisms/Header';
 
 LocaleConfig.locales['kr'] = lconfig;
 LocaleConfig.defaultLocale = 'kr';
@@ -106,79 +107,81 @@ const Reservation: React.FC<IProps> = ({ navigation }) => {
   };
 
   return (
-    <Scroll refreshing={refreshing} onRefresh={onRefresh}>
-      <Flex
-        backgroundColor={ColorPalette.White.WHITE}
-        width={'100%'}
-        borderRadius={[40, 0]}
-        sort={Sort.CENTER_TOP}
-        padding={[40, 0, 0, 0]}
-        margin={[60, 0, 0, 0]}
-      >
-        <Block width={'100%'} margin={[0, 0, 2, 0]}>
-          <Calendar
-            style={{ width: width - 20 }}
-            markingType="simple"
-            markedDates={markList()}
-            hideExtraDays={true}
-            onDayPress={(day) => {
-              navigation.navigate('Schedule', { date: `${day.dateString}` });
-            }}
-            onMonthChange={(month) => {
-              // console.log('month changed', month);
-              setYear(month.year);
-              setMonth(month.month);
-            }}
-            theme={{
-              arrowColor: ColorPalette.Main.BG_DARK,
-              dayTextColor: ColorPalette.Main.BG_DARK,
-              todayTextColor: ColorPalette.Main.TXT,
-              textDayFontFamily: FontFamily.NANUM_REGULAR,
-              textMonthFontFamily: FontFamily.NANUM_REGULAR,
-              textDayHeaderFontFamily: FontFamily.NANUM_REGULAR,
-            }}
-          />
-        </Block>
-        <Block
-          flexDirection={FlexDirection.ROW}
-          sort={Sort.SPACE_AROUND_CENTER}
-          width={'100%'}
-          height={'50px'}
-          margin={[0, 0, 10, 0]}
-        >
-          <Block flexDirection={FlexDirection.ROW}>
-            <T
-              color={ColorPalette.Main.TXT_LIGHT}
-              size={8}
-              fontFamily={FontFamily.NANUM_BOLD}
-              margin={[0, 10, 0, 0]}
-            >
-              T
-            </T>
-            <T size={12}>와드 미등록</T>
-          </Block>
-          {dotOptions.map((option, index) => (
-            <DotOption text={option.text} key={index} color={option.color} />
-          ))}
-        </Block>
+    <>
+      <Header goMembership={() => navigation.navigate('Membership')} />
+      <Scroll refreshing={refreshing} onRefresh={onRefresh}>
         <Flex
-          padding={[0, 30]}
+          backgroundColor={ColorPalette.White.WHITE}
           width={'100%'}
-          backgroundColor={ColorPalette.White.SMOKE}
+          borderRadius={[40, 0]}
           sort={Sort.CENTER_TOP}
+          padding={[40, 0, 0, 0]}
+          margin={[5, 0, 0, 0]}
         >
-          <T size={13} margin={[15, 0]}>
-            {month}월 예약
-          </T>
-          {reservations &&
-            reservations
-              .filter((value) => isPassDate(value.date))
-              .map((reservation, index) => (
-                <Ticket key={index} reservation={reservation} />
-              ))}
+          <Block width={'100%'} margin={[0, 0, 2, 0]}>
+            <Calendar
+              style={{ width: width - 20 }}
+              markingType="simple"
+              markedDates={markList()}
+              hideExtraDays={true}
+              onDayPress={(day) => {
+                navigation.navigate('Schedule', { date: `${day.dateString}` });
+              }}
+              onMonthChange={(month) => {
+                setYear(month.year);
+                setMonth(month.month);
+              }}
+              theme={{
+                arrowColor: ColorPalette.Main.BG_DARK,
+                dayTextColor: ColorPalette.Main.BG_DARK,
+                todayTextColor: ColorPalette.Main.TXT,
+                textDayFontFamily: FontFamily.NANUM_REGULAR,
+                textMonthFontFamily: FontFamily.NANUM_REGULAR,
+                textDayHeaderFontFamily: FontFamily.NANUM_REGULAR,
+              }}
+            />
+          </Block>
+          <Block
+            flexDirection={FlexDirection.ROW}
+            sort={Sort.SPACE_AROUND_CENTER}
+            width={'100%'}
+            height={'50px'}
+            margin={[0, 0, 10, 0]}
+          >
+            <Block flexDirection={FlexDirection.ROW}>
+              <T
+                color={ColorPalette.Main.TXT_LIGHT}
+                size={8}
+                fontFamily={FontFamily.NANUM_BOLD}
+                margin={[0, 10, 0, 0]}
+              >
+                T
+              </T>
+              <T size={12}>와드 미등록</T>
+            </Block>
+            {dotOptions.map((option, index) => (
+              <DotOption text={option.text} key={index} color={option.color} />
+            ))}
+          </Block>
+          <Flex
+            padding={[0, 30]}
+            width={'100%'}
+            backgroundColor={ColorPalette.White.SMOKE}
+            sort={Sort.CENTER_TOP}
+          >
+            <T size={13} margin={[15, 0]}>
+              {month}월 예약
+            </T>
+            {reservations &&
+              reservations
+                .filter((value) => isPassDate(value.date))
+                .map((reservation, index) => (
+                  <Ticket key={index} reservation={reservation} />
+                ))}
+          </Flex>
         </Flex>
-      </Flex>
-    </Scroll>
+      </Scroll>
+    </>
   );
 };
 

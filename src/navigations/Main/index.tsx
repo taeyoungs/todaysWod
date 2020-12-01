@@ -17,13 +17,13 @@ import Wod from 'screens/Main/Wod';
 import Check from 'screens/Main/Check';
 import { ColorPalette } from 'models/color';
 import { MainStackParamList, MainTabsParamList } from 'models/types';
-import useUser from 'hooks/useUser';
+import useAlert from 'hooks/useAlert';
 
 const Tab = createBottomTabNavigator<MainTabsParamList>();
 const Main = createStackNavigator<MainStackParamList>();
 
 const Tabs = () => {
-  const { hasNewAlert } = useUser();
+  const { hasNewAlert } = useAlert();
   return (
     <Tab.Navigator
       tabBarOptions={{
@@ -104,7 +104,7 @@ export default (): JSX.Element => {
       <Main.Screen
         component={Membership}
         name="Membership"
-        options={{ header: () => <BackButton isWhite={true} /> }}
+        options={{ header: () => <BackButton /> }}
       />
       <Main.Screen
         component={Schedule}

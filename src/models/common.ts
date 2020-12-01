@@ -43,11 +43,12 @@ export interface IWodProps {
 export interface IMemebershipProps {
   id?: number;
   title?: string;
-  user?: number;
-  start_term?: string | null;
-  end_term?: string | null;
-  cnt?: number | null;
-  hold_date?: string | null;
+  user?: ICoachProps;
+  start_term: string | null;
+  end_term: string | null;
+  cnt: number | null;
+  hold_start: string | null;
+  hold_date: string | null;
   state?: string;
 }
 
