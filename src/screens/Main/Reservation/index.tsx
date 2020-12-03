@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Dimensions } from 'react-native';
 import { Calendar, LocaleConfig } from 'react-native-calendars';
 import T, { FontFamily } from 'components/atoms/T';
@@ -6,15 +6,14 @@ import Flex from 'components/molecules/Flex';
 import Scroll from 'components/molecules/Scroll';
 import Block, { FlexDirection, Sort } from 'components/molecules/Block';
 import Ticket from 'components/organisms/Ticket';
+import Header from 'components/organisms/Header';
 import useMonthRecords from 'hooks/useMonthRecords';
 import useExistWods from 'hooks/useExistWods';
-import useReservationActions from 'hooks/useReservationActions';
 import useReservations from 'hooks/useReservations';
 import { ColorPalette } from 'models/color';
 import { lconfig } from 'models/cal';
 import { HomeScreenProps } from 'models/types';
 import { daysInMonth, isPassDate, wait } from 'utils';
-import Header from 'components/organisms/Header';
 
 LocaleConfig.locales['kr'] = lconfig;
 LocaleConfig.defaultLocale = 'kr';
@@ -34,9 +33,8 @@ const Reservation: React.FC<IProps> = ({ navigation }) => {
   const [refreshing, setRefreshing] = useState(false);
   const [year, setYear] = useState(new Date().getFullYear());
   const [month, setMonth] = useState(new Date().getMonth() + 1);
-  const records = useMonthRecords(year, month);
+  useMonthRecords(year, month, true);
   const existWods = useExistWods(year, month, refreshing);
-  const { onSetReservations } = useReservationActions();
   const reservations = useReservations(month);
 
   const onRefresh = React.useCallback(() => {
@@ -44,14 +42,14 @@ const Reservation: React.FC<IProps> = ({ navigation }) => {
     wait(1000).then(() => setRefreshing(false));
   }, []);
 
-  useEffect(() => {
-    // 이번 달 이전의 예약 목록은 저장하지 않음 => X 다시 저장하는 걸로 변경
-    // const thisMonth = new Date().getMonth() + 1;
-    // if (thisMonth <= month) {
-    //   const reservations = records.filter((value) => isPassDate(value.date));
-    // }
-    onSetReservations({ month, reservations: records });
-  }, [records]);
+  // useEffect(() => {
+  //   // 이번 달 이전의 예약 목록은 저장하지 않음 => X 다시 저장하는 걸로 변경
+  //   // const thisMonth = new Date().getMonth() + 1;
+  //   // if (thisMonth <= month) {
+  //   //   const reservations = records.filter((value) => isPassDate(value.date));
+  //   // }
+  //   onSetReservations({ month, reservations: records });
+  // }, [records]);
 
   const markList = () => {
     const objRecords: Record<string, Record<string, string | boolean>> = {};
@@ -108,7 +106,11 @@ const Reservation: React.FC<IProps> = ({ navigation }) => {
 
   return (
     <>
-      <Header goMembership={() => navigation.navigate('Membership')} />
+      <Header
+        title="예약"
+        iconName="calendar"
+        goMembership={() => navigation.navigate('Membership')}
+      />
       <Scroll refreshing={refreshing} onRefresh={onRefresh}>
         <Flex
           backgroundColor={ColorPalette.White.WHITE}

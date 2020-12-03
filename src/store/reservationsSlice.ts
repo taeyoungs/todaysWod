@@ -3,14 +3,19 @@ import { IReservationProps } from 'models/common';
 
 export interface IRState {
   reservations: Record<number, Array<IReservationProps>>;
+  past: {
+    records: Array<IReservationProps>;
+    page: number;
+  };
 }
 
 const initialState: IRState = {
   reservations: {},
+  past: {
+    records: [],
+    page: 1,
+  },
 };
-
-// ToDo1: 이번 달일 경우 reservations 초기화
-// ToDo2: 년 월 처리는 디스패치 하기 전에 처리 (디스패치 여부를 결정)
 
 interface IReservationsActionProps {
   month: number;
@@ -26,6 +31,15 @@ function compareReservations(a: IReservationProps, b: IReservationProps) {
   const aDate = new Date(a.date).getTime();
   const bDate = new Date(b.date).getTime();
   return aDate - bDate;
+}
+
+function compareDescendReservations(
+  a: IReservationProps,
+  b: IReservationProps
+) {
+  const aDate = new Date(a.date).getTime();
+  const bDate = new Date(b.date).getTime();
+  return bDate - aDate;
 }
 
 const reservationsSlice = createSlice({
@@ -67,6 +81,13 @@ const reservationsSlice = createSlice({
         (r) => r.id !== id
       );
     },
+    setPastReservations: (
+      state,
+      action: PayloadAction<Array<IReservationProps>>
+    ) => {
+      state.past.records = action.payload.sort(compareDescendReservations);
+      state.past.page = 1;
+    },
   },
 });
 
@@ -75,6 +96,7 @@ export const {
   setReservation,
   updateReservation,
   deleteReservation,
+  setPastReservations,
 } = reservationsSlice.actions;
 
 export default reservationsSlice.reducer;

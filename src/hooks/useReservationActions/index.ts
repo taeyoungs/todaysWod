@@ -6,6 +6,7 @@ import {
   setReservation,
   updateReservation,
   deleteReservation,
+  setPastReservations,
 } from 'store/reservationsSlice';
 import { RootState } from 'store/rootReducer';
 
@@ -43,12 +44,24 @@ const useReservationActions = () => {
     return reservation;
   };
 
+  const onSetPastReservations = useCallback(
+    (reservations: Array<IReservationProps>) =>
+      dispatch(setPastReservations(reservations)),
+    [dispatch]
+  );
+
+  const getPastReservationPage = (): number => {
+    return rSlice.past.page;
+  };
+
   return {
     onSetReservations,
     onSetReservation,
     onUpdateReservation,
     onDeleteReservaton,
     getReservation,
+    onSetPastReservations,
+    getPastReservationPage,
   };
 };
 

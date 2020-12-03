@@ -9,6 +9,7 @@ import {
 import T from 'components/atoms/T';
 import Scroll from 'components/molecules/Scroll';
 import Block from 'components/molecules/Block';
+import Shadow from 'components/molecules/Shadow';
 import Header from 'components/organisms/Header';
 import DayButton from 'components/organisms/DayButton';
 import WodList from 'components/organisms/WodList';
@@ -80,13 +81,29 @@ const Home: React.FC<IProps> = ({ navigation }) => {
 
   return (
     <>
-      <Header goMembership={() => navigation.navigate('Membership')} />
-      <Scroll refreshing={refreshing} onRefresh={onRefresh}>
+      <Header
+        title="와드"
+        iconName="list"
+        goMembership={() => navigation.navigate('Membership')}
+      />
+      <Scroll
+        refreshing={refreshing}
+        onRefresh={onRefresh}
+        backgroundColor={ColorPalette.White.SMOKE}
+        refreshColor={ColorPalette.Main.BG}
+      >
         <StatusBar barStyle="light-content" />
-        <Block width={'100%'} margin={[0, 0, 20, 0]}>
-          <T margin={[0, 0, 10, 0]} color={ColorPalette.Main.TXT} size={14}>
-            {wods[currentIndex]?.date.split('-')[1]}월
-          </T>
+        <Block
+          width={'100%'}
+          margin={[0, 0, 20, 0]}
+          backgroundColor={ColorPalette.White.SMOKE}
+          padding={[10, 0]}
+        >
+          <Block margin={[0, 0, 10, 0]}>
+            <T size={12} color={ColorPalette.Main.BG}>
+              {wods[currentIndex]?.date.split('-')[1]}월
+            </T>
+          </Block>
           <ScrollView
             style={{
               height: 80,
@@ -125,7 +142,7 @@ const Home: React.FC<IProps> = ({ navigation }) => {
             flexGrow: 1,
             width: '100%',
             marginBottom: 30,
-            height: 400,
+            height: 450,
           }}
           horizontal
           scrollEventThrottle={25}
@@ -134,7 +151,12 @@ const Home: React.FC<IProps> = ({ navigation }) => {
           onScrollEndDrag={handleScroll}
           ref={wodRef}
         >
-          {wods && wods.map((wod, index) => <WodList wod={wod} key={index} />)}
+          {wods &&
+            wods.map((wod, index) => (
+              <Shadow width={width} key={index}>
+                <WodList wod={wod} />
+              </Shadow>
+            ))}
         </ScrollView>
       </Scroll>
     </>

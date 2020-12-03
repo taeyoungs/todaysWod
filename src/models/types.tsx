@@ -27,6 +27,7 @@ export type MainStackParamList = {
   Schedule: { date: string };
   Wod: { date: string };
   Check: { date: string; schedule: IScheduleProps };
+  Record: undefined;
 };
 
 export type MainTabsParamList = {

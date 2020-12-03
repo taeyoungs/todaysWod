@@ -46,7 +46,11 @@ const Alerts: React.FC<IProps> = ({ navigation }) => {
 
   return (
     <>
-      <Header goMembership={() => navigation.navigate('Membership')} />
+      <Header
+        title="알림"
+        iconName="notifications-outline"
+        goMembership={() => navigation.navigate('Membership')}
+      />
       <ScrollView
         showsVerticalScrollIndicator={false}
         refreshControl={

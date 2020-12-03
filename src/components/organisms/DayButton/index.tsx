@@ -1,10 +1,10 @@
+import React from 'react';
+import { Dimensions, ScrollView } from 'react-native';
 import Btn from 'components/atoms/Button';
 import T, { FontFamily, TextAlign } from 'components/atoms/T';
 import Block from 'components/molecules/Block';
 import { ColorPalette } from 'models/color';
 import { IWodProps } from 'models/common';
-import React from 'react';
-import { Dimensions, ScrollView } from 'react-native';
 import { dayOfTheWeek } from 'utils';
 
 interface IProps {
@@ -69,11 +69,11 @@ const DayButton: React.FC<IProps> = ({
     <Block
       width={`${width / 6 - 5.5}px`}
       backgroundColor={
-        today - day === 0 ? ColorPalette.Main.BG_DARK : ColorPalette.Main.BG
+        today - day === 0 ? ColorPalette.Main.BG : ColorPalette.White.WHITE
       }
       border={[1]}
       borderColor={
-        today - day === 0 ? ColorPalette.Main.BG_DARK : ColorPalette.White.WHITE
+        today - day === 0 ? ColorPalette.Main.BG : ColorPalette.Gray.GAINSBORO
       }
       borderRadius={[10]}
       margin={[0, 10, 0, 0]}
@@ -83,8 +83,8 @@ const DayButton: React.FC<IProps> = ({
           <T
             color={
               today - day === 0
-                ? ColorPalette.Main.TXT
-                : ColorPalette.White.WHITE
+                ? ColorPalette.White.WHITE
+                : ColorPalette.Main.BG
             }
             align={TextAlign.CENTER}
             fontFamily={
@@ -100,8 +100,8 @@ const DayButton: React.FC<IProps> = ({
           <T
             color={
               today - day === 0
-                ? ColorPalette.Main.TXT
-                : ColorPalette.White.WHITE
+                ? ColorPalette.White.WHITE
+                : ColorPalette.Main.BG
             }
             align={TextAlign.CENTER}
             size={today - day === 0 ? 26 : 20}

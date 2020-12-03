@@ -1,22 +1,25 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import useUser from 'hooks/useUser';
+import useReservationActions from 'hooks/useReservationActions';
 import api from 'api';
-import { IReservationProps } from 'models/common';
 
 const useMonthRecords = (
   year: number,
-  month: number
-): Array<IReservationProps> => {
-  const [records, setRecords] = useState([]);
+  month: number,
+  isCalendar: boolean
+): void => {
   const { token } = useUser();
+  const { onSetReservations, onSetPastReservations } = useReservationActions();
 
   useEffect(() => {
     api.getMonthRecords(token, { period: `${year}-${month}` }).then((res) => {
-      setRecords(res.data);
+      if (isCalendar) {
+        onSetReservations({ month, reservations: res.data });
+      } else {
+        onSetPastReservations(res.data);
+      }
     });
   }, [month]);
-
-  return records;
 };
 
 export default useMonthRecords;

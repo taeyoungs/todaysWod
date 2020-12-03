@@ -10,10 +10,15 @@ const useUserRetrieve = (refreshing: boolean): IUserProps => {
   const { onUpdateRState } = useUserActions();
 
   useEffect(() => {
-    api.getUser(userId).then((res) => {
-      setInfo(res.data);
-      onUpdateRState({ registrationState: res.data.registration_state });
-    });
+    api
+      .getUser(userId)
+      .then((res) => {
+        setInfo(res.data);
+        return res;
+      })
+      .then((res) => {
+        onUpdateRState({ registrationState: res.data.registration_state });
+      });
   }, [refreshing, boxId]);
 
   return info;

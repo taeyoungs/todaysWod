@@ -1,9 +1,12 @@
 import React from 'react';
 import { View } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { createStackNavigator } from '@react-navigation/stack';
+import {
+  createStackNavigator,
+  TransitionPresets,
+} from '@react-navigation/stack';
 import Icon from 'components/atoms/Icon';
-import T from 'components/atoms/T';
+import T, { FontFamily } from 'components/atoms/T';
 import PositionBlock, { Position } from 'components/molecules/PositionBlock';
 import Block from 'components/molecules/Block';
 import BackButton from 'components/organisms/BackButton';
@@ -18,6 +21,7 @@ import Check from 'screens/Main/Check';
 import { ColorPalette } from 'models/color';
 import { MainStackParamList, MainTabsParamList } from 'models/types';
 import useAlert from 'hooks/useAlert';
+import Record from 'screens/Main/Record';
 
 const Tab = createBottomTabNavigator<MainTabsParamList>();
 const Main = createStackNavigator<MainStackParamList>();
@@ -44,8 +48,16 @@ const Tabs = () => {
           const color = focused
             ? ColorPalette.Main.BG
             : ColorPalette.Gray.SILVER;
+          const family = focused
+            ? FontFamily.NANUM_BOLD
+            : FontFamily.NANUM_REGULAR;
           return (
-            <T color={color} size={10} margin={[-5, 0, 5, 0]}>
+            <T
+              color={color}
+              size={10}
+              margin={[-5, 0, 5, 0]}
+              fontFamily={family}
+            >
               {name}
             </T>
           );
@@ -60,7 +72,7 @@ const Tabs = () => {
             iconName = 'calendar';
             size = 20;
           } else if (route.name === 'Alerts') {
-            iconName = 'notifications';
+            iconName = 'notifications-outline';
             size = 20;
           } else {
             iconName = 'contact';
@@ -95,7 +107,15 @@ const Tabs = () => {
 
 export default (): JSX.Element => {
   return (
-    <Main.Navigator mode="modal">
+    <Main.Navigator
+      mode="modal"
+      headerMode="float"
+      screenOptions={{
+        headerBackTitleVisible: false,
+        headerBackground: () => null,
+        headerTitle: () => null,
+      }}
+    >
       <Main.Screen
         component={Tabs}
         name="Tabs"
@@ -120,6 +140,13 @@ export default (): JSX.Element => {
         component={Check}
         name="Check"
         options={{ header: () => null }}
+      />
+      <Main.Screen
+        component={Record}
+        name="Record"
+        options={{
+          ...TransitionPresets.DefaultTransition,
+        }}
       />
     </Main.Navigator>
   );

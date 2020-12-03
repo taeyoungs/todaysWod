@@ -4,18 +4,19 @@ import Icon from 'components/atoms/Icon';
 import Btn from 'components/atoms/Button';
 import Shadow from 'components/molecules/Shadow';
 import Block, { FlexDirection, Sort } from 'components/molecules/Block';
+import useUser from 'hooks/useUser';
+import useReservationActions from 'hooks/useReservationActions';
 import { ColorPalette } from 'models/color';
 import { IReservationProps } from 'models/common';
 import { createTwoButtonAlert, dayOfTheWeek, formatTime } from 'utils';
-import useReservationActions from 'hooks/useReservationActions';
 import api from 'api';
-import useUser from 'hooks/useUser';
 
 interface IProps {
   reservation: IReservationProps;
+  calendar?: boolean;
 }
 
-const Ticket: React.FC<IProps> = ({ reservation }) => {
+const Ticket: React.FC<IProps> = ({ reservation, calendar = true }) => {
   const d = reservation.date.split('-');
   const { onDeleteReservaton } = useReservationActions();
   const { token } = useUser();
@@ -27,6 +28,12 @@ const Ticket: React.FC<IProps> = ({ reservation }) => {
       console.warn(error);
     }
   };
+  const ticketColor =
+    reservation.state === 'pending'
+      ? ColorPalette.Main.TXT
+      : reservation.state === 'confirmed'
+      ? ColorPalette.Main.BG
+      : ColorPalette.Red.RED;
   return (
     <Shadow>
       <Block
@@ -34,7 +41,7 @@ const Ticket: React.FC<IProps> = ({ reservation }) => {
         width={'100%'}
         backgroundColor={ColorPalette.White.WHITE}
         border={[0, 0, 0, 3]}
-        borderColor={ColorPalette.Main.TXT}
+        borderColor={ticketColor}
         margin={[0, 0, 10, 0]}
         flexDirection={FlexDirection.ROW}
         sort={Sort.LEFT_CENTER}
@@ -61,22 +68,31 @@ const Ticket: React.FC<IProps> = ({ reservation }) => {
           </T>
         </Block>
         <Block>
-          <Btn
-            onPress={() => {
-              createTwoButtonAlert(
-                reservation.date,
-                formatTime(reservation.schedule.start_time),
-                formatTime(reservation.schedule.end_time),
-                handleDelete
-              );
-            }}
-          >
-            <Icon
-              name="close-circle-outline"
-              color={ColorPalette.Gray.GAINSBORO}
-              size={20}
-            />
-          </Btn>
+          {calendar ? (
+            <Btn
+              onPress={() => {
+                createTwoButtonAlert(
+                  reservation.date,
+                  formatTime(reservation.schedule.start_time),
+                  formatTime(reservation.schedule.end_time),
+                  handleDelete
+                );
+              }}
+            >
+              <Icon
+                name="close-circle-outline"
+                color={ColorPalette.Gray.GAINSBORO}
+                size={20}
+              />
+            </Btn>
+          ) : (
+            <Block margin={[0, 0, 0, 20]}>
+              <Icon
+                name={reservation.state === 'confirmed' ? 'checkmark' : 'close'}
+                color={ticketColor}
+              />
+            </Block>
+          )}
         </Block>
       </Block>
     </Shadow>
