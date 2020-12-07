@@ -42,15 +42,6 @@ const Reservation: React.FC<IProps> = ({ navigation }) => {
     wait(1000).then(() => setRefreshing(false));
   }, []);
 
-  // useEffect(() => {
-  //   // 이번 달 이전의 예약 목록은 저장하지 않음 => X 다시 저장하는 걸로 변경
-  //   // const thisMonth = new Date().getMonth() + 1;
-  //   // if (thisMonth <= month) {
-  //   //   const reservations = records.filter((value) => isPassDate(value.date));
-  //   // }
-  //   onSetReservations({ month, reservations: records });
-  // }, [records]);
-
   const markList = () => {
     const objRecords: Record<string, Record<string, string | boolean>> = {};
 

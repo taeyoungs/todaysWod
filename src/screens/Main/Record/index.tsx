@@ -1,5 +1,6 @@
 import React, { useLayoutEffect, useState } from 'react';
-import T, { FontFamily } from 'components/atoms/T';
+import { ActivityIndicator } from 'react-native';
+import T, { FontFamily, TextAlign } from 'components/atoms/T';
 import Btn from 'components/atoms/Button';
 import Icon from 'components/atoms/Icon';
 import Scroll from 'components/molecules/Scroll';
@@ -8,11 +9,11 @@ import Block, { FlexDirection, Sort } from 'components/molecules/Block';
 import OpacityHeader from 'components/organisms/OpacityHeader';
 import Ticket from 'components/organisms/Ticket';
 import useMonthRecords from 'hooks/useMonthRecords';
-import useReservations from 'hooks/useReservations';
+import usePastReservations from 'hooks/usePastReservations';
+import useReservationActions from 'hooks/useReservationActions';
 import { HomeScreenProps } from 'models/types';
 import { ColorPalette } from 'models/color';
 import { isPassDate } from 'utils';
-import useReservationActions from 'hooks/useReservationActions';
 
 interface IProps {
   navigation: HomeScreenProps['navigation'];
@@ -21,11 +22,17 @@ interface IProps {
 const Record: React.FC<IProps> = ({ navigation }) => {
   const [year, setYear] = useState(new Date().getFullYear());
   const [month, setMonth] = useState(new Date().getMonth() + 1);
-  useMonthRecords(year, month, false);
-  const reservations = useReservations();
+  const [loading, setLoading] = useState(false);
+  useMonthRecords(year, month, false, setLoading);
+  const {
+    records,
+    canceledCnt,
+    confirmCnt,
+    recordsCnt,
+    hasMore,
+  } = usePastReservations();
+  const { onIncreasePage } = useReservationActions();
   const thisMonth = new Date().getMonth() + 1;
-
-  // console.log(reservations, getPastReservationPage());
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -46,6 +53,7 @@ const Record: React.FC<IProps> = ({ navigation }) => {
     } else {
       setMonth((prevState) => prevState + 1);
     }
+    setLoading(true);
   };
 
   const beforeMonth = () => {
@@ -55,6 +63,26 @@ const Record: React.FC<IProps> = ({ navigation }) => {
     } else {
       setMonth((prevState) => prevState - 1);
     }
+    setLoading(true);
+  };
+
+  const Cnt = ({
+    color,
+    title,
+    count,
+  }: {
+    color: string;
+    title: string;
+    count: number;
+  }) => {
+    return (
+      <Block flexDirection={FlexDirection.ROW}>
+        <T size={12} color={color} fontFamily={FontFamily.NANUM_BOLD}>
+          {title}{' '}
+        </T>
+        <T size={12}>{count}</T>
+      </Block>
+    );
   };
 
   return (
@@ -111,58 +139,48 @@ const Record: React.FC<IProps> = ({ navigation }) => {
           sort={Sort.SPACE_AROUND_CENTER}
           margin={[20, 0]}
         >
-          <Block flexDirection={FlexDirection.ROW}>
-            <T
-              size={12}
-              color={ColorPalette.Main.TXT}
-              fontFamily={FontFamily.NANUM_BOLD}
-            >
-              예약:{' '}
-            </T>
-            <T size={12}>
-              {reservations.filter((r) => !isPassDate(r.date)).length}
-            </T>
-          </Block>
-          <Block flexDirection={FlexDirection.ROW}>
-            <T
-              size={12}
-              color={ColorPalette.Main.BG}
-              fontFamily={FontFamily.NANUM_BOLD}
-            >
-              출석:{' '}
-            </T>
-            <T size={12}>
-              {reservations.filter((r) => r.state === 'confirmed').length}
-            </T>
-          </Block>
-          <Block flexDirection={FlexDirection.ROW}>
-            <T
-              size={12}
-              color={ColorPalette.Red.RED}
-              fontFamily={FontFamily.NANUM_BOLD}
-            >
-              결석:{' '}
-            </T>
-            <T size={12}>
-              {reservations.filter((r) => r.state === 'canceled').length}
-            </T>
-          </Block>
+          <Cnt color={ColorPalette.Main.TXT} title="예약:" count={recordsCnt} />
+          <Cnt color={ColorPalette.Main.BG} title="출석:" count={confirmCnt} />
+          <Cnt color={ColorPalette.Red.RED} title="결석:" count={canceledCnt} />
         </Block>
         <Scroll backgroundColor={ColorPalette.White.SMOKE} padding={[0, 20]}>
-          {reservations
-            .filter((reservation) => !isPassDate(reservation.date))
-            .map((reservation) => (
-              <Ticket
-                reservation={reservation}
-                calendar={false}
-                key={reservation.id}
-              />
-            ))}
-          <Block margin={[0, 0, 10, 0]}>
-            <Btn onPress={() => console.log('더 불러오기')}>
-              <T>더 불러오기</T>
-            </Btn>
-          </Block>
+          {loading ? (
+            <Flex backgroundColor={ColorPalette.White.TANSPARENT}>
+              <ActivityIndicator color={ColorPalette.Main.BG_DARK} />
+            </Flex>
+          ) : (
+            <>
+              {records
+                .filter((reservation) => !isPassDate(reservation.date))
+                .map((reservation) => (
+                  <Ticket
+                    reservation={reservation}
+                    calendar={false}
+                    key={reservation.id}
+                  />
+                ))}
+              {hasMore && (
+                <Block margin={[0, 0, 20, 0]}>
+                  <Block
+                    backgroundColor={ColorPalette.Main.TXT_LIGHT}
+                    width={'120px'}
+                    padding={[5, 0]}
+                    borderRadius={[2]}
+                  >
+                    <Btn onPress={onIncreasePage}>
+                      <T
+                        align={TextAlign.CENTER}
+                        color={ColorPalette.White.WHITE}
+                        size={12}
+                      >
+                        더 불러오기
+                      </T>
+                    </Btn>
+                  </Block>
+                </Block>
+              )}
+            </>
+          )}
         </Scroll>
       </Flex>
     </>

@@ -113,7 +113,7 @@ export const createOneButtonAlert = (errorMsg: string): void => {
   );
 };
 
-export const createTwoButtonAlert = (
+export const cancelReservationAlert = (
   date: string,
   startTime: string,
   endTime: string,
@@ -122,6 +122,26 @@ export const createTwoButtonAlert = (
   return Alert.alert(
     '정말 취소하시겠습니까?',
     `${date} ${startTime} - ${endTime}`,
+    [
+      {
+        text: 'Cancel',
+        onPress: () => console.log('Cancel Pressed'),
+        style: 'cancel',
+      },
+      { text: 'OK', onPress: onP },
+    ],
+    { cancelable: false }
+  );
+};
+
+export const createTwoButtonAlert = (
+  onP: () => void,
+  title: string,
+  content: string
+): void => {
+  return Alert.alert(
+    `${title}`,
+    `${content}`,
     [
       {
         text: 'Cancel',

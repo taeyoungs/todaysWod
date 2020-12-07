@@ -8,7 +8,7 @@ import useUser from 'hooks/useUser';
 import useReservationActions from 'hooks/useReservationActions';
 import { ColorPalette } from 'models/color';
 import { IReservationProps } from 'models/common';
-import { createTwoButtonAlert, dayOfTheWeek, formatTime } from 'utils';
+import { cancelReservationAlert, dayOfTheWeek, formatTime } from 'utils';
 import api from 'api';
 
 interface IProps {
@@ -71,7 +71,7 @@ const Ticket: React.FC<IProps> = ({ reservation, calendar = true }) => {
           {calendar ? (
             <Btn
               onPress={() => {
-                createTwoButtonAlert(
+                cancelReservationAlert(
                   reservation.date,
                   formatTime(reservation.schedule.start_time),
                   formatTime(reservation.schedule.end_time),

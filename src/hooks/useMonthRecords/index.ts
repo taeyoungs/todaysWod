@@ -6,7 +6,8 @@ import api from 'api';
 const useMonthRecords = (
   year: number,
   month: number,
-  isCalendar: boolean
+  isCalendar: boolean,
+  setLoading?: React.Dispatch<React.SetStateAction<boolean>>
 ): void => {
   const { token } = useUser();
   const { onSetReservations, onSetPastReservations } = useReservationActions();
@@ -17,6 +18,7 @@ const useMonthRecords = (
         onSetReservations({ month, reservations: res.data });
       } else {
         onSetPastReservations(res.data);
+        setLoading && setLoading(false);
       }
     });
   }, [month]);

@@ -88,6 +88,9 @@ const reservationsSlice = createSlice({
       state.past.records = action.payload.sort(compareDescendReservations);
       state.past.page = 1;
     },
+    increasePage: (state) => {
+      state.past.page += 1;
+    },
   },
 });
 
@@ -97,6 +100,7 @@ export const {
   updateReservation,
   deleteReservation,
   setPastReservations,
+  increasePage,
 } = reservationsSlice.actions;
 
 export default reservationsSlice.reducer;

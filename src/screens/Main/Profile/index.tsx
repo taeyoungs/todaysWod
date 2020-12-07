@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Dimensions } from 'react-native';
 import T from 'components/atoms/T';
 import Btn from 'components/atoms/Button';
@@ -9,7 +9,7 @@ import Header from 'components/organisms/Header';
 import useUserActions from 'hooks/useUserActions';
 import { ColorPalette } from 'models/color';
 import { HomeScreenProps } from 'models/types';
-import OpacityHeader from 'components/organisms/OpacityHeader';
+import { createTwoButtonAlert } from 'utils';
 
 const { width } = Dimensions.get('screen');
 
@@ -51,7 +51,7 @@ const Profile: React.FC<IProps> = ({ navigation }) => {
   return (
     <>
       <Header
-        goMembership={() => console.log('클릭')}
+        goMembership={() => navigation.navigate('Membership')}
         iconName="contact"
         title="프로필"
       />
@@ -64,12 +64,12 @@ const Profile: React.FC<IProps> = ({ navigation }) => {
         <Block
           flexDirection={FlexDirection.ROW}
           sort={Sort.LEFT_BOTTOM}
-          margin={[40, 0]}
+          margin={[40, 0, 20, 0]}
           width={'100%'}
           padding={[0, 10]}
         >
           <T size={30}>박수민</T>
-          <T size={23} color={ColorPalette.Gray.GRAY}>
+          <T size={22} color={ColorPalette.Gray.GRAY}>
             님
           </T>
         </Block>
@@ -92,7 +92,13 @@ const Profile: React.FC<IProps> = ({ navigation }) => {
           <OptionBox
             iconName="log-out"
             label="로그아웃"
-            onPress={() => console.log('개인정보')}
+            onPress={() =>
+              createTwoButtonAlert(
+                () => onLogOut(),
+                '정말 로그아웃 하시겠습니까?',
+                ''
+              )
+            }
           />
         </Block>
         <Block></Block>

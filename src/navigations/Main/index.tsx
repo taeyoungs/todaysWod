@@ -9,7 +9,6 @@ import Icon from 'components/atoms/Icon';
 import T, { FontFamily } from 'components/atoms/T';
 import PositionBlock, { Position } from 'components/molecules/PositionBlock';
 import Block from 'components/molecules/Block';
-import BackButton from 'components/organisms/BackButton';
 import Reservation from 'screens/Main/Reservation';
 import Alerts from 'screens/Main/Alerts';
 import Profile from 'screens/Main/Profile';
@@ -18,10 +17,10 @@ import Membership from 'screens/Main/Membership';
 import Schedule from 'screens/Main/Schedule';
 import Wod from 'screens/Main/Wod';
 import Check from 'screens/Main/Check';
+import Record from 'screens/Main/Record';
+import useAlert from 'hooks/useAlert';
 import { ColorPalette } from 'models/color';
 import { MainStackParamList, MainTabsParamList } from 'models/types';
-import useAlert from 'hooks/useAlert';
-import Record from 'screens/Main/Record';
 
 const Tab = createBottomTabNavigator<MainTabsParamList>();
 const Main = createStackNavigator<MainStackParamList>();
@@ -124,7 +123,7 @@ export default (): JSX.Element => {
       <Main.Screen
         component={Membership}
         name="Membership"
-        options={{ header: () => <BackButton /> }}
+        options={{ header: () => null }}
       />
       <Main.Screen
         component={Schedule}
