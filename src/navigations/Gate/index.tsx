@@ -10,11 +10,11 @@ interface IProps {
 }
 
 const Gate: React.FC<IProps> = () => {
-  const { isLoggedIn, registrationState } = useUser();
+  const { isLoggedIn, user } = useUser();
   return (
     <NavigationContainer>
       {isLoggedIn ? (
-        registrationState === 'registered' ? (
+        user?.registration_state === 'registered' ? (
           <Main />
         ) : (
           <Box />

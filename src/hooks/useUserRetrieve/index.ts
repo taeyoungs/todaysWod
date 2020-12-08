@@ -1,27 +1,17 @@
-import api from 'api';
+import { useLayoutEffect } from 'react';
 import useUser from 'hooks/useUser';
 import useUserActions from 'hooks/useUserActions';
-import { IUserProps } from 'models/common';
-import { useEffect, useState } from 'react';
+import api from 'api';
 
-const useUserRetrieve = (refreshing: boolean): IUserProps => {
-  const [info, setInfo] = useState({});
-  const { userId, boxId } = useUser();
-  const { onUpdateRState } = useUserActions();
+const useUserRetrieve = (refreshing: boolean): void => {
+  const { userId } = useUser();
+  const { onSetUser } = useUserActions();
 
-  useEffect(() => {
-    api
-      .getUser(userId)
-      .then((res) => {
-        setInfo(res.data);
-        return res;
-      })
-      .then((res) => {
-        onUpdateRState({ registrationState: res.data.registration_state });
-      });
-  }, [refreshing, boxId]);
-
-  return info;
+  useLayoutEffect(() => {
+    api.getUser(userId).then((res) => {
+      onSetUser(res.data);
+    });
+  }, [refreshing]);
 };
 
 export default useUserRetrieve;

@@ -1,15 +1,8 @@
 import { useSelector } from 'react-redux';
 import { RootState } from 'store/rootReducer';
+import { IUserState } from 'store/usersSlice';
 
-interface IState {
-  isLoggedIn: boolean;
-  token: string | null;
-  userId: string | null;
-  boxId: string | null;
-  registrationState: string;
-}
-
-export default function useUser(): IState {
+export default function useUser(): IUserState {
   const user = useSelector((state: RootState) => state.usersSlice);
   // console.log(user);
   return user;

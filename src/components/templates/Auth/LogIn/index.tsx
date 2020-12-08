@@ -98,7 +98,7 @@ const LogIn: React.FC<IProps> = ({
                 padding={[15, 20]}
                 margin={[20, 0]}
                 backgroundColor={ColorPalette.Main.TXT}
-                borderRadius={20}
+                borderRadius={25}
               >
                 {loading ? (
                   <ActivityIndicator color={ColorPalette.Main.BG_DARK} />
@@ -107,6 +107,7 @@ const LogIn: React.FC<IProps> = ({
                     color={ColorPalette.Main.BG}
                     fontFamily={FontFamily.NANUM_BOLD}
                     align={TextAlign.CENTER}
+                    size={16}
                   >
                     로그인
                   </T>

@@ -1,51 +1,71 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { IBoxProps, IUserProps } from 'models/common';
 
 export interface IUserState {
   isLoggedIn: boolean;
   token: string | null;
   userId: string | null;
-  boxId: string | null;
-  registrationState: string;
-  hasNewAlert: boolean;
+  user: IUserProps | null;
 }
 
 const initialState: IUserState = {
   isLoggedIn: false,
   token: null,
   userId: null,
-  boxId: null,
-  registrationState: 'unregistered',
-  hasNewAlert: false,
+  user: null,
 };
+
+export interface ILoginProps {
+  token: string;
+  userId: string;
+  user: IUserProps;
+}
 
 const usersSlice = createSlice({
   name: 'users',
   initialState,
   reducers: {
-    logIn: (state, action: PayloadAction<Record<string, string>>) => {
+    logIn: (state, action: PayloadAction<ILoginProps>) => {
       (state.isLoggedIn = true),
         (state.token = action.payload.token),
         (state.userId = action.payload.userId),
-        (state.boxId = action.payload.boxId),
-        (state.registrationState = action.payload.registrationState);
+        (state.user = action.payload.user);
     },
     logOut: (state) => {
       (state.isLoggedIn = false),
         (state.token = null),
         (state.userId = null),
-        (state.boxId = null),
-        (state.registrationState = 'unregistered');
+        (state.user = null);
     },
-    enrollBox: (state, action: PayloadAction<Record<string, string>>) => {
-      (state.boxId = action.payload.boxId),
-        (state.registrationState = 'pending');
+    setUser: (state, action: PayloadAction<IUserProps>) => {
+      state.user = action.payload;
+    },
+    enrollBox: (state, action: PayloadAction<IBoxProps>) => {
+      if (state.user) {
+        (state.user.box = action.payload),
+          (state.user.registration_state = 'pending');
+      }
     },
     updateRState: (state, action: PayloadAction<Record<string, string>>) => {
-      state.registrationState = action.payload.registrationState;
+      if (state.user) {
+        state.user.registration_state = action.payload.registrationState;
+      }
+    },
+    setHasNewAlert: (state, action: PayloadAction<boolean>) => {
+      if (state.user) {
+        state.user.has_new_alert = action.payload;
+      }
     },
   },
 });
 
-export const { logIn, logOut, enrollBox, updateRState } = usersSlice.actions;
+export const {
+  logIn,
+  logOut,
+  enrollBox,
+  setUser,
+  updateRState,
+  setHasNewAlert,
+} = usersSlice.actions;
 
 export default usersSlice.reducer;

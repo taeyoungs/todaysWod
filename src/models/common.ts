@@ -8,23 +8,22 @@ export interface IComponentProps {
 }
 
 export interface IBoxProps {
-  name?: string;
-  address?: string;
-  coach?: Array<number>;
-  owner?: number;
-  id?: number;
+  id: number;
+  name: string;
+  address: string;
+  owner: number;
+  coach: Array<number>;
 }
 
 export interface IUserProps {
-  box?: IBoxProps;
-  email?: string;
-  first_name?: string;
-  last_name?: string;
-  gender?: string;
-  has_new_alert?: boolean;
-  id?: number;
-  registration_state?: string;
-  username?: string;
+  id: number;
+  box: IBoxProps | null;
+  email: string;
+  last_name: string;
+  gender: string;
+  has_new_alert: boolean;
+  registration_state: string;
+  username: string;
 }
 
 export interface IWodProps {

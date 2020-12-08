@@ -21,15 +21,19 @@ interface IProps {
 
 const BoxScreen: React.FC<IProps> = ({ navigation }) => {
   const [refreshing, setRefreshing] = useState(false);
+  const [fakeClock, setFakeClock] = useState(false);
   const { onLogOut } = useUserActions();
-  const { boxId } = useUser();
-  const info = useUserRetrieve(refreshing);
-  // console.log(info);
+  useUserRetrieve(fakeClock);
+  const { user } = useUser();
 
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
-    wait(1000).then(() => setRefreshing(false));
+    wait(300).then(() => {
+      setRefreshing(false);
+      setFakeClock((prevState) => !prevState);
+    });
   }, []);
+
   return (
     <Scroll padding={[0, 15]} refreshing={refreshing} onRefresh={onRefresh}>
       <StatusBar barStyle="light-content" />
@@ -51,11 +55,11 @@ const BoxScreen: React.FC<IProps> = ({ navigation }) => {
         flex={5}
         backgroundColor={ColorPalette.White.WHITE}
         width={'100%'}
-        borderRadius={[50]}
+        borderRadius={[20]}
         padding={[0, 30]}
       >
-        {boxId ? (
-          <BoxInfo box={info.box} />
+        {user && user.box ? (
+          <BoxInfo box={user.box} />
         ) : (
           <Flex backgroundColor={ColorPalette.White.TANSPARENT}>
             <Block>

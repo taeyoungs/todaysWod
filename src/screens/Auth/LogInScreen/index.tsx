@@ -34,13 +34,19 @@ const LogInScreen: React.FC<IProps> = ({ navigation }) => {
         username: email,
         password: pw,
       };
-      const results = await api.token(form);
+      await api.token(form).then((res) => {
+        setLoading(false);
+        onLogIn(res.data);
+      });
       // console.log(results.data);
-      onLogIn(results.data);
     } catch (error) {
       console.warn(error);
-    } finally {
       setLoading(false);
+      if (error.message === 'Request failed with status code 404') {
+        createOneButtonAlert('존재하지 않는 아이디(이메일)입니다.');
+      } else if (error.message === 'Request failed with status code 401') {
+        createOneButtonAlert('아이디와 비밀번호가 일치하지 않습니다.');
+      }
     }
   };
   const goSignUp = () => navigation.navigate('SignUpScreen');

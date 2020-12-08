@@ -7,6 +7,7 @@ import Flex from 'components/molecules/Flex';
 import Block, { FlexDirection, Sort } from 'components/molecules/Block';
 import Header from 'components/organisms/Header';
 import useUserActions from 'hooks/useUserActions';
+import useUser from 'hooks/useUser';
 import { ColorPalette } from 'models/color';
 import { HomeScreenProps } from 'models/types';
 import { createTwoButtonAlert } from 'utils';
@@ -19,6 +20,7 @@ interface IProps {
 
 const Profile: React.FC<IProps> = ({ navigation }) => {
   const { onLogOut } = useUserActions();
+  const { user } = useUser();
 
   const OptionBox = ({
     onPress,
@@ -68,7 +70,7 @@ const Profile: React.FC<IProps> = ({ navigation }) => {
           width={'100%'}
           padding={[0, 10]}
         >
-          <T size={30}>박수민</T>
+          <T size={30}>{user && user.last_name}</T>
           <T size={22} color={ColorPalette.Gray.GRAY}>
             님
           </T>

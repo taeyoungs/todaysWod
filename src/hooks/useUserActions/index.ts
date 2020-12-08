@@ -1,25 +1,52 @@
+import { IUserProps } from 'models/common';
 import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
-import { logIn, logOut, enrollBox, updateRState } from 'store/usersSlice';
+import {
+  logIn,
+  logOut,
+  enrollBox,
+  updateRState,
+  setUser,
+  setHasNewAlert,
+  ILoginProps,
+} from 'store/usersSlice';
 
 const useUserActions = () => {
   const dispatch = useDispatch();
 
-  const onLogIn = useCallback(
-    (form: Record<string, string>) => dispatch(logIn(form)),
-    [dispatch]
-  );
+  const onLogIn = useCallback((form: ILoginProps) => dispatch(logIn(form)), [
+    dispatch,
+  ]);
+
   const onLogOut = useCallback(() => dispatch(logOut()), [dispatch]);
+
   const onEnrollBox = useCallback(
     (form: Record<string, string>) => dispatch(enrollBox(form)),
     [dispatch]
   );
+
+  const onSetUser = useCallback((user: IUserProps) => dispatch(setUser(user)), [
+    dispatch,
+  ]);
+
   const onUpdateRState = useCallback(
     (form: Record<string, string>) => dispatch(updateRState(form)),
     [dispatch]
   );
 
-  return { onLogIn, onLogOut, onEnrollBox, onUpdateRState };
+  const onSetHasNewAlert = useCallback(
+    (b: boolean) => dispatch(setHasNewAlert(b)),
+    [dispatch]
+  );
+
+  return {
+    onLogIn,
+    onLogOut,
+    onEnrollBox,
+    onSetUser,
+    onUpdateRState,
+    onSetHasNewAlert,
+  };
 };
 
 export default useUserActions;

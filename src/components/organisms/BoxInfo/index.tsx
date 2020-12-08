@@ -6,16 +6,14 @@ import T, { FontFamily, TextAlign } from 'components/atoms/T';
 import Flex from 'components/molecules/Flex';
 import Block, { FlexDirection, Sort } from 'components/molecules/Block';
 import { ColorPalette } from 'models/color';
-import { IUserProps } from 'models/common';
+import { IBoxProps } from 'models/common';
 
 interface IProps {
-  name?: string;
-  address?: string;
   phone?: string;
   time?: string;
   insta?: string;
   facebook?: string;
-  box: IUserProps['box'];
+  box: IBoxProps;
 }
 
 const BoxInfo: React.FC<IProps> = ({

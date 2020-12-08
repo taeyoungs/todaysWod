@@ -20,6 +20,7 @@ import KeyboardDismiss from 'components/molecules/KeyboardDismiss';
 import Logo from 'components/organisms/Logo';
 import InputBox from 'components/organisms/InputBox';
 import { ColorPalette } from 'models/color';
+import Icon from 'components/atoms/Icon';
 
 interface IProps {
   email: string;
@@ -30,6 +31,7 @@ interface IProps {
   onConfirmPwChange(text: string): void;
   onPress(event: GestureResponderEvent): void;
   goLogIn(): void;
+  clearEmail(): void;
   loading: boolean;
 }
 
@@ -43,6 +45,7 @@ const SignUp: React.FC<IProps> = ({
   confirmPw,
   goLogIn,
   loading,
+  clearEmail,
 }) => {
   return (
     <>
@@ -62,11 +65,20 @@ const SignUp: React.FC<IProps> = ({
               <InputBox name="at" label="이메일" size={20}>
                 <TInput
                   placeholder=""
-                  width={'100%'}
+                  width={'70%'}
                   onChangeText={onEmailChange}
                   value={email}
                   keyboardType={KeyboardType.EMAIL}
                 />
+                {email != '' ? (
+                  <Btn onPress={clearEmail}>
+                    <Icon
+                      name="close-circle-outline"
+                      size={20}
+                      color={ColorPalette.Gray.SLATE}
+                    />
+                  </Btn>
+                ) : null}
               </InputBox>
               <InputBox name="lock" label="비밀번호">
                 <TInput
@@ -92,7 +104,7 @@ const SignUp: React.FC<IProps> = ({
                 padding={[15, 20]}
                 margin={[20, 0]}
                 backgroundColor={ColorPalette.Main.TXT}
-                borderRadius={20}
+                borderRadius={25}
               >
                 {loading ? (
                   <ActivityIndicator color={ColorPalette.Main.BG_DARK} />
@@ -101,6 +113,7 @@ const SignUp: React.FC<IProps> = ({
                     color={ColorPalette.Main.BG}
                     fontFamily={FontFamily.NANUM_BOLD}
                     align={TextAlign.CENTER}
+                    size={16}
                   >
                     회원가입
                   </T>

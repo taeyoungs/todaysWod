@@ -3,6 +3,7 @@ import { GestureResponderEvent } from 'react-native';
 import SignUp from 'components/templates/Auth/SignUp';
 import { LogInScreenProps } from 'models/types';
 import api from 'api';
+import { createOneButtonAlert } from 'utils';
 
 interface IProps {
   navigation: LogInScreenProps['navigation'];
@@ -23,17 +24,20 @@ const SignUpScreen: React.FC<IProps> = ({ navigation }) => {
         username: email,
         email,
         password: pw,
-        gender: '남',
       };
-      const results = await api.signUp(form);
-      console.log(results.status);
+      await api.signUp(form);
+      // console.log(results.status);
+      navigation.navigate('LogInScreen');
     } catch (error) {
-      console.log(error);
+      console.warn(error);
+      if (error.message === 'Request failed with status code 409') {
+        createOneButtonAlert('이미 존재하는 아이디(이메일)입니다.');
+      }
     } finally {
       setLoading(false);
-      navigation.navigate('LogInScreen');
     }
   };
+  const clearEmail = () => setEmail('');
   const goLogIn = () => navigation.navigate('LogInScreen');
   return (
     <SignUp
@@ -46,6 +50,7 @@ const SignUpScreen: React.FC<IProps> = ({ navigation }) => {
       onPress={onPress}
       goLogIn={goLogIn}
       loading={loading}
+      clearEmail={clearEmail}
     />
   );
 };

@@ -19,7 +19,7 @@ const callApi = async (
     'Content-Type': 'application/json',
   };
   // const baseUrl = 'http://192.168.0.25:8000/api/v1';
-  const baseUrl = 'http://172.16.35.38:8000/api/v1';
+  const baseUrl = 'http://172.16.35.111:8000/api/v1';
   const fullUrl = `${baseUrl}${path}`;
 
   if (method === 'get' || method === 'delete') {

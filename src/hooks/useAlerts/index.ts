@@ -1,13 +1,15 @@
 import { useEffect } from 'react';
 import useUser from 'hooks/useUser';
 import useAlertActions from 'hooks/useAlertActions';
+import useUserActions from 'hooks/useUserActions';
 import useAlert from 'hooks/useAlert';
 import api from 'api';
 
 const useAlerts = (refreshing: boolean): void => {
   const { page } = useAlert();
   const { token } = useUser();
-  const { onSetNewAlert, onSetAlerts } = useAlertActions();
+  const { onSetAlerts } = useAlertActions();
+  const { onSetHasNewAlert } = useUserActions();
 
   useEffect(() => {
     api
@@ -20,7 +22,7 @@ const useAlerts = (refreshing: boolean): void => {
         };
         onSetAlerts(form);
       })
-      .then(() => onSetNewAlert(false));
+      .then(() => onSetHasNewAlert(false));
   }, [refreshing]);
   useEffect(() => {
     page != 1 &&
