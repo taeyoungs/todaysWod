@@ -40,6 +40,12 @@ const api = {
     callApi(Method.POST, '/users/certification/', form),
   pw_set: (form: Record<string, string>): Promise<AxiosResponse<any>> =>
     callApi(Method.POST, '/users/pw_set/', form),
+  updateUser: (
+    form: Record<string, string>,
+    id: string | null,
+    token: string | null
+  ): Promise<AxiosResponse<any>> =>
+    callApi(Method.PATCH, `/users/${id}/`, form, token),
   getUser: (id: string | null): Promise<AxiosResponse<any>> =>
     callApi(Method.GET, `/users/${id}/`),
   getAlerts: (

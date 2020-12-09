@@ -124,11 +124,10 @@ export const cancelReservationAlert = (
     `${date} ${startTime} - ${endTime}`,
     [
       {
-        text: 'Cancel',
+        text: '취소',
         onPress: () => console.log('Cancel Pressed'),
-        style: 'cancel',
       },
-      { text: 'OK', onPress: onP },
+      { text: '삭제', onPress: onP, style: 'cancel' },
     ],
     { cancelable: false }
   );
@@ -137,18 +136,19 @@ export const cancelReservationAlert = (
 export const createTwoButtonAlert = (
   onP: () => void,
   title: string,
-  content: string
+  content: string,
+  cancelMsg: string,
+  okMsg: string
 ): void => {
   return Alert.alert(
     `${title}`,
     `${content}`,
     [
       {
-        text: 'Cancel',
+        text: cancelMsg,
         onPress: () => console.log('Cancel Pressed'),
-        style: 'cancel',
       },
-      { text: 'OK', onPress: onP },
+      { text: okMsg, onPress: onP, style: 'cancel' },
     ],
     { cancelable: false }
   );

@@ -79,7 +79,7 @@ const Profile: React.FC<IProps> = ({ navigation }) => {
           <OptionBox
             iconName="person"
             label="개인 정보"
-            onPress={() => console.log('개인정보')}
+            onPress={() => navigation.navigate('PersonalInfo')}
           />
           <OptionBox
             iconName="folder-open"
@@ -97,8 +97,10 @@ const Profile: React.FC<IProps> = ({ navigation }) => {
             onPress={() =>
               createTwoButtonAlert(
                 () => onLogOut(),
-                '정말 로그아웃 하시겠습니까?',
-                ''
+                '로그아웃 하시겠습니까?',
+                '',
+                '취소',
+                '확인'
               )
             }
           />

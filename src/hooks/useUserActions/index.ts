@@ -1,4 +1,3 @@
-import { IUserProps } from 'models/common';
 import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import {
@@ -10,6 +9,7 @@ import {
   setHasNewAlert,
   ILoginProps,
 } from 'store/usersSlice';
+import { IUserProps } from 'models/common';
 
 const useUserActions = () => {
   const dispatch = useDispatch();

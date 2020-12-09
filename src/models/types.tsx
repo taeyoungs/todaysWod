@@ -4,7 +4,8 @@ import {
 } from '@react-navigation/bottom-tabs';
 import { CompositeNavigationProp } from '@react-navigation/native';
 import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack';
-import { IScheduleProps } from './common';
+import PersonalInfo from 'screens/Main/PersonalInfo';
+import { IScheduleProps, IUserProps } from './common';
 
 export type AuthStackParamList = {
   LogInScreen: undefined;
@@ -28,6 +29,7 @@ export type MainStackParamList = {
   Wod: { date: string };
   Check: { date: string; schedule: IScheduleProps };
   Record: undefined;
+  PersonalInfo: undefined;
 };
 
 export type MainTabsParamList = {

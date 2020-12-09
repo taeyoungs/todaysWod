@@ -32,7 +32,7 @@ const Alerts: React.FC<IProps> = ({ navigation }) => {
 
   const onRefresh = () => {
     setRefreshing(true);
-    wait(1000).then(() => setRefreshing(false));
+    wait(500).then(() => setRefreshing(false));
   };
 
   const handleScrollEnd = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
@@ -70,11 +70,7 @@ const Alerts: React.FC<IProps> = ({ navigation }) => {
           width={`${width - 40}px`}
           sort={alerts.length === 0 ? Sort.CENTER_CENTER : Sort.CENTER_TOP}
         >
-          {alerts.length === 0 && (
-            <Block>
-              <T>👋 새로운 알림이 없습니다.</T>
-            </Block>
-          )}
+          {alerts.length === 0 && <T>👋 새로운 알림이 없습니다.</T>}
           {alerts &&
             alerts.map((alert) => <AlertItem alert={alert} key={alert.id} />)}
         </Flex>

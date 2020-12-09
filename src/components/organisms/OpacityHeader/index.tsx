@@ -7,6 +7,7 @@ import Icon from 'components/atoms/Icon';
 import T, { FontFamily } from 'components/atoms/T';
 import { ColorPalette } from 'models/color';
 import Block, { FlexDirection } from 'components/molecules/Block';
+import Btn from 'components/atoms/Button';
 
 const Container = styled.View`
   position: absolute;
@@ -29,17 +30,17 @@ const BackButton = styled.TouchableOpacity`
 interface IProps {
   scene: Scene<Route<string, object | undefined>>;
   back: () => void;
-  children?: React.ReactNode;
   title: string;
   iconName: string;
+  updateInfo?: () => Promise<void>;
 }
 
 const OpacityHeader: React.FC<IProps> = ({
   scene,
   back,
-  children,
   title,
   iconName,
+  updateInfo,
 }) => {
   //   console.log(scene.progress);
   const progress = Animated.add(
@@ -69,7 +70,15 @@ const OpacityHeader: React.FC<IProps> = ({
             {title}
           </T>
         </Block>
-        <Block width={'20px'}>{children}</Block>
+        {updateInfo ? (
+          <Block>
+            <Btn onPress={updateInfo} padding={[10]}>
+              <T color={ColorPalette.White.WHITE}>저장</T>
+            </Btn>
+          </Block>
+        ) : (
+          <Block width={'20px'}></Block>
+        )}
       </Container>
     </Animated.View>
   );

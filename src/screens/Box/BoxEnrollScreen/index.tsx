@@ -3,8 +3,8 @@ import Certification from 'components/templates/Auth/Certification';
 import useUserActions from 'hooks/useUserActions';
 import useUser from 'hooks/useUser';
 import { BoxEnrollScreenProps } from 'models/types';
-import api from 'api';
 import { createOneButtonAlert, validateEmpty } from 'utils';
+import api from 'api';
 
 interface IProps {
   navigation: BoxEnrollScreenProps['navigation'];

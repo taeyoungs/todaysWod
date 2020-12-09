@@ -18,7 +18,8 @@ import Schedule from 'screens/Main/Schedule';
 import Wod from 'screens/Main/Wod';
 import Check from 'screens/Main/Check';
 import Record from 'screens/Main/Record';
-import useAlert from 'hooks/useAlert';
+import PersonalInfo from 'screens/Main/PersonalInfo';
+import useUser from 'hooks/useUser';
 import { ColorPalette } from 'models/color';
 import { MainStackParamList, MainTabsParamList } from 'models/types';
 
@@ -26,7 +27,7 @@ const Tab = createBottomTabNavigator<MainTabsParamList>();
 const Main = createStackNavigator<MainStackParamList>();
 
 const Tabs = () => {
-  const { hasNewAlert } = useAlert();
+  const { user } = useUser();
   return (
     <Tab.Navigator
       tabBarOptions={{
@@ -82,7 +83,7 @@ const Tabs = () => {
           return (
             <View>
               <Icon name={iconName} size={size} color={color} />
-              {route.name === 'Alerts' && hasNewAlert && (
+              {route.name === 'Alerts' && user?.has_new_alert && (
                 <PositionBlock position={Position.ABSOLUTE} top={0} right={-5}>
                   <Block
                     padding={[4]}
@@ -143,6 +144,13 @@ export default (): JSX.Element => {
       <Main.Screen
         component={Record}
         name="Record"
+        options={{
+          ...TransitionPresets.DefaultTransition,
+        }}
+      />
+      <Main.Screen
+        component={PersonalInfo}
+        name="PersonalInfo"
         options={{
           ...TransitionPresets.DefaultTransition,
         }}

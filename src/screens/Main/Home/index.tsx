@@ -14,10 +14,10 @@ import Header from 'components/organisms/Header';
 import DayButton from 'components/organisms/DayButton';
 import WodList from 'components/organisms/WodList';
 import useWods from 'hooks/useWods';
+import useUserRetrieve from 'hooks/useUserRetrieve';
 import { ColorPalette } from 'models/color';
 import { HomeScreenProps } from 'models/types';
 import { checkTodayIdx, wait } from 'utils';
-import useUserRetrieve from 'hooks/useUserRetrieve';
 
 const { width } = Dimensions.get('screen');
 
