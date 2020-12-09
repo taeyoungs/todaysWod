@@ -11,6 +11,7 @@ import useUser from 'hooks/useUser';
 import { ColorPalette } from 'models/color';
 import { HomeScreenProps } from 'models/types';
 import { createTwoButtonAlert } from 'utils';
+import api from 'api';
 
 const { width } = Dimensions.get('screen');
 
@@ -19,8 +20,8 @@ interface IProps {
 }
 
 const Profile: React.FC<IProps> = ({ navigation }) => {
-  const { onLogOut } = useUserActions();
-  const { user } = useUser();
+  const { onLogOut, onSetUser } = useUserActions();
+  const { user, userId, token } = useUser();
 
   const OptionBox = ({
     onPress,
@@ -48,6 +49,14 @@ const Profile: React.FC<IProps> = ({ navigation }) => {
         </Block>
       </Btn>
     );
+  };
+
+  const revokeBox = async () => {
+    try {
+      await api.revokeBox(userId, token).then((res) => onSetUser(res.data));
+    } catch (error) {
+      console.warn(error);
+    }
   };
 
   return (
@@ -89,7 +98,16 @@ const Profile: React.FC<IProps> = ({ navigation }) => {
           <OptionBox
             iconName="build"
             label="박스 변경"
-            onPress={() => console.log('개인정보')}
+            onPress={() =>
+              createTwoButtonAlert(
+                revokeBox,
+                '박스를 변경하시겠습니까?',
+                `확인을 누르시면 현재 등록된 박스 삭제 후 박스 등록 화면으로 이동합니다.
+(기존 박스의 모든 예약이 취소됩니다.)`,
+                '취소',
+                '확인'
+              )
+            }
           />
           <OptionBox
             iconName="log-out"

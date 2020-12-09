@@ -21,6 +21,11 @@ export interface ILoginProps {
   user: IUserProps;
 }
 
+export interface IEnrollBoxProps {
+  box: IBoxProps;
+  registrationState: string;
+}
+
 const usersSlice = createSlice({
   name: 'users',
   initialState,
@@ -40,10 +45,10 @@ const usersSlice = createSlice({
     setUser: (state, action: PayloadAction<IUserProps>) => {
       state.user = action.payload;
     },
-    enrollBox: (state, action: PayloadAction<IBoxProps>) => {
+    enrollBox: (state, action: PayloadAction<IEnrollBoxProps>) => {
       if (state.user) {
-        (state.user.box = action.payload),
-          (state.user.registration_state = 'pending');
+        (state.user.box = action.payload.box),
+          (state.user.registration_state = action.payload.registrationState);
       }
     },
     updateRState: (state, action: PayloadAction<Record<string, string>>) => {

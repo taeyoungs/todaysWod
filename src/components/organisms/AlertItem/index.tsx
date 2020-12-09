@@ -54,7 +54,9 @@ const AlertItem: React.FC<IProps> = ({ alert }) => {
         <Block
           backgroundColor={ColorPalette.White.WHITE}
           width={`${width - 40}px`}
-          height={more ? '150px' : '100px'}
+          height={
+            more ? (alert.content.length > 150 ? '200px' : '150px') : '100px'
+          }
           flexDirection={FlexDirection.ROW}
           padding={[0, 15]}
           sort={Sort.SPACE_BETWEEN_CENTER}

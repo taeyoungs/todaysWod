@@ -46,6 +46,11 @@ const api = {
     token: string | null
   ): Promise<AxiosResponse<any>> =>
     callApi(Method.PATCH, `/users/${id}/`, form, token),
+  revokeBox: (
+    id: string | null,
+    token: string | null
+  ): Promise<AxiosResponse<any>> =>
+    callApi(Method.GET, `/users/${id}/revoke/`, null, token),
   getUser: (id: string | null): Promise<AxiosResponse<any>> =>
     callApi(Method.GET, `/users/${id}/`),
   getAlerts: (

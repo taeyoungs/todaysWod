@@ -14,7 +14,7 @@ const Gate: React.FC<IProps> = () => {
   return (
     <NavigationContainer>
       {isLoggedIn ? (
-        user?.registration_state === 'registered' ? (
+        user?.box && user?.registration_state === 'registered' ? (
           <Main />
         ) : (
           <Box />

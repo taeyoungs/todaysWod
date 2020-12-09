@@ -4,6 +4,7 @@ import useUserActions from 'hooks/useUserActions';
 import useUser from 'hooks/useUser';
 import { BoxEnrollScreenProps } from 'models/types';
 import { createOneButtonAlert, validateEmpty } from 'utils';
+import { IEnrollBoxProps } from 'store/usersSlice';
 import api from 'api';
 
 interface IProps {
@@ -31,13 +32,14 @@ const BoxErollScreen: React.FC<IProps> = ({ navigation }) => {
     setLoading(true);
     try {
       const results = await api.boxAuthentication(form, token);
-      // console.log(results.data);
+      const data: IEnrollBoxProps = results.data;
       onEnrollBox(results.data);
+      if (data.registrationState === 'pending') {
+        setLoading(false);
+        navigation.navigate('BoxScreen');
+      }
     } catch (error) {
       console.warn(error);
-    } finally {
-      setLoading(false);
-      navigation.navigate('BoxScreen');
     }
   };
   return (
