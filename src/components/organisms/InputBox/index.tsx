@@ -30,11 +30,11 @@ const InputBox: React.FC<IProps> = ({ name, children, label, size }) => {
         <Icon name={name} color={ColorPalette.Main.TXT} size={size} />
       </Block>
       <Block width={'100%'} sort={Sort.LEFT_CENTER}>
-        <T size={12} color={ColorPalette.Main.TXT_LIGHT}>
+        <T size={12} color={ColorPalette.Main.TXT_LIGHT} margin={[0, 0, 10, 0]}>
           {label}
         </T>
         <Block
-          margin={[5, 0, 0, 0]}
+          margin={[0, 0, 5, 0]}
           width={'100%'}
           flexDirection={FlexDirection.ROW}
           sort={Sort.LEFT_CENTER}

@@ -9,6 +9,7 @@ import TInput, { KeyboardType } from 'components/atoms/TInput';
 import Img from 'components/atoms/Img';
 import T, { FontFamily, TextAlign } from 'components/atoms/T';
 import Btn from 'components/atoms/Button';
+import Icon from 'components/atoms/Icon';
 import Block, {
   BorderStyle,
   FlexDirection,
@@ -20,32 +21,33 @@ import KeyboardDismiss from 'components/molecules/KeyboardDismiss';
 import Logo from 'components/organisms/Logo';
 import InputBox from 'components/organisms/InputBox';
 import { ColorPalette } from 'models/color';
-import Icon from 'components/atoms/Icon';
 
 interface IProps {
   email: string;
   pw: string;
-  confirmPw: string;
+  name: string;
   onEmailChange(text: string): void;
   onPwChange(text: string): void;
-  onConfirmPwChange(text: string): void;
+  onNameChange(text: string): void;
   onPress(event: GestureResponderEvent): void;
   goLogIn(): void;
   clearEmail(): void;
+  clearName(): void;
   loading: boolean;
 }
 
 const SignUp: React.FC<IProps> = ({
   onEmailChange,
   onPwChange,
-  onConfirmPwChange,
+  onNameChange,
   onPress,
   email,
   pw,
-  confirmPw,
+  name,
   goLogIn,
   loading,
   clearEmail,
+  clearName,
 }) => {
   return (
     <>
@@ -80,6 +82,24 @@ const SignUp: React.FC<IProps> = ({
                   </Btn>
                 ) : null}
               </InputBox>
+              <InputBox name="contact" label="이름" size={19}>
+                <TInput
+                  placeholder=""
+                  width={'70%'}
+                  onChangeText={onNameChange}
+                  keyboardType={KeyboardType.DEFAULT}
+                  value={name}
+                />
+                {name != '' ? (
+                  <Btn onPress={clearName}>
+                    <Icon
+                      name="close-circle-outline"
+                      size={20}
+                      color={ColorPalette.Gray.SLATE}
+                    />
+                  </Btn>
+                ) : null}
+              </InputBox>
               <InputBox name="lock" label="비밀번호">
                 <TInput
                   placeholder=""
@@ -87,15 +107,6 @@ const SignUp: React.FC<IProps> = ({
                   secureTextEntry={true}
                   onChangeText={onPwChange}
                   value={pw}
-                />
-              </InputBox>
-              <InputBox name="lock" label="비밀번호 확인">
-                <TInput
-                  placeholder=""
-                  width={'70%'}
-                  secureTextEntry={true}
-                  onChangeText={onConfirmPwChange}
-                  value={confirmPw}
                 />
               </InputBox>
               <Btn

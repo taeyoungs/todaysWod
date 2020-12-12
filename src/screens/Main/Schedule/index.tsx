@@ -60,6 +60,7 @@ const Schedule: React.FC<IProps> = ({ navigation, route }) => {
             refreshColor={ColorPalette.Main.BG}
             refreshing={refreshing}
             onRefresh={onRefresh}
+            showsVerticalScrollIndicator={true}
           >
             <Block
               height={'50px'}

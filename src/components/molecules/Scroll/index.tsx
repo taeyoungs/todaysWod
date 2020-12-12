@@ -23,6 +23,7 @@ interface IProps extends IComponentProps {
   onRefresh?(): void;
   refreshColor?: string;
   scrollEventThrottle?: number;
+  showsVerticalScrollIndicator?: boolean;
 }
 
 interface IStyleProps {
@@ -72,6 +73,7 @@ const Scroll: React.FC<IProps> = ({
   backgroundColor = ColorPalette.Main.BG,
   refreshColor = 'white',
   scrollEventThrottle = 25,
+  showsVerticalScrollIndicator = false,
 }) => {
   const marginProps = CalculateBlock(margin, MPB.Margin);
   const paddingProps = CalculateBlock(padding, MPB.Padiing);
@@ -91,7 +93,7 @@ const Scroll: React.FC<IProps> = ({
       onScroll={onScroll}
       contentContainerStyle={{ flexGrow: 1 }}
       scrollEventThrottle={scrollEventThrottle}
-      showsVerticalScrollIndicator={false}
+      showsVerticalScrollIndicator={showsVerticalScrollIndicator}
       refreshControl={
         <RefreshControl
           refreshing={refreshing}

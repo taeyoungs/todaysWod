@@ -1,6 +1,6 @@
 import React from 'react';
 import { Dimensions } from 'react-native';
-import T, { FontFamily, TextAlign, TextTransform } from 'components/atoms/T';
+import T, { FontFamily, TextTransform } from 'components/atoms/T';
 import Block, { FlexDirection, Sort } from 'components/molecules/Block';
 import { ColorPalette } from 'models/color';
 import { IWodProps } from 'models/common';
@@ -57,6 +57,16 @@ const WodList: React.FC<IProps> = ({ wod }) => {
           {wod.rest_sec && (
             <OptionBox title="REST (sec)" content={wod.rest_sec} />
           )}
+          {wod.title.name === 'rest' && (
+            <Block>
+              <T color={ColorPalette.Gray.GRAY} size={10}>
+                -
+              </T>
+              <T size={12} fontFamily={FontFamily.NANUM_BOLD}>
+                🌙
+              </T>
+            </Block>
+          )}
         </Block>
       </Block>
       <Block
@@ -65,7 +75,7 @@ const WodList: React.FC<IProps> = ({ wod }) => {
         padding={[0, 10]}
         height={'70%'}
       >
-        <T size={18} align={TextAlign.LEFT} lineHeight={22}>
+        <T size={16} lineHeight={22}>
           {wod.content}
         </T>
       </Block>
