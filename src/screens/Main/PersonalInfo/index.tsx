@@ -1,14 +1,13 @@
 import React, { useEffect, useLayoutEffect, useState } from 'react';
-import { Dimensions, Keyboard } from 'react-native';
+import { Dimensions } from 'react-native';
 import Modal from 'react-native-modal';
 import { Picker } from '@react-native-picker/picker';
-import T, { FontFamily, TextAlign } from 'components/atoms/T';
-import Btn from 'components/atoms/Button';
+import { FontFamily } from 'components/atoms/T';
 import Flex from 'components/molecules/Flex';
-import Block from 'components/molecules/Block';
 import PositionBlock, { Position } from 'components/molecules/PositionBlock';
 import OpacityHeader from 'components/organisms/OpacityHeader';
 import InfoItem from 'components/organisms/InfoItem';
+import ModalConfirm from 'components/organisms/ModalConfirm';
 import useUser from 'hooks/useUser';
 import useUserActions from 'hooks/useUserActions';
 import { HomeScreenProps } from 'models/types';
@@ -136,30 +135,11 @@ const PersonalInfo: React.FC<IProps> = ({ navigation }) => {
           </Picker>
         </PositionBlock>
       </Modal>
-      <Modal isVisible={confirmVisible} hasBackdrop={false} coverScreen={false}>
-        <PositionBlock position={Position.ABSOLUTE} left={-20} bottom={196}>
-          <Block
-            width={`${width}px`}
-            border={[1, 0, 0, 0]}
-            borderColor={ColorPalette.Main.BG}
-            backgroundColor={ColorPalette.White.WHITE}
-            height={'50px'}
-          >
-            <Btn
-              onPress={() => {
-                setConfirmVisible(false);
-                setPickerVisible(false);
-                Keyboard.dismiss();
-              }}
-              padding={[5, 20]}
-            >
-              <T align={TextAlign.RIGHT} color={ColorPalette.Main.BG_DARK}>
-                완료
-              </T>
-            </Btn>
-          </Block>
-        </PositionBlock>
-      </Modal>
+      <ModalConfirm
+        isVisible={confirmVisible}
+        setConfirmVisible={setConfirmVisible}
+        setPickerVisible={setPickerVisible}
+      />
     </Flex>
   );
 };

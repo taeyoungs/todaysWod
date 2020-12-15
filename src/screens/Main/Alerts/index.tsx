@@ -9,7 +9,7 @@ import {
 import T from 'components/atoms/T';
 import Flex from 'components/molecules/Flex';
 import Header from 'components/organisms/Header';
-import Block, { Sort } from 'components/molecules/Block';
+import { Sort } from 'components/molecules/Block';
 import AlertItem from 'components/organisms/AlertItem';
 import useAlerts from 'hooks/useAlerts';
 import useAlert from 'hooks/useAlert';

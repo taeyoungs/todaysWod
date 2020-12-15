@@ -4,12 +4,11 @@ import {
 } from '@react-navigation/bottom-tabs';
 import { CompositeNavigationProp } from '@react-navigation/native';
 import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack';
-import PersonalInfo from 'screens/Main/PersonalInfo';
-import { IScheduleProps, IUserProps } from './common';
+import { IScheduleProps } from './common';
 
 export type AuthStackParamList = {
-  LogInScreen: undefined;
-  SignUpScreen: undefined;
+  LogIn: undefined;
+  SignUp: undefined;
   PwScreen: undefined;
   CertificationScreen: { email: string };
   PwResetScreen: { email: string };

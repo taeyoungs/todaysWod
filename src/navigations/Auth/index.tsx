@@ -1,7 +1,7 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import LogInScreen from 'screens/Auth/LogInScreen';
-import SignUpScreen from 'screens/Auth/SignUpScreen';
+import LogIn from 'screens/Auth/LogIn';
+import SignUp from 'screens/Auth/SignUp';
 import PwScreen from 'screens/Auth/PwScreen';
 import CertificationScreen from 'screens/Auth/CertificationScreen';
 import PwResetScreen from 'screens/Auth/PwResetScreen';
@@ -12,16 +12,16 @@ const Auth = createStackNavigator<AuthStackParamList>();
 
 export default (): JSX.Element => {
   return (
-    <Auth.Navigator initialRouteName="LogInScreen" mode="modal">
+    <Auth.Navigator initialRouteName="LogIn" mode="modal">
       <Auth.Screen
         options={{ header: () => null }}
-        name="LogInScreen"
-        component={LogInScreen}
+        name="LogIn"
+        component={LogIn}
       />
       <Auth.Screen
-        options={{ header: () => <BackButton /> }}
-        name="SignUpScreen"
-        component={SignUpScreen}
+        options={{ header: () => null }}
+        name="SignUp"
+        component={SignUp}
       />
       <Auth.Screen
         options={{ header: () => <BackButton /> }}
