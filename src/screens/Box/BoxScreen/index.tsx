@@ -4,8 +4,8 @@ import Btn from 'components/atoms/Button';
 import T, { FontFamily } from 'components/atoms/T';
 import Icon from 'components/atoms/Icon';
 import Flex from 'components/molecules/Flex';
-import Block, { FlexDirection, Sort } from 'components/molecules/Block';
 import Scroll from 'components/molecules/Scroll';
+import Block, { FlexDirection, Sort } from 'components/molecules/Block';
 import BoxInfo from 'components/organisms/BoxInfo';
 import useUserActions from 'hooks/useUserActions';
 import useUserRetrieve from 'hooks/useUserRetrieve';
@@ -78,7 +78,7 @@ const BoxScreen: React.FC<IProps> = ({ navigation }) => {
             </Block>
             <Block backgroundColor={ColorPalette.Main.TXT} borderRadius={[10]}>
               <Btn
-                onPress={() => navigation.navigate('BoxEnrollScreen')}
+                onPress={() => navigation.navigate('BoxEnroll')}
                 padding={[15, 25]}
               >
                 <T

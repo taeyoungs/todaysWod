@@ -1,24 +1,28 @@
 import React, { useState } from 'react';
 import { Dimensions, StatusBar } from 'react-native';
 import T, { FontFamily, TextAlign } from 'components/atoms/T';
-import Flex from 'components/molecules/Flex';
 import KeyboardDismiss from 'components/molecules/KeyboardDismiss';
+import Flex from 'components/molecules/Flex';
 import Block, { Sort } from 'components/molecules/Block';
 import AuthItem from 'components/organisms/AuthItem';
 import AuthButton from 'components/organisms/AuthButton';
+import useUserActions from 'hooks/useUserActions';
+import useUser from 'hooks/useUser';
+import { BoxEnrollScreenProps } from 'models/types';
 import { ColorPalette } from 'models/color';
-import { CertificationScreenProps } from 'models/types';
+import { IEnrollBoxProps } from 'store/usersSlice';
 import { createOneButtonAlert } from 'utils';
 import api from 'api';
 
 const { width } = Dimensions.get('screen');
 
 interface IProps {
-  route: CertificationScreenProps['route'];
-  navigation: CertificationScreenProps['navigation'];
+  navigation: BoxEnrollScreenProps['navigation'];
 }
 
-const Certification: React.FC<IProps> = ({ route, navigation }) => {
+const BoxErollScreen: React.FC<IProps> = ({ navigation }) => {
+  const { onEnrollBox } = useUserActions();
+  const { token } = useUser();
   const [loading, setLoading] = useState(false);
   const [number, setNumber] = useState('');
   const handleSubmit = async () => {
@@ -26,23 +30,22 @@ const Certification: React.FC<IProps> = ({ route, navigation }) => {
       createOneButtonAlert('6자리 모두 입력해주세요.');
       return;
     }
+    const form = {
+      certification_code: number,
+    };
+    setLoading(true);
     try {
-      const form = {
-        certification_number: number,
-        email: route.params.email,
-      };
-      setLoading(true);
-      const results = await api.certification(form);
-      if (results.status === 200) {
-        navigation.navigate('PwReset', { email: route.params.email });
+      const results = await api.boxAuthentication(form, token);
+      const data: IEnrollBoxProps = results.data;
+      onEnrollBox(results.data);
+      if (data.registrationState === 'pending') {
+        setLoading(false);
+        navigation.navigate('BoxScreen');
       }
     } catch (error) {
-      console.log();
-    } finally {
-      setLoading(false);
+      console.warn(error);
     }
   };
-
   return (
     <KeyboardDismiss>
       <StatusBar barStyle="light-content" />
@@ -55,21 +58,21 @@ const Certification: React.FC<IProps> = ({ route, navigation }) => {
               size={30}
               margin={[10, 0]}
             >
-              인증번호 입력
+              박스 인증 코드
             </T>
             <T
               color={ColorPalette.Main.TXT_LIGHT}
               size={12}
               align={TextAlign.CENTER}
             >
-              이메일에 적혀있는 인증번호를 입력해주세요.
+              등록하고자 하는 박스 인증 코드를 입력해주세요.
             </T>
             <T
               color={ColorPalette.Main.TXT_LIGHT}
               size={12}
               align={TextAlign.CENTER}
             >
-              인증번호가 맞다면 비밀번호 재설정 화면으로 이동합니다.
+              인증 후 해당 박스로 회원권 등록 요청이 발송됩니다.
             </T>
           </Block>
         </Flex>
@@ -95,4 +98,4 @@ const Certification: React.FC<IProps> = ({ route, navigation }) => {
   );
 };
 
-export default Certification;
+export default BoxErollScreen;

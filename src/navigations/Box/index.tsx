@@ -1,6 +1,6 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import BoxErollScreen from 'screens/Box/BoxEnrollScreen';
+import BoxEnroll from 'screens/Box/BoxEnroll';
 import BoxScreen from 'screens/Box/BoxScreen';
 import BackButton from 'components/organisms/BackButton';
 import { BoxStackParamList } from 'models/types';
@@ -17,8 +17,8 @@ export default (): JSX.Element => {
       />
       <Box.Screen
         options={{ header: () => <BackButton /> }}
-        name="BoxEnrollScreen"
-        component={BoxErollScreen}
+        name="BoxEnroll"
+        component={BoxEnroll}
       />
     </Box.Navigator>
   );

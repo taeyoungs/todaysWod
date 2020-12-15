@@ -13,12 +13,12 @@ export type AuthStackParamList = {
   Certification: { email: string };
   PwReset: { email: string };
   BoxScreen: undefined;
-  BoxEnrollScreen: undefined;
+  BoxEnroll: undefined;
 };
 
 export type BoxStackParamList = {
   BoxScreen: undefined;
-  BoxEnrollScreen: undefined;
+  BoxEnroll: undefined;
 };
 
 export type MainStackParamList = {
@@ -57,7 +57,7 @@ export type PwResetScreenProps = StackScreenProps<
 export type BoxScreenProps = StackScreenProps<BoxStackParamList, 'BoxScreen'>;
 export type BoxEnrollScreenProps = StackScreenProps<
   BoxStackParamList,
-  'BoxEnrollScreen'
+  'BoxEnroll'
 >;
 
 export type HomeScreenProps = StackScreenProps<MainStackParamList>;
