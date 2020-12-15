@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import Certification from 'components/templates/Auth/Certification';
 import useUserActions from 'hooks/useUserActions';
 import useUser from 'hooks/useUser';
 import { BoxEnrollScreenProps } from 'models/types';
 import { createOneButtonAlert, validateEmpty } from 'utils';
 import { IEnrollBoxProps } from 'store/usersSlice';
 import api from 'api';
+import CertificationScreen from 'screens/Auth/Certification';
 
 interface IProps {
   navigation: BoxEnrollScreenProps['navigation'];
@@ -43,7 +43,7 @@ const BoxErollScreen: React.FC<IProps> = ({ navigation }) => {
     }
   };
   return (
-    <Certification
+    <CertificationScreen
       one={one}
       two={two}
       three={three}

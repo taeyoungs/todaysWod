@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import { ActivityIndicator, Dimensions, StatusBar } from 'react-native';
+import { Dimensions, StatusBar } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
-import T, { FontFamily, TextAlign } from 'components/atoms/T';
+import T from 'components/atoms/T';
 import Img from 'components/atoms/Img';
-import Btn from 'components/atoms/Button';
 import KeyboardDismiss from 'components/molecules/KeyboardDismiss';
 import PositionBlock, { Position } from 'components/molecules/PositionBlock';
 import Flex from 'components/molecules/Flex';
@@ -14,6 +13,7 @@ import Block, {
 } from 'components/molecules/Block';
 import Logo from 'components/organisms/Logo';
 import AuthItem from 'components/organisms/AuthItem';
+import AuthButton from 'components/organisms/AuthButton';
 import useUserActions from 'hooks/useUserActions';
 import { ColorPalette } from 'models/color';
 import { LogInScreenProps } from 'models/types';
@@ -95,7 +95,7 @@ const LogInScreen: React.FC<IProps> = ({ navigation }) => {
               />
               <Block width={'100%'}>
                 <TouchableWithoutFeedback
-                  onPress={() => navigation.navigate('PwScreen')}
+                  onPress={() => navigation.navigate('Pw')}
                   style={{ padding: 5, marginTop: 10 }}
                 >
                   <T color={ColorPalette.Main.TXT_LIGHT}>
@@ -103,29 +103,7 @@ const LogInScreen: React.FC<IProps> = ({ navigation }) => {
                   </T>
                 </TouchableWithoutFeedback>
               </Block>
-              <Block width={`${width - 40}px`} margin={[0, 20]}>
-                <Btn
-                  onPress={onPress}
-                  activeOpacity={0.6}
-                  padding={[15, 20]}
-                  margin={[20, 0, 10, 0]}
-                  backgroundColor={ColorPalette.Main.TXT}
-                  borderRadius={25}
-                >
-                  {loading ? (
-                    <ActivityIndicator color={ColorPalette.Main.BG_DARK} />
-                  ) : (
-                    <T
-                      color={ColorPalette.Main.BG}
-                      fontFamily={FontFamily.NANUM_BOLD}
-                      align={TextAlign.CENTER}
-                      size={16}
-                    >
-                      로그인
-                    </T>
-                  )}
-                </Btn>
-              </Block>
+              <AuthButton loading={loading} onPress={onPress} text="로그인" />
               <Block flexDirection={FlexDirection.ROW} width={'100%'}>
                 <T color={ColorPalette.Main.TXT_LIGHT}>
                   아직 회원이 아니신가요?{' '}

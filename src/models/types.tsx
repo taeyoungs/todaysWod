@@ -9,9 +9,9 @@ import { IScheduleProps } from './common';
 export type AuthStackParamList = {
   LogIn: undefined;
   SignUp: undefined;
-  PwScreen: undefined;
-  CertificationScreen: { email: string };
-  PwResetScreen: { email: string };
+  Pw: undefined;
+  Certification: { email: string };
+  PwReset: { email: string };
   BoxScreen: undefined;
   BoxEnrollScreen: undefined;
 };
@@ -43,22 +43,16 @@ export type CombineNavigationProps = CompositeNavigationProp<
   StackNavigationProp<MainStackParamList>
 >;
 
-export type LogInScreenProps = StackScreenProps<
-  AuthStackParamList,
-  'LogInScreen'
->;
-export type SignUpScreenProps = StackScreenProps<
-  AuthStackParamList,
-  'SignUpScreen'
->;
-export type PwScreenProps = StackScreenProps<AuthStackParamList, 'PwScreen'>;
+export type LogInScreenProps = StackScreenProps<AuthStackParamList, 'LogIn'>;
+export type SignUpScreenProps = StackScreenProps<AuthStackParamList, 'SignUp'>;
+export type PwScreenProps = StackScreenProps<AuthStackParamList, 'Pw'>;
 export type CertificationScreenProps = StackScreenProps<
   AuthStackParamList,
-  'CertificationScreen'
+  'Certification'
 >;
 export type PwResetScreenProps = StackScreenProps<
   AuthStackParamList,
-  'PwResetScreen'
+  'PwReset'
 >;
 export type BoxScreenProps = StackScreenProps<BoxStackParamList, 'BoxScreen'>;
 export type BoxEnrollScreenProps = StackScreenProps<

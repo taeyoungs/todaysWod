@@ -17,6 +17,7 @@ import { LogInScreenProps } from 'models/types';
 import { ColorPalette } from 'models/color';
 import { createOneButtonAlert } from 'utils';
 import api from 'api';
+import AuthButton from 'components/organisms/AuthButton';
 
 const { width } = Dimensions.get('screen');
 
@@ -85,29 +86,7 @@ const SignUpScreen: React.FC<IProps> = ({ navigation }) => {
               setConfirmVisible={setConfirmVisible}
               secureTextEntry={true}
             />
-            <Block width={`${width - 40}px`} margin={[0, 20]}>
-              <Btn
-                onPress={onPress}
-                activeOpacity={0.6}
-                padding={[15, 20]}
-                margin={[20, 0]}
-                backgroundColor={ColorPalette.Main.TXT}
-                borderRadius={25}
-              >
-                {loading ? (
-                  <ActivityIndicator color={ColorPalette.Main.BG_DARK} />
-                ) : (
-                  <T
-                    color={ColorPalette.Main.BG}
-                    fontFamily={FontFamily.NANUM_BOLD}
-                    align={TextAlign.CENTER}
-                    size={16}
-                  >
-                    회원가입
-                  </T>
-                )}
-              </Btn>
-            </Block>
+            <AuthButton onPress={onPress} loading={loading} text="회원가입" />
             <Block
               flexDirection={FlexDirection.ROW}
               width={`${width - 40}px`}

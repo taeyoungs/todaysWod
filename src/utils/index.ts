@@ -154,27 +154,6 @@ export const createTwoButtonAlert = (
   );
 };
 
-export const validateEmpty = (
-  one: string,
-  two: string,
-  three: string,
-  four: string,
-  five: string,
-  six: string
-): boolean => {
-  if (
-    one === '' ||
-    two === '' ||
-    three === '' ||
-    four === '' ||
-    five === '' ||
-    six === ''
-  ) {
-    return false;
-  }
-  return true;
-};
-
 export function formatDate(num: number): string {
   if (num < 10) {
     return `0${num}`;

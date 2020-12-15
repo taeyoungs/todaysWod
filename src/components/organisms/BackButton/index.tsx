@@ -13,8 +13,8 @@ interface IProps {
 const BackButton: React.FC<IProps> = ({ isWhite = false }) => {
   const naviagtion = useNavigation<SignUpScreenProps['navigation']>();
   return (
-    <PositionBlock position={Position.ABSOLUTE} top={30} left={30}>
-      <Btn onPress={() => naviagtion.goBack()}>
+    <PositionBlock position={Position.ABSOLUTE} top={40} left={30}>
+      <Btn onPress={() => naviagtion.goBack()} padding={[10]}>
         {isWhite ? (
           <Icon name="arrow-down" color={ColorPalette.Main.BG} size={30} />
         ) : (

@@ -2,9 +2,9 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import LogIn from 'screens/Auth/LogIn';
 import SignUp from 'screens/Auth/SignUp';
-import PwScreen from 'screens/Auth/PwScreen';
-import CertificationScreen from 'screens/Auth/CertificationScreen';
-import PwResetScreen from 'screens/Auth/PwResetScreen';
+import Pw from 'screens/Auth/Pw';
+import Certification from 'screens/Auth/Certification';
+import PwReset from 'screens/Auth/PwReset';
 import BackButton from 'components/organisms/BackButton';
 import { AuthStackParamList } from 'models/types';
 
@@ -25,18 +25,18 @@ export default (): JSX.Element => {
       />
       <Auth.Screen
         options={{ header: () => <BackButton /> }}
-        name="PwScreen"
-        component={PwScreen}
+        name="Pw"
+        component={Pw}
       />
       <Auth.Screen
         options={{ header: () => <BackButton /> }}
-        name="CertificationScreen"
-        component={CertificationScreen}
+        name="Certification"
+        component={Certification}
       />
       <Auth.Screen
         options={{ header: () => null }}
-        name="PwResetScreen"
-        component={PwResetScreen}
+        name="PwReset"
+        component={PwReset}
       />
     </Auth.Navigator>
   );
