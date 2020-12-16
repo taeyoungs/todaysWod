@@ -16,7 +16,17 @@ interface IProps {
 
 const AlertItem: React.FC<IProps> = ({ alert }) => {
   const [more, setMore] = useState(false);
-  // console.log(alerts);
+  const alertHeight = (len: number): string => {
+    if (len > 400) {
+      return '500px';
+    } else if (len > 300) {
+      return '400px';
+    } else if (len > 150) {
+      return '300px';
+    } else {
+      return '170px';
+    }
+  };
 
   const handleMore = () => {
     setMore((prevState) => !prevState);
@@ -41,12 +51,14 @@ const AlertItem: React.FC<IProps> = ({ alert }) => {
       const h = date.getHours() < 10 ? `0${date.getHours()}` : date.getHours();
       return `${h}:${m}`;
     } else {
-      const d = `${date.getFullYear()}-${
-        date.getMonth() + 1
-      }-${date.getDate()}`;
+      const formatD =
+        date.getDate() < 10 ? `0${date.getDate()}` : date.getDate();
+      const d = `${date.getFullYear()}-${date.getMonth() + 1}-${formatD}`;
       return `${date.getDate()}  ${dayOfTheWeek(d)}`;
     }
   }
+
+  const moreHeight = more ? null : { height: '20px' };
 
   return (
     <TouchableOpacity onPress={handleMore}>
@@ -54,9 +66,7 @@ const AlertItem: React.FC<IProps> = ({ alert }) => {
         <Block
           backgroundColor={ColorPalette.White.WHITE}
           width={`${width - 40}px`}
-          height={
-            more ? (alert.content.length > 150 ? '200px' : '150px') : '100px'
-          }
+          height={more ? alertHeight(alert.content.length) : '100px'}
           flexDirection={FlexDirection.ROW}
           padding={[0, 15]}
           sort={Sort.SPACE_BETWEEN_CENTER}
@@ -79,9 +89,13 @@ const AlertItem: React.FC<IProps> = ({ alert }) => {
               </T>
             </Block>
             <T size={13} margin={[5, 0, 10, 0]}>
-              {alert.title}
+              {more
+                ? alert.title
+                : alert.title.length > 24
+                ? `${alert.title.slice(0, 25)}...`
+                : alert.title}
             </T>
-            <Block sort={Sort.LEFT_CENTER}>
+            <Block sort={Sort.LEFT_CENTER} {...moreHeight}>
               <T size={12} color={ColorPalette.Gray.GRAY} lineHeight={16}>
                 {more
                   ? alert.content

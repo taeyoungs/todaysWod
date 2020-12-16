@@ -11,6 +11,12 @@ const useUserRetrieve = (refreshing: boolean): void => {
     api.getUser(userId).then((res) => {
       onSetUser(res.data);
     });
+  }, []);
+  useLayoutEffect(() => {
+    refreshing &&
+      api.getUser(userId).then((res) => {
+        onSetUser(res.data);
+      });
   }, [refreshing]);
 };
 

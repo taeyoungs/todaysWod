@@ -39,7 +39,7 @@ const Reservation: React.FC<IProps> = ({ navigation }) => {
 
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
-    wait(1000).then(() => setRefreshing(false));
+    wait(500).then(() => setRefreshing(false));
   }, []);
 
   const markList = () => {
@@ -48,15 +48,21 @@ const Reservation: React.FC<IProps> = ({ navigation }) => {
     for (let index = 1; index <= daysInMonth(month - 1, year); index++) {
       const formatMonth = month < 10 ? `0${month}` : month;
       if (index < 10) {
-        objRecords[`${year}-${formatMonth}-0${index}`] = { disabled: true };
+        objRecords[`${year}-${formatMonth}-0${index}`] = {
+          disabled: true,
+          disableTouchEvent: true,
+        };
       } else {
-        objRecords[`${year}-${formatMonth}-${index}`] = { disabled: true };
+        objRecords[`${year}-${formatMonth}-${index}`] = {
+          disabled: true,
+          disableTouchEvent: true,
+        };
       }
     }
 
     existWods.forEach((wod) => {
       if (wod.title.name != 'rest') {
-        objRecords[wod.date] = { disabled: false };
+        objRecords[wod.date] = { disabled: false, disableTouchEvent: false };
       }
     });
 

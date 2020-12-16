@@ -9,9 +9,14 @@ const useWods = (refreshing: boolean): Array<IWodProps> => {
 
   useEffect(() => {
     api.getWods(token).then((res) => {
-      // console.log(res.data);
       setWods(res.data);
     });
+  }, []);
+  useEffect(() => {
+    refreshing &&
+      api.getWods(token).then((res) => {
+        setWods(res.data);
+      });
   }, [refreshing]);
 
   return wods;

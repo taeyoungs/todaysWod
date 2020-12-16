@@ -6,6 +6,7 @@ import {
   RefreshControl,
   ScrollView,
 } from 'react-native';
+import { useIsFocused } from '@react-navigation/native';
 import T from 'components/atoms/T';
 import Flex from 'components/molecules/Flex';
 import Header from 'components/organisms/Header';
@@ -28,11 +29,12 @@ const Alerts: React.FC<IProps> = ({ navigation }) => {
   const [refreshing, setRefreshing] = useState(false);
   const { alerts, count, page } = useAlert();
   const { onIncreasePage } = useAlertActions();
-  useAlerts(refreshing);
+  const isFocused = useIsFocused();
+  useAlerts(refreshing, isFocused);
 
   const onRefresh = () => {
     setRefreshing(true);
-    wait(500).then(() => setRefreshing(false));
+    wait(300).then(() => setRefreshing(false));
   };
 
   const handleScrollEnd = (event: NativeSyntheticEvent<NativeScrollEvent>) => {

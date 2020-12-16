@@ -5,24 +5,39 @@ import useUserActions from 'hooks/useUserActions';
 import useAlert from 'hooks/useAlert';
 import api from 'api';
 
-const useAlerts = (refreshing: boolean): void => {
+const useAlerts = (refreshing: boolean, isFocused: boolean): void => {
   const { page } = useAlert();
   const { token } = useUser();
   const { onSetAlerts } = useAlertActions();
   const { onSetHasNewAlert } = useUserActions();
 
   useEffect(() => {
-    api
-      .getAlerts(token, 1)
-      .then((res) => {
-        const form = {
-          alerts: res.data.results,
-          page: 1,
-          count: res.data.count,
-        };
-        onSetAlerts(form);
-      })
-      .then(() => onSetHasNewAlert(false));
+    isFocused &&
+      api
+        .getAlerts(token, 1)
+        .then((res) => {
+          const form = {
+            alerts: res.data.results,
+            page: 1,
+            count: res.data.count,
+          };
+          onSetAlerts(form);
+        })
+        .then(() => onSetHasNewAlert(false));
+  }, [isFocused]);
+  useEffect(() => {
+    refreshing &&
+      api
+        .getAlerts(token, 1)
+        .then((res) => {
+          const form = {
+            alerts: res.data.results,
+            page: 1,
+            count: res.data.count,
+          };
+          onSetAlerts(form);
+        })
+        .then(() => onSetHasNewAlert(false));
   }, [refreshing]);
   useEffect(() => {
     page != 1 &&

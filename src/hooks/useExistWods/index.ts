@@ -19,7 +19,13 @@ const useExistWods = (
     api.getWods(token, { period: `${year}-${month}` }).then((res) => {
       setExistWods(res.data);
     });
-  }, [month, refreshing]);
+  }, [month]);
+  useEffect(() => {
+    refreshing &&
+      api.getWods(token, { period: `${year}-${month}` }).then((res) => {
+        setExistWods(res.data);
+      });
+  }, [refreshing]);
 
   return existWods;
 };

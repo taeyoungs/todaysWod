@@ -44,8 +44,8 @@ const Header: React.FC<IProps> = ({
       </Block>
       <Block
         margin={[10, 15, 11, 0]}
-        padding={[2, 5]}
-        borderRadius={[5]}
+        padding={[3, 5]}
+        borderRadius={[3]}
         border={[1]}
         borderColor={ColorPalette.White.WHITE}
       >

@@ -23,7 +23,7 @@ const Schedule: React.FC<IProps> = ({ navigation, route }) => {
 
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
-    wait(1000).then(() => setRefreshing(false));
+    wait(300).then(() => setRefreshing(false));
   }, []);
   useLayoutEffect(() => {
     navigation.setOptions({
