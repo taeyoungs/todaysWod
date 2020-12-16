@@ -1,16 +1,14 @@
 import React, { useState } from 'react';
-import Pw from 'components/templates/Auth/Pw';
-import { PwScreenProps } from 'models/types';
-import api from 'api';
-import { createOneButtonAlert, validateEmail } from 'utils';
+import T, { FontFamily, TextAlign } from 'components/atoms/T';
 import KeyboardDismiss from 'components/molecules/KeyboardDismiss';
 import Flex from 'components/molecules/Flex';
 import Block, { Sort } from 'components/molecules/Block';
-import T, { FontFamily, TextAlign } from 'components/atoms/T';
-import { ColorPalette } from 'models/color';
 import AuthItem from 'components/organisms/AuthItem';
-import Btn from 'components/atoms/Button';
 import AuthButton from 'components/organisms/AuthButton';
+import { ColorPalette } from 'models/color';
+import { PwScreenProps } from 'models/types';
+import { createOneButtonAlert, validateEmail } from 'utils';
+import api from 'api';
 
 interface IProps {
   navigation: PwScreenProps['navigation'];

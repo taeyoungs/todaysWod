@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { Dimensions, StatusBar } from 'react-native';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import T, { FontFamily, TextAlign } from 'components/atoms/T';
 import Flex from 'components/molecules/Flex';
 import KeyboardDismiss from 'components/molecules/KeyboardDismiss';
-import Block, { Sort } from 'components/molecules/Block';
+import Block, { FlexDirection, Sort } from 'components/molecules/Block';
 import AuthItem from 'components/organisms/AuthItem';
 import AuthButton from 'components/organisms/AuthButton';
 import { ColorPalette } from 'models/color';
@@ -40,6 +41,14 @@ const Certification: React.FC<IProps> = ({ route, navigation }) => {
       console.log();
     } finally {
       setLoading(false);
+    }
+  };
+  const resendEmail = async () => {
+    try {
+      await api.pw_reset({ email: route.params.email });
+      createOneButtonAlert('새로운 인증번호가 발송됐습니다.');
+    } catch (error) {
+      console.warn(error);
     }
   };
 
@@ -81,7 +90,23 @@ const Certification: React.FC<IProps> = ({ route, navigation }) => {
             setValue={setNumber}
             secureTextEntry={true}
           />
+          <Block
+            flexDirection={FlexDirection.ROW}
+            width={`${width - 40}px`}
+            margin={[0, 20]}
+          >
+            <T color={ColorPalette.Main.TXT_LIGHT}>
+              이메일이 도착하지 않았나요?{' '}
+            </T>
+            <TouchableWithoutFeedback
+              onPress={resendEmail}
+              style={{ padding: 5 }}
+            >
+              <T color={ColorPalette.Main.TXT}>재전송</T>
+            </TouchableWithoutFeedback>
+          </Block>
         </Flex>
+
         <Flex sort={Sort.CENTER_TOP}>
           <AuthButton
             onPress={handleSubmit}

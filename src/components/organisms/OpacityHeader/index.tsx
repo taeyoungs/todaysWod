@@ -15,7 +15,7 @@ const Container = styled.View`
   left: 0;
   width: 100%;
   background-color: ${ColorPalette.Main.BG};
-  height: 65px;
+  height: 70px;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;

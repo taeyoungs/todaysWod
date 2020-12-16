@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import T from 'components/atoms/T';
 import Scroll from 'components/molecules/Scroll';
+import Flex from 'components/molecules/Flex';
 import Block from 'components/molecules/Block';
 import Shadow from 'components/molecules/Shadow';
 import Header from 'components/organisms/Header';
@@ -29,8 +30,8 @@ const Home: React.FC<IProps> = ({ navigation }) => {
   const [refreshing, setRefreshing] = useState(false);
   const [today, setToday] = useState(new Date().getDate());
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [offsetX, setOffsetX] = useState(0);
-  const [offsetWodX, setOffsetWodX] = useState(0);
+  const [offsetX, setOffsetX] = useState(0); // dayButton offset
+  const [offsetWodX, setOffsetWodX] = useState(0); // Wod offset
   const svRef = useRef<ScrollView>(null);
   const wodRef = useRef<ScrollView>(null);
   const wods = useWods(refreshing);
@@ -38,9 +39,10 @@ const Home: React.FC<IProps> = ({ navigation }) => {
 
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
-    wait(1000).then(() => setRefreshing(false));
+    wait(300).then(() => setRefreshing(false));
   }, []);
   useEffect(() => {
+    // wods arr 중에서 오늘 날짜에 해당하는 idx
     const idx = checkTodayIdx(wods);
 
     if (idx > 0) {
@@ -51,6 +53,12 @@ const Home: React.FC<IProps> = ({ navigation }) => {
 
     if (idx > 2) {
       const toX = (idx - 2) * 67;
+      svRef.current?.scrollTo({ x: toX, y: 0, animated: false });
+      setOffsetX(toX);
+      setCurrentIndex(idx);
+      setToday(new Date().getDate());
+    } else if (idx <= 2 && idx > 0) {
+      const toX = idx * 67;
       svRef.current?.scrollTo({ x: toX, y: 0, animated: false });
       setOffsetX(toX);
       setCurrentIndex(idx);
@@ -93,71 +101,79 @@ const Home: React.FC<IProps> = ({ navigation }) => {
         refreshColor={ColorPalette.Main.BG}
       >
         <StatusBar barStyle="light-content" />
-        <Block
-          width={'100%'}
-          margin={[0, 0, 20, 0]}
-          backgroundColor={ColorPalette.White.SMOKE}
-          padding={[10, 0]}
-        >
-          <Block margin={[0, 0, 10, 0]}>
-            <T size={12} color={ColorPalette.Main.BG}>
-              {wods[currentIndex]?.date.split('-')[1]}월
-            </T>
-          </Block>
-          <ScrollView
-            style={{
-              height: 80,
-            }}
-            horizontal
-            scrollEventThrottle={25}
-            ref={svRef}
-            scrollEnabled={false}
-            contentContainerStyle={{
-              marginLeft: 25,
-              paddingRight: 174,
-            }}
-          >
-            {wods.length > 0 &&
-              wods.map((wod, index) => (
-                <DayButton
-                  key={index}
-                  svRef={svRef}
-                  wodRef={wodRef}
-                  wod={wod}
-                  idx={index}
-                  today={today}
-                  offsetX={offsetX}
-                  currentIndex={currentIndex}
-                  offsetWodX={offsetWodX}
-                  setOffsetWodX={setOffsetWodX}
-                  setToday={setToday}
-                  setOffsetX={setOffsetX}
-                  setCurrentIndex={setCurrentIndex}
-                />
-              ))}
-          </ScrollView>
-        </Block>
-        <ScrollView
-          style={{
-            flexGrow: 1,
-            width: '100%',
-            marginBottom: 30,
-            height: 450,
-          }}
-          horizontal
-          scrollEventThrottle={25}
-          pagingEnabled
-          showsHorizontalScrollIndicator={false}
-          onScrollEndDrag={handleScroll}
-          ref={wodRef}
-        >
-          {wods &&
-            wods.map((wod, index) => (
-              <Shadow width={width} key={index}>
-                <WodList wod={wod} />
-              </Shadow>
-            ))}
-        </ScrollView>
+        {wods.length > 0 ? (
+          <>
+            <Block
+              width={'100%'}
+              margin={[0, 0, 20, 0]}
+              backgroundColor={ColorPalette.White.SMOKE}
+              padding={[10, 0]}
+            >
+              <Block margin={[0, 0, 10, 0]}>
+                <T size={12} color={ColorPalette.Main.BG}>
+                  {wods[currentIndex]?.date.split('-')[1]}월
+                </T>
+              </Block>
+              <ScrollView
+                style={{
+                  height: 80,
+                  paddingLeft: 159,
+                }}
+                horizontal
+                scrollEventThrottle={25}
+                ref={svRef}
+                scrollEnabled={false}
+                contentContainerStyle={{
+                  paddingRight: 174,
+                }}
+              >
+                {wods.length > 0 &&
+                  wods.map((wod, index) => (
+                    <DayButton
+                      key={index}
+                      svRef={svRef}
+                      wodRef={wodRef}
+                      wod={wod}
+                      idx={index}
+                      today={today}
+                      offsetX={offsetX}
+                      currentIndex={currentIndex}
+                      offsetWodX={offsetWodX}
+                      setOffsetWodX={setOffsetWodX}
+                      setToday={setToday}
+                      setOffsetX={setOffsetX}
+                      setCurrentIndex={setCurrentIndex}
+                    />
+                  ))}
+              </ScrollView>
+            </Block>
+            <ScrollView
+              style={{
+                flexGrow: 1,
+                width: '100%',
+                marginBottom: 30,
+                height: 450,
+              }}
+              horizontal
+              scrollEventThrottle={25}
+              pagingEnabled
+              showsHorizontalScrollIndicator={false}
+              onScrollEndDrag={handleScroll}
+              ref={wodRef}
+            >
+              {wods &&
+                wods.map((wod, index) => (
+                  <Shadow width={width} key={index}>
+                    <WodList wod={wod} />
+                  </Shadow>
+                ))}
+            </ScrollView>
+          </>
+        ) : (
+          <Flex backgroundColor={ColorPalette.White.TANSPARENT}>
+            <T>등록된 와드가 없습니다. 😴</T>
+          </Flex>
+        )}
       </Scroll>
     </>
   );

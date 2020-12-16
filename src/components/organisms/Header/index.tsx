@@ -5,6 +5,7 @@ import Img from 'components/atoms/Img';
 import { ColorPalette } from 'models/color';
 import T, { FontFamily } from 'components/atoms/T';
 import Icon from 'components/atoms/Icon';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 interface IProps {
   goMembership(): void;
@@ -22,7 +23,7 @@ const Header: React.FC<IProps> = ({
   return (
     <Block
       width={'100%'}
-      height={'65px'}
+      height={'70px'}
       backgroundColor={ColorPalette.Main.BG}
       flexDirection={FlexDirection.ROW}
       sort={Sort.SPACE_BETWEEN_BOTTOM}
@@ -41,14 +42,18 @@ const Header: React.FC<IProps> = ({
           {title}
         </T>
       </Block>
-      <Block margin={[10, 15, 10, 0]}>
-        <Btn onPress={goMembership}>
-          <Img
-            sourceImg={require('assets/images/ticket.png')}
-            width={23}
-            height={23}
-          />
-        </Btn>
+      <Block
+        margin={[10, 15, 11, 0]}
+        padding={[2, 5]}
+        borderRadius={[5]}
+        border={[1]}
+        borderColor={ColorPalette.White.WHITE}
+      >
+        <TouchableWithoutFeedback onPress={goMembership}>
+          <T size={10} color={ColorPalette.White.WHITE}>
+            회원권
+          </T>
+        </TouchableWithoutFeedback>
       </Block>
     </Block>
   );

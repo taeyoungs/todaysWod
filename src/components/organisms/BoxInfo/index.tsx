@@ -7,6 +7,7 @@ import Flex from 'components/molecules/Flex';
 import Block, { FlexDirection, Sort } from 'components/molecules/Block';
 import { ColorPalette } from 'models/color';
 import { IBoxProps } from 'models/common';
+import * as Linking from 'expo-linking';
 
 interface IProps {
   phone?: string;
@@ -20,16 +21,32 @@ const BoxInfo: React.FC<IProps> = ({
   box,
   phone = '02-516-6744',
   time = '06:30 ~ 23:00',
-  insta = '@cfgn_nh',
+  insta = 'cfgn_nh',
   facebook = 'crossftgn',
 }) => {
+  const OptionBox = ({
+    title,
+    content,
+  }: {
+    title: string;
+    content: string;
+  }) => {
+    return (
+      <>
+        <T color={ColorPalette.Gray.GRAY} size={11} margin={[0, 0, 10, 0]}>
+          {title}
+        </T>
+        <T color={ColorPalette.Black.BLACK}>{content}</T>
+      </>
+    );
+  };
+
   return (
     <>
       <Flex
         flexDirection={FlexDirection.ROW}
         backgroundColor={ColorPalette.White.TANSPARENT}
-        border={[0, 0, 2, 0]}
-        borderColor={ColorPalette.White.SMOKE}
+        borderColor={ColorPalette.Gray.GAINSBORO}
         width={'100%'}
         flex={0.5}
       >
@@ -40,13 +57,13 @@ const BoxInfo: React.FC<IProps> = ({
           margin={[0, 20, 0, 0]}
         >
           <Block flexDirection={FlexDirection.ROW}>
-            <Icon name="body" color={ColorPalette.Main.BG_DARK} />
+            <Icon name="body" color={ColorPalette.Black.BLACK} />
             <Block>
-              <T color={ColorPalette.Main.BG_DARK}>CrossFit</T>
-              <T color={ColorPalette.Main.BG_DARK}>GANGNAM</T>
+              <T color={ColorPalette.Black.BLACK}>CrossFit</T>
+              <T color={ColorPalette.Black.BLACK}>GANGNAM</T>
             </Block>
           </Block>
-          <Block margin={[10, 0]}>
+          <Block margin={[20, 0, 10, 0]}>
             <Img
               sourceImg={require('assets/images/light_dbell.png')}
               width={15}
@@ -54,15 +71,11 @@ const BoxInfo: React.FC<IProps> = ({
             />
           </Block>
           <Block sort={Sort.LEFT_CENTER}>
-            <T
-              color={ColorPalette.Main.TXT_LIGHT}
-              size={11}
-              margin={[0, 0, 5, 0]}
-            >
+            <T color={ColorPalette.Gray.GRAY} size={11} margin={[0, 0, 5, 0]}>
               이름
             </T>
             <T
-              color={ColorPalette.Main.BG_DARK}
+              color={ColorPalette.Black.BLACK}
               size={20}
               fontFamily={FontFamily.NANUM_BOLD}
             >
@@ -81,25 +94,14 @@ const BoxInfo: React.FC<IProps> = ({
         sort={Sort.CENTER_SPACE_AROUND}
         width={'100%'}
         borderRadius={[0, 50]}
+        flex={1.3}
       >
         <Block
           sort={Sort.LEFT_CENTER}
           backgroundColor={ColorPalette.White.WHITE}
           width={'100%'}
         >
-          <T
-            color={ColorPalette.Main.TXT_LIGHT}
-            size={11}
-            margin={[0, 0, 5, 0]}
-          >
-            주소
-          </T>
-          <T
-            color={ColorPalette.Main.BG_DARK}
-            fontFamily={FontFamily.NANUM_BOLD}
-          >
-            {box?.address}
-          </T>
+          <OptionBox title="주소" content={box?.address} />
         </Block>
         <Block
           flexDirection={FlexDirection.ROW}
@@ -111,37 +113,13 @@ const BoxInfo: React.FC<IProps> = ({
             sort={Sort.LEFT_CENTER}
             backgroundColor={ColorPalette.White.WHITE}
           >
-            <T
-              color={ColorPalette.Main.TXT_LIGHT}
-              size={11}
-              margin={[0, 0, 5, 0]}
-            >
-              전화번호
-            </T>
-            <T
-              color={ColorPalette.Main.BG_DARK}
-              fontFamily={FontFamily.NANUM_BOLD}
-            >
-              {phone}
-            </T>
+            <OptionBox title="전화번호" content={phone} />
           </Flex>
           <Flex
             sort={Sort.LEFT_CENTER}
             backgroundColor={ColorPalette.White.WHITE}
           >
-            <T
-              color={ColorPalette.Main.TXT_LIGHT}
-              size={11}
-              margin={[0, 0, 5, 0]}
-            >
-              운영 시간
-            </T>
-            <T
-              color={ColorPalette.Main.BG_DARK}
-              fontFamily={FontFamily.NANUM_BOLD}
-            >
-              {time}
-            </T>
+            <OptionBox title="운영시간" content={time} />
           </Flex>
         </Block>
         <Block
@@ -153,46 +131,28 @@ const BoxInfo: React.FC<IProps> = ({
             sort={Sort.LEFT_CENTER}
             backgroundColor={ColorPalette.White.WHITE}
           >
-            <T
-              color={ColorPalette.Main.TXT_LIGHT}
-              size={11}
-              margin={[0, 0, 5, 0]}
+            <Btn
+              onPress={() =>
+                Linking.openURL(`instagram://user?username=${insta}`)
+              }
             >
-              인스타그램
-            </T>
-            <T
-              color={ColorPalette.Main.BG_DARK}
-              fontFamily={FontFamily.NANUM_BOLD}
-            >
-              {insta}
-            </T>
+              <OptionBox title="인스타그램" content={insta} />
+            </Btn>
           </Flex>
           <Flex
             sort={Sort.LEFT_CENTER}
             backgroundColor={ColorPalette.White.WHITE}
           >
-            <T
-              color={ColorPalette.Main.TXT_LIGHT}
-              size={11}
-              margin={[0, 0, 5, 0]}
-            >
-              페이스북
-            </T>
-            <T
-              color={ColorPalette.Main.BG_DARK}
-              fontFamily={FontFamily.NANUM_BOLD}
-            >
-              {facebook}
-            </T>
+            <OptionBox title="페이스북" content={facebook} />
           </Flex>
         </Block>
-        <Block width={'100%'} borderRadius={[20]}>
+        <Block width={'100%'} borderRadius={[50]}>
           <Btn
             onPress={() => console.log('버튼')}
-            backgroundColor={ColorPalette.Main.TXT}
+            backgroundColor={ColorPalette.Main.BG}
             padding={[10, 0]}
           >
-            <T align={TextAlign.CENTER} color={ColorPalette.Main.BG}>
+            <T align={TextAlign.CENTER} color={ColorPalette.White.WHITE}>
               회원권 등록 대기 중
             </T>
           </Btn>

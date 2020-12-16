@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { StatusBar } from 'react-native';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import Btn from 'components/atoms/Button';
 import T, { FontFamily } from 'components/atoms/T';
 import Icon from 'components/atoms/Icon';
@@ -12,7 +13,8 @@ import useUserRetrieve from 'hooks/useUserRetrieve';
 import useUser from 'hooks/useUser';
 import { BoxScreenProps } from 'models/types';
 import { ColorPalette } from 'models/color';
-import { wait } from 'utils';
+import { createTwoButtonAlert, wait } from 'utils';
+import api from 'api';
 
 interface IProps {
   navigation: BoxScreenProps['navigation'];
@@ -22,9 +24,9 @@ interface IProps {
 const BoxScreen: React.FC<IProps> = ({ navigation }) => {
   const [refreshing, setRefreshing] = useState(false);
   const [fakeClock, setFakeClock] = useState(false);
-  const { onLogOut } = useUserActions();
+  const { onLogOut, onSetUser } = useUserActions();
   useUserRetrieve(fakeClock);
-  const { user } = useUser();
+  const { user, userId, token } = useUser();
 
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
@@ -33,6 +35,14 @@ const BoxScreen: React.FC<IProps> = ({ navigation }) => {
       setFakeClock((prevState) => !prevState);
     });
   }, []);
+
+  const revokeBox = async () => {
+    try {
+      await api.revokeBox(userId, token).then((res) => onSetUser(res.data));
+    } catch (error) {
+      console.warn(error);
+    }
+  };
 
   return (
     <Scroll padding={[0, 15]} refreshing={refreshing} onRefresh={onRefresh}>
@@ -65,28 +75,23 @@ const BoxScreen: React.FC<IProps> = ({ navigation }) => {
             <Block>
               <Icon
                 name="help-circle-outline"
-                color={ColorPalette.Main.TXT_LIGHT}
-                size={40}
+                color={ColorPalette.Gray.GRAY}
+                size={35}
               />
               <T
-                color={ColorPalette.Main.TXT_LIGHT}
-                size={18}
+                color={ColorPalette.Gray.GRAY}
+                size={14}
                 margin={[10, 0, 30, 0]}
               >
                 등록된 박스가 없습니다.
               </T>
             </Block>
-            <Block backgroundColor={ColorPalette.Main.TXT} borderRadius={[10]}>
+            <Block backgroundColor={ColorPalette.Main.BG} borderRadius={[50]}>
               <Btn
                 onPress={() => navigation.navigate('BoxEnroll')}
-                padding={[15, 25]}
+                padding={[15, 60]}
               >
-                <T
-                  color={ColorPalette.Main.BG_DARK}
-                  fontFamily={FontFamily.NANUM_BOLD}
-                >
-                  등록하러 가기
-                </T>
+                <T color={ColorPalette.White.WHITE}>등록하러 가기</T>
               </Btn>
             </Block>
           </Flex>
@@ -99,14 +104,25 @@ const BoxScreen: React.FC<IProps> = ({ navigation }) => {
         sort={Sort.SPACE_AROUND_CENTER}
       >
         <Block>
-          <Btn onPress={() => console.log('박스 삭제 버튼')}>
-            <T color={ColorPalette.Main.TXT}>박스 삭제</T>
+          <Btn
+            onPress={() =>
+              createTwoButtonAlert(
+                revokeBox,
+                '박스 등록을 취소하시겠습니까?',
+                `확인을 누르시면 현재 등록한 박스가 삭제됩니다.
+(박스에 전송된 등록 요청 또한 삭제됩니다.)`,
+                '취소',
+                '확인'
+              )
+            }
+          >
+            <T color={ColorPalette.Main.TXT_LIGHT}>박스 삭제</T>
           </Btn>
         </Block>
         <Block>
-          <Btn onPress={onLogOut}>
-            <T color={ColorPalette.Main.TXT}>로그아웃</T>
-          </Btn>
+          <TouchableWithoutFeedback onPress={onLogOut}>
+            <T color={ColorPalette.Main.TXT_LIGHT}>로그아웃</T>
+          </TouchableWithoutFeedback>
         </Block>
       </Flex>
     </Scroll>
