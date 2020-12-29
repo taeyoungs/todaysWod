@@ -45,25 +45,27 @@ const Home: React.FC<IProps> = ({ navigation }) => {
     // wods arr 중에서 오늘 날짜에 해당하는 idx
     const idx = checkTodayIdx(wods);
 
+    // Page Wod
     if (idx > 0) {
       const toX = idx * width;
       wodRef.current?.scrollTo({ x: toX, y: 0, animated: false });
       setOffsetWodX(toX);
     }
-
-    if (idx > 2) {
-      const toX = (idx - 2) * 67;
-      svRef.current?.scrollTo({ x: toX, y: 0, animated: false });
-      setOffsetX(toX);
-      setCurrentIndex(idx);
-      setToday(new Date().getDate());
-    } else if (idx <= 2 && idx > 0) {
+    // Day Button
+    if (idx > 0) {
       const toX = idx * 67;
       svRef.current?.scrollTo({ x: toX, y: 0, animated: false });
       setOffsetX(toX);
       setCurrentIndex(idx);
       setToday(new Date().getDate());
     }
+    // else if (idx <= 2 && idx > 0) {
+    //   const toX = idx * 67;
+    //   svRef.current?.scrollTo({ x: toX, y: 0, animated: false });
+    //   setOffsetX(toX);
+    //   setCurrentIndex(idx);
+    //   setToday(new Date().getDate());
+    // }
   }, [wods]);
 
   const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
@@ -117,13 +119,13 @@ const Home: React.FC<IProps> = ({ navigation }) => {
               <ScrollView
                 style={{
                   height: 80,
-                  paddingLeft: 159,
                 }}
                 horizontal
                 scrollEventThrottle={25}
                 ref={svRef}
                 scrollEnabled={false}
                 contentContainerStyle={{
+                  paddingLeft: 159,
                   paddingRight: 174,
                 }}
               >
