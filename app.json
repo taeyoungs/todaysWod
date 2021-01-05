@@ -2,6 +2,7 @@
   "expo": {
     "entryPoint": "./src/App.tsx", 
     "name": "todaysWod",
+    "description": "check out todays workouts and manage your reservations",
     "slug": "todaysWod",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -18,7 +19,9 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "bundleIdentifier": "com.youngslog.todayswod",
+      "buildNumber": "1.0.0",
+      "supportsTablet": false
     },
     "web": {
       "favicon": "./assets/favicon.png"
