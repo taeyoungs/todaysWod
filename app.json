@@ -2,7 +2,7 @@
   "expo": {
     "entryPoint": "./src/App.tsx", 
     "name": "todaysWod",
-    "description": "check out todays workouts and manage your reservations",
+    "description": "check todays workout and manage reservations",
     "slug": "todaysWod",
     "version": "1.0.0",
     "orientation": "portrait",
