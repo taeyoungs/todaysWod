@@ -10,16 +10,6 @@ import Gate from 'navigations/Gate';
 
 const storybook = false;
 
-// const cacheFonts = (fonts: string | { [fontFamily: string]: FontSource }) =>
-//   fonts.map((font: string | { [fontFamily: string]: FontSource }) => {
-//     return Font.loadAsync(font);
-//   });
-
-// const cacheImages = (images: Array<number>) =>
-//   images.map((image: number) => {
-//     return Asset.fromModule(image).downloadAsync();
-//   });
-
 let App = null;
 if (storybook) {
   // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -38,7 +28,6 @@ if (storybook) {
         require('../assets/images/dark_dbell.png'),
         require('../assets/images/light_dbell.png'),
         require('../assets/images/seoulmap.png'),
-        require('../assets/images/ticket.png'),
       ];
 
       const promisedImages = images.map((image: number | string) => {

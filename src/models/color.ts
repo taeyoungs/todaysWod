@@ -43,12 +43,6 @@ export enum GREEN {
   GREEN = '#00ff00',
 }
 
-//#00243F
-//#859F9E
-// #22a6b3
-// #6a89cc - #778beb
-//#425C59 #0984e3
-// #3A5350
 export enum BLUE {
   ALICE = '#f0f8ff',
   AZURE = '#f0ffff',
