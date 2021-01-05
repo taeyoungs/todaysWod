@@ -21,9 +21,9 @@ interface IProps {
 
 const SignUpScreen: React.FC<IProps> = ({ navigation }) => {
   const [loading, setLoading] = useState(false);
-  const [email, setEmail] = useState('lolollg@naver.com');
-  const [pw, setPw] = useState('xodud9411!');
-  const [name, setName] = useState('박수민');
+  const [email, setEmail] = useState('');
+  const [pw, setPw] = useState('');
+  const [name, setName] = useState('');
   const [confirmVisible, setConfirmVisible] = useState(false);
   const onPress = async () => {
     if (email === '') {

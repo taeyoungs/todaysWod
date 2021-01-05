@@ -15,7 +15,7 @@ interface IProps {
 }
 
 const PwScreen: React.FC<IProps> = ({ navigation }) => {
-  const [email, setEmail] = useState('lolollg@naver.com');
+  const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
   const sendEmail = async () => {
     if (!validateEmail(email)) {
