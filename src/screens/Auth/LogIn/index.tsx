@@ -29,8 +29,8 @@ interface IProps {
 const LogInScreen: React.FC<IProps> = ({ navigation }) => {
   const { onLogIn } = useUserActions();
   const [loading, setLoading] = useState(false);
-  const [email, setEmail] = useState('lolollg@naver.com');
-  const [pw, setPw] = useState('xodud9411!');
+  const [email, setEmail] = useState('');
+  const [pw, setPw] = useState('');
   const onPress = async () => {
     if (email === '') {
       createOneButtonAlert('아이디(이메일)을 입력해주세요.');
