@@ -138,7 +138,8 @@ export const createTwoButtonAlert = (
   title: string,
   content: string,
   cancelMsg: string,
-  okMsg: string
+  okMsg: string,
+  onCancleP?: () => void
 ): void => {
   return Alert.alert(
     `${title}`,
@@ -146,7 +147,7 @@ export const createTwoButtonAlert = (
     [
       {
         text: cancelMsg,
-        onPress: () => console.log('Cancel Pressed'),
+        onPress: onCancleP ? onCancleP : () => console.log('Cancel Pressed'),
       },
       { text: okMsg, onPress: onP, style: 'cancel' },
     ],

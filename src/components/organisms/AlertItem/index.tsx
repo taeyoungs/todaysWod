@@ -42,21 +42,52 @@ const AlertItem: React.FC<IProps> = ({ alert }) => {
     }
   }
 
-  function formatDate(datetime: string): string {
-    const now = new Date();
-    const date = new Date(datetime);
-    if (now.getDate() === date.getDate()) {
-      const m =
-        date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes();
-      const h = date.getHours() < 10 ? `0${date.getHours()}` : date.getHours();
-      return `${h}:${m}`;
+  function isZero(num: number): string {
+    if (num < 10) {
+      return `0${num}`;
     } else {
-      const formatD =
-        date.getDate() < 10 ? `0${date.getDate()}` : date.getDate();
-      const d = `${date.getFullYear()}-${date.getMonth() + 1}-${formatD}`;
-      return `${date.getDate()}  ${dayOfTheWeek(d)}`;
+      return `${num}`;
     }
   }
+
+  const formatDate = (datetime: string) => {
+    const now = new Date();
+    const date = new Date(datetime);
+    const d = `${date.getFullYear()}-${isZero(date.getMonth() + 1)}-${isZero(
+      date.getDate()
+    )}`;
+    if (now.getDate() === date.getDate()) {
+      return (
+        <T
+          color={ColorPalette.Main.BG}
+          fontFamily={FontFamily.NANUM_BOLD}
+          size={15}
+        >
+          {`${isZero(date.getHours())}:${isZero(date.getMinutes())}`}
+        </T>
+      );
+    } else {
+      return (
+        <>
+          <T
+            color={ColorPalette.Main.BG}
+            fontFamily={FontFamily.NANUM_BOLD}
+            size={15}
+          >
+            {`${isZero(date.getMonth() + 1)}.${isZero(date.getDate())}`}
+          </T>
+          <T
+            color={ColorPalette.Main.BG}
+            fontFamily={FontFamily.NANUM_BOLD}
+            size={12}
+            margin={[5, 0, 0, 0]}
+          >
+            {dayOfTheWeek(d)}
+          </T>
+        </>
+      );
+    }
+  };
 
   const moreHeight = more ? null : { height: '20px' };
 
@@ -105,17 +136,7 @@ const AlertItem: React.FC<IProps> = ({ alert }) => {
               </T>
             </Block>
           </Block>
-          {!more && (
-            <Block>
-              <T
-                color={ColorPalette.Main.BG}
-                fontFamily={FontFamily.NANUM_BOLD}
-                size={15}
-              >
-                {formatDate(alert.datetime)}
-              </T>
-            </Block>
-          )}
+          {!more && <Block>{formatDate(alert.datetime)}</Block>}
         </Block>
       </Shadow>
     </TouchableOpacity>

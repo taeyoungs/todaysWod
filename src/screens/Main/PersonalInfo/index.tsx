@@ -53,8 +53,9 @@ const PersonalInfo: React.FC<IProps> = ({ navigation }) => {
         updateInfo,
         '저장되지 않은 변경사항',
         '개인 정보의 변경사항을 저장하시겠어요?',
-        '취소',
-        '저장'
+        '삭제',
+        '저장',
+        () => navigation.goBack()
       );
     } else {
       navigation.goBack();

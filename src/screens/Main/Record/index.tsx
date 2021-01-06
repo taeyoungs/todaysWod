@@ -49,6 +49,7 @@ const Record: React.FC<IProps> = ({ navigation }) => {
 
   const nextMonth = () => {
     if (month === 12) {
+      setYear((prevState) => prevState + 1);
       setMonth(1);
     } else {
       setMonth((prevState) => prevState + 1);

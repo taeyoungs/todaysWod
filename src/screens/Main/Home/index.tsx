@@ -113,7 +113,7 @@ const Home: React.FC<IProps> = ({ navigation }) => {
             >
               <Block margin={[0, 0, 10, 0]}>
                 <T size={12} color={ColorPalette.Main.BG}>
-                  {wods[currentIndex]?.date.split('-')[1]}월
+                  {parseInt(wods[currentIndex]?.date.split('-')[1])}월
                 </T>
               </Block>
               <ScrollView
