@@ -20,7 +20,7 @@
     ],
     "ios": {
       "bundleIdentifier": "com.youngslog.todayswod",
-      "buildNumber": "1.0.0",
+      "buildNumber": "1.0.1",
       "supportsTablet": false
     },
     "web": {
