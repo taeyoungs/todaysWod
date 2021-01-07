@@ -30,7 +30,7 @@ const Record: React.FC<IProps> = ({ navigation }) => {
     confirmCnt,
     recordsCnt,
     hasMore,
-  } = usePastReservations();
+  } = usePastReservations(month);
   const { onIncreasePage } = useReservationActions();
   const thisMonth = new Date().getMonth() + 1;
 

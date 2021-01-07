@@ -1,4 +1,5 @@
 import React from 'react';
+import { getStatusBarHeight } from 'react-native-status-bar-height';
 import T, { FontFamily } from 'components/atoms/T';
 import Img from 'components/atoms/Img';
 import Block from 'components/molecules/Block';
@@ -20,8 +21,13 @@ const Logo: React.FC<IProps> = ({
   height = 60,
   size = 24,
 }) => {
+  const statusBarHeight = getStatusBarHeight();
+
   return (
-    <Block backgroundColor={backgroundColor}>
+    <Block
+      backgroundColor={backgroundColor}
+      margin={[statusBarHeight, 0, 0, 0]}
+    >
       <Img
         width={width}
         height={height}

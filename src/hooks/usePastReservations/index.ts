@@ -12,18 +12,23 @@ export interface IPastRProps {
   hasMore: boolean;
 }
 
-const usePastReservations = (): IPastRProps => {
+const usePastReservations = (month: number): IPastRProps => {
   const rSlice = useSelector((state: RootState) => state.reservationsSlice);
   const { getPastReservationPage } = useReservationActions();
 
+  const thisMonth = new Date().getMonth() + 1;
+
   const pastReservations = rSlice.past.records;
   const pageSize = 6;
-  let records = [];
+  let records: Array<IReservationProps> = [];
   let hasMore = false;
-  if (rSlice.past.records.length <= getPastReservationPage() * pageSize) {
-    records = rSlice.past.records;
+  if (month === thisMonth) {
+    records = pastReservations.filter((r) => !isPassDate(r.date));
   } else {
-    records = rSlice.past.records.slice(0, getPastReservationPage() * pageSize);
+    records = pastReservations;
+  }
+  if (records.length > getPastReservationPage() * pageSize) {
+    records = records.slice(0, getPastReservationPage() * pageSize);
     hasMore = true;
   }
 

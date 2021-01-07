@@ -64,7 +64,7 @@ const SignUpScreen: React.FC<IProps> = ({ navigation }) => {
     <>
       <StatusBar barStyle="light-content" />
       <Flex width={`${width}px`}>
-        <Block width={'100%'} sort={Sort.CENTER_BOTTOM} margin={[60, 0, 0, 0]}>
+        <Block width={'100%'} sort={Sort.CENTER_BOTTOM} margin={[40, 0, 0, 0]}>
           <Logo />
         </Block>
         <KeyboardAvoidingView behavior="padding" enabled style={{ flex: 1 }}>
