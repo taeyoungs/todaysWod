@@ -151,15 +151,13 @@ const Record: React.FC<IProps> = ({ navigation }) => {
             </Flex>
           ) : (
             <>
-              {records
-                .filter((reservation) => !isPassDate(reservation.date))
-                .map((reservation) => (
-                  <Ticket
-                    reservation={reservation}
-                    calendar={false}
-                    key={reservation.id}
-                  />
-                ))}
+              {records.map((reservation) => (
+                <Ticket
+                  reservation={reservation}
+                  calendar={false}
+                  key={reservation.id}
+                />
+              ))}
               {hasMore && (
                 <Block margin={[0, 0, 20, 0]}>
                   <Block
